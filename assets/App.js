@@ -9,7 +9,9 @@ import CategoriesScreen from './screens/CategoriesScreen';
 import MealsOverviewScreen from './screens/MealsOverviewScreen';
 import MealDetailScreen from './screens/MealDetailScreen';
 import FavoritesScreen from './screens/FavoritesScreen';
-import { colors } from './styles/colors';
+import { colors } from '../styles/colors';
+
+
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();

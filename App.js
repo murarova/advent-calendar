@@ -1,54 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { Ionicons } from '@expo/vector-icons';
 
-import CategoriesScreen from './screens/CategoriesScreen';
-import MealsOverviewScreen from './screens/MealsOverviewScreen';
-import MealDetailScreen from './screens/MealDetailScreen';
-import FavoritesScreen from './screens/FavoritesScreen';
+import DaysOverviewScreen from './screens/days-overview-screen.js';
+import DayOverviewScreen from './screens/day-overview-screen';
 import { colors } from './styles/colors';
 
 const Stack = createNativeStackNavigator();
-const Drawer = createDrawerNavigator();
-
-function DrawerNavigator() {
-  return (
-    <Drawer.Navigator
-      screenOptions={{
-        headerStyle: { backgroundColor: colors.secondaryColor },
-        headerTintColor: 'white',
-        sceneContainerStyle: { backgroundColor: '#3f2f25' },
-        drawerContentStyle: { backgroundColor: colors.secondaryColor },
-        drawerInactiveTintColor: 'white',
-        drawerActiveTintColor: colors.secondaryColor,
-        drawerActiveBackgroundColor: '#e4baa1',
-      }}
-    >
-      <Drawer.Screen
-        name="Categories"
-        component={CategoriesScreen}
-        options={{
-          title: 'All Categories',
-          drawerIcon: ({ color, size }) => (
-            <Ionicons name="list" color={color} size={size} />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        name="Favorites"
-        component={FavoritesScreen}
-        options={{
-          drawerIcon: ({ color, size }) => (
-            <Ionicons name="star" color={color} size={size} />
-          ),
-        }}
-      />
-    </Drawer.Navigator>
-  );
-}
 
 export default function App() {
   return (
@@ -56,33 +14,29 @@ export default function App() {
       <StatusBar style="light" />
       <NavigationContainer>
         <Stack.Navigator
-          screenOptions={{
-            headerStyle: { backgroundColor: colors.secondaryColor },
-            headerTintColor: 'white',
-            contentStyle: { backgroundColor: '#3f2f25' },
-          }}
+          screenOptions={ {
+            headerStyle: { backgroundColor: colors.primaryColor },
+            headerTintColor: colors.darkColor,
+            contentStyle: { backgroundColor: colors.lightColor },
+          } }
         >
           <Stack.Screen
-            name="Drawer"
-            component={DrawerNavigator}
-            options={{
-              headerShown: false,
-            }}
+            name="DaysOverview"
+            component={ DaysOverviewScreen }
+            options={ {
+              title: 'Your current path',
+            } }
           />
-          <Stack.Screen name="MealsOverview" component={MealsOverviewScreen} />
           <Stack.Screen
-            name="MealDetail"
-            component={MealDetailScreen}
-            options={{
-              title: 'About the Meal',
-            }}
+            name="DayOverview"
+            component={ DayOverviewScreen }
+            options={ {
+              title: 'Goals for today',
+              headerBackTitle: "Back"
+            } }
           />
         </Stack.Navigator>
       </NavigationContainer>
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {},
-});

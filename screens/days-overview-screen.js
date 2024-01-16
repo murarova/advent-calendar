@@ -1,5 +1,5 @@
 import { FlatList } from 'react-native';
-import DayGoalsItem from '../components/day-item';
+import { DayIconItem } from '../components/day-icon-item';
 import moment from "moment";
 import { useMemo } from 'react';
 import { enumerateDaysBetweenDates } from '../utils/utils';
@@ -10,19 +10,16 @@ function DaysOverviewScreen({ navigation }) {
     return enumerateDaysBetweenDates(START_DAY, END_DAY)
   }, [ START_DAY, END_DAY ])
 
-  function renderCategoryItem(itemData) {
+  function renderDayItem(itemData) {
     function pressHandler() {
       navigation.navigate('DayOverview', {
         currentDay: moment(itemData.item).format('YYYY-MM-DD'),
       });
     }
-    const day = moment(itemData.item).format('DD');
-    const dayOfWeek = moment(itemData.item).format('dddd');
 
     return (
-      <DayGoalsItem
-        day={ day }
-        dayOfWeek={ dayOfWeek }
+      <DayIconItem
+        date={ itemData.item }
         onPress={ pressHandler }
       />
     );
@@ -31,7 +28,7 @@ function DaysOverviewScreen({ navigation }) {
   return (
     <FlatList
       data={ days }
-      renderItem={ renderCategoryItem }
+      renderItem={ renderDayItem }
       numColumns={ 3 }
     />
   );

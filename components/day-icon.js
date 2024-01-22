@@ -3,7 +3,7 @@ import { colors } from "../styles/colors";
 import moment from "moment";
 import { OPEN_DAYS_FROM_TODAY } from "../constants/constants";
 
-export function DayIconItem({ date, onPress }) {
+export function DayIcon({ date, onPress }) {
   const day = moment(date).format("DD");
   const dayOfWeek = moment(date).format("dddd");
   //current day hardcoded

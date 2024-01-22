@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { Button, View, Alert } from "react-native";
+import { View, Alert } from "react-native";
 import YoutubeIframe from "react-native-youtube-iframe";
 
 export function YoutubePlayer({ videoId }) {

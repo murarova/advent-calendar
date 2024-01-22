@@ -1,5 +1,5 @@
 import config from './adventCalendarConfig.json'
 
-export function getDayGoalsConfig(day) {
+export function getDayTasks(day) {
   return config[day];
 }

@@ -24,7 +24,7 @@ export function ImagePicker() {
   };
   return (
     <View>
-      <Button title="Pick image" onPress={pickImage} />
+      <Button title="Вибери фото" onPress={pickImage} />
       {image && <Image source={{ uri: image }} style={styles.image} />}
     </View>
   );

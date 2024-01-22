@@ -1,26 +1,25 @@
-import { useLayoutEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { useLayoutEffect } from "react";
+import { View, StyleSheet } from "react-native";
 import moment from "moment";
-import { DayGoalsItem } from '../components/day-goals-item';
-import { getDayGoalsConfig } from '../config/dayGoalsConfig';
+import { Tasks } from "../components/tasks";
+import { getDayTasks } from "../config/day-tasks-config";
 
 function DayOverviewScreen({ route, navigation }) {
   const currentDay = route.params.currentDay;
-  const day = moment(currentDay).format('DD');
-  const month = moment(currentDay).format('MMMM');
+  const day = moment(currentDay).format("DD");
+  const month = moment(currentDay).format("MMMM");
 
-  const config = getDayGoalsConfig(day);
+  const config = getDayTasks(day);
 
   useLayoutEffect(() => {
-
     navigation.setOptions({
-      title: `${ day } of ${ month }`,
+      title: `${day} of ${month}`,
     });
-  }, [ currentDay, navigation ]);
+  }, [currentDay, navigation]);
 
   return (
-    <View style={ styles.container }>
-      <DayGoalsItem {...config} />
+    <View style={styles.container}>
+      <Tasks {...config} />
     </View>
   );
 }

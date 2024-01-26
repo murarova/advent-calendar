@@ -6,32 +6,41 @@ import {
   ScrollView,
   StatusBar,
   Button,
+  Switch,
 } from "react-native";
+import { useState } from "react";
 import { YoutubePlayer } from "./youtube-player";
 import { colors } from "../styles/colors";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 
 export function Tasks({
   videoText,
   videoId,
   dayTitle,
   dayText,
-  dayTasksConfig,
-  dayMoodText,
-  dayMoodTitle,
+  dayTaskConfig,
+  moodTaskConfig,
+  setGrade,
 }) {
+  const [isMoodTaskDone, setIsMoodTaskDone] = useState(false);
+
+  const handleDayMoodSwitch = (value) => {
+    const moodTaskGrade = value ? moodTaskConfig.grade : 0;
+    setIsMoodTaskDone(value);
+    setGrade((grade) => ({ ...grade, moodTask: moodTaskGrade }));
+  };
   const navigation = useNavigation();
 
-  function handlePress() {
+  function handleDayTaskBtnPress() {
     navigation.navigate("TasksOfTheDay", {
-      dayTasksConfig,
+      dayTaskConfig,
     });
   }
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
-        <View style={styles.container}>
+        <View>
           {videoText && <Text style={styles.introduction}>{videoText}</Text>}
           {videoId && <YoutubePlayer videoId={videoId} />}
 
@@ -39,16 +48,28 @@ export function Tasks({
             {dayTitle && <Text style={styles.title}>{dayTitle}</Text>}
             {dayText && <Text style={styles.introduction}>{dayText}</Text>}
             <View style={styles.sectionButton}>
-              <Button onPress={handlePress} title="Just do it" />
+              <Button onPress={handleDayTaskBtnPress} title="Just do it" />
             </View>
           </View>
 
-          <View style={styles.sectionContainer}>
-            {dayMoodTitle && <Text style={styles.title}>{dayMoodTitle}</Text>}
-            {dayMoodText && (
-              <Text style={styles.introduction}>{dayMoodText}</Text>
-            )}
-          </View>
+          {moodTaskConfig && (
+            <View style={styles.sectionContainer}>
+              {moodTaskConfig.dayTitle && (
+                <Text style={styles.title}>{moodTaskConfig.dayTitle}</Text>
+              )}
+              <Text style={styles.introduction}>{moodTaskConfig.dayText}</Text>
+              <View style={styles.sectionButton}>
+                <Switch
+                  trackColor={{ false: "#767577", true: "#81b0ff" }}
+                  thumbColor={isMoodTaskDone ? "#f5dd4b" : "#f4f3f4"}
+                  ios_backgroundColor="#3e3e3e"
+                  onValueChange={handleDayMoodSwitch}
+                  value={isMoodTaskDone}
+                />
+                <Text style={styles.dayMoodGrade}>Виконано</Text>
+              </View>
+            </View>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -58,7 +79,7 @@ export function Tasks({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: StatusBar.currentHeight,
+    paddingTop: StatusBar.currentHeight + 10,
   },
   sectionContainer: {
     borderRadius: 10,
@@ -68,6 +89,7 @@ const styles = StyleSheet.create({
   },
   sectionButton: {
     flexDirection: "row",
+    alignItems: "center",
     justifyContent: "flex-end",
   },
   title: {
@@ -78,5 +100,8 @@ const styles = StyleSheet.create({
   introduction: {
     fontSize: 16,
     paddingBottom: 15,
+  },
+  dayMoodGrade: {
+    paddingLeft: 5,
   },
 });

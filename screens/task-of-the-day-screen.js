@@ -2,7 +2,7 @@ import { View, StyleSheet, Text } from "react-native";
 import { ImagePicker } from "../components/image-picker";
 
 function TasksOfTheDay({ route }) {
-  const { dayText, pickImage } = route.params.dayTasksConfig;
+  const { dayText, pickImage } = route.params.dayTaskConfig;
 
   return (
     <View style={styles.container}>
@@ -24,6 +24,6 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   imagePickerContainer: {
-    marginVertical: 10
-  }
+    marginVertical: 10,
+  },
 });

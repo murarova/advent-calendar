@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { View, Alert, StyleSheet } from "react-native";
 import YoutubeIframe from "react-native-youtube-iframe";
-import Loader from "./common/Loader";
+import Loader from "./common/loader";
 import AnimatedView from "./common/animated-view";
 
 export function YoutubePlayer({ videoId }) {

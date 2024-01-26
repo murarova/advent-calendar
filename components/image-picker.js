@@ -22,6 +22,7 @@ export function ImagePicker() {
       Alert.alert("Canceled");
     }
   };
+
   return (
     <View>
       <Button title="Вибери фото" onPress={pickImage} />

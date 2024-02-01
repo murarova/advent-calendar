@@ -1,11 +1,10 @@
-import { Pressable, View, Text, StyleSheet } from "react-native";
-import { colors } from "../styles/colors";
+import { Pressable, Box, Text, VStack, Center } from "@gluestack-ui/themed";
 import moment from "moment";
 import { OPEN_DAYS_FROM_TODAY } from "../constants/constants";
 
 export function DayIcon({ date, onPress }) {
   const day = moment(date).format("DD");
-  const dayOfWeek = moment(date).format("dddd");
+  const dayOfWeek = moment(date).format("ddd");
   //current day hardcoded
   const currentDate = moment("20231214");
   const isCurrentDay = currentDate.isSame(moment(date));
@@ -14,100 +13,38 @@ export function DayIcon({ date, onPress }) {
     return moment(date).diff(currentDate, "days") <= OPEN_DAYS_FROM_TODAY;
   }
 
+  function getIconBg(pressed) {
+    if (isCurrentDay) {
+      return pressed ? "$teal400" : "$teal500";
+    } else if (isDayAvailableForUser()) {
+      return pressed ? "$primary300" : "$primary400";
+    } else {
+      return "$warmGray400";
+    }
+  }
+
   return (
     <Pressable
-      android_ripple={{ color: "#ccc" }}
-      style={({ pressed }) => [
-        styles.button,
-        pressed && styles.buttonPressed,
-        !isDayAvailableForUser() && styles.buttonDisabled,
-      ]}
-      pointerEvents={isDayAvailableForUser() ? "all" : "none"}
       onPress={onPress}
+      softShadow="3"
+      m="$2"
+      flex={1}
+      disabled={!isDayAvailableForUser()}
     >
-      <View
-        style={[
-          styles.innerContainer,
-          { backgroundColor: isCurrentDay ? colors.lightColor : colors.white },
-        ]}
-      >
-        <View style={styles.dayOfWeek}>
-          <Text style={styles.dayOfWeekText}>{dayOfWeek}</Text>
-        </View>
-        <View style={styles.day}>
-          <Text style={styles.dayText}>{day}</Text>
-        </View>
-      </View>
+      {({ pressed }) => (
+        <Box p="$5" rounded="$xl" bg={getIconBg(pressed)}>
+          <VStack space="xs" reversed={false}>
+            <Center>
+              <Text color="$warmGray200">{dayOfWeek}</Text>
+            </Center>
+            <Center>
+              <Text size="3xl" color="$warmGray200">
+                {day}
+              </Text>
+            </Center>
+          </VStack>
+        </Box>
+      )}
     </Pressable>
   );
 }
-
-const styles = StyleSheet.create({
-  button: {
-    flex: 1,
-    margin: 16,
-    height: 90,
-    borderRadius: 20,
-    elevation: 4,
-    shadowColor: colors.darkColor,
-    shadowOpacity: 0.25,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 20,
-    overflow: Platform.OS === "android" ? "hidden" : "visible",
-  },
-  buttonDisabled: {
-    opacity: 0.5,
-  },
-  buttonPressed: {
-    opacity: 0.5,
-  },
-  innerContainer: {
-    display: "flex",
-    justifyContent: "center",
-    flex: 1,
-    position: "relative",
-    backgroundColor: "#fff",
-    borderRadius: 20,
-  },
-  dayOfWeekText: {
-    color: colors.white,
-    fontSize: 16,
-  },
-  dayOfWeek: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    flex: 1,
-    position: "absolute",
-    bottom: 0,
-    height: 26,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-    color: colors.white,
-    backgroundColor: "#12486B",
-    elevation: 1,
-    shadowColor: colors.darkColor,
-    shadowOpacity: 0.25,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 8,
-  },
-  day: {
-    display: "flex",
-    alignItems: "center",
-    flex: 2,
-    color: "#12486B",
-    paddingTop: 1,
-  },
-  dayText: {
-    paddingTop: 5,
-    fontSize: 45,
-    letterSpacing: -1,
-    color: "#12486B",
-    fontWeight: "bold",
-  },
-  title: {
-    fontWeight: "bold",
-    fontSize: 18,
-  },
-});

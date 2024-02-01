@@ -1,29 +1,20 @@
-import { View, StyleSheet, Text } from "react-native";
 import { ImagePicker } from "../components/image-picker";
+import { Box, Text } from "@gluestack-ui/themed";
 
 function TasksOfTheDay({ route }) {
   const { dayText, pickImage } = route.params.dayTaskConfig;
 
   return (
-    <View style={styles.container}>
+    <Box flex={1} p="$4">
       <Text>{dayText}</Text>
+
       {pickImage && (
-        <View style={styles.imagePickerContainer}>
+        <Box my="$4">
           <ImagePicker />
-        </View>
+        </Box>
       )}
-    </View>
+    </Box>
   );
 }
 
 export default TasksOfTheDay;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-  imagePickerContainer: {
-    marginVertical: 10,
-  },
-});

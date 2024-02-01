@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { View, StyleSheet, Text, Button, Image, Alert } from "react-native";
+import { Alert } from "react-native";
 import * as ExpoImagePicker from "expo-image-picker";
+import { Box, ButtonText, Button, Image } from "@gluestack-ui/themed";
 
 export function ImagePicker() {
   const [image, setImage] = useState(null);
@@ -24,16 +25,20 @@ export function ImagePicker() {
   };
 
   return (
-    <View>
-      <Button title="Вибери фото" onPress={pickImage} />
-      {image && <Image source={{ uri: image }} style={styles.image} />}
-    </View>
+    <Box>
+      <Button onPress={pickImage}>
+        <ButtonText>Вибери фото</ButtonText>
+      </Button>
+      {image && (
+        <Box mt="$4">
+          <Image
+            alt="user photo"
+            source={{ uri: image }}
+            width="100%"
+            height={200}
+          />
+        </Box>
+      )}
+    </Box>
   );
 }
-
-const styles = StyleSheet.create({
-  image: {
-    width: "100%",
-    height: 200,
-  },
-});

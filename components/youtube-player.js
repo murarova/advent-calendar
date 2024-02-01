@@ -1,8 +1,9 @@
 import React, { useState, useCallback } from "react";
-import { View, Alert, StyleSheet } from "react-native";
+import { Alert } from "react-native";
 import YoutubeIframe from "react-native-youtube-iframe";
 import Loader from "./common/loader";
 import AnimatedView from "./common/animated-view";
+import { Box } from "@gluestack-ui/themed";
 
 export function YoutubePlayer({ videoId }) {
   const [playing, setPlaying] = useState(false);
@@ -20,11 +21,18 @@ export function YoutubePlayer({ videoId }) {
   }
 
   return (
-    <View style={styles.container}>
+    <Box flex="1">
       {isLoading && (
-        <View style={styles.loaderContainer}>
-          <Loader size="large" />
-        </View>
+        <Box
+          position="absolute"
+          top="$0"
+          bottom="$0"
+          left="$0"
+          right="$0"
+          zIndex="1"
+        >
+          <Loader />
+        </Box>
       )}
       <AnimatedView style={{ zIndex: 2 }} show={!isLoading}>
         <YoutubeIframe
@@ -35,21 +43,6 @@ export function YoutubePlayer({ videoId }) {
           onChangeState={onStateChange}
         />
       </AnimatedView>
-    </View>
+    </Box>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    height: 250,
-  },
-  loaderContainer: {
-    position: "absolute",
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    zIndex: 1,
-  },
-});

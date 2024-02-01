@@ -1,23 +1,26 @@
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { GluestackUIProvider } from "@gluestack-ui/themed";
+import { config } from "@gluestack-ui/config";
 
 import { colors } from "./styles/colors";
 import PeriodOverviewScreen from "./screens/period-overview-screen";
 import DayOverviewScreen from "./screens/day-overview-screen";
 import TasksOfTheDay from "./screens/task-of-the-day-screen";
+import { SCREENS } from "./constants/constants";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <>
-      <StatusBar style="light" />
+    <GluestackUIProvider config={config}>
+      <StatusBar style="dark" />
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
-            headerStyle: { backgroundColor: colors.primaryColor },
-            headerTintColor: colors.darkColor,
+            headerStyle: { backgroundColor: config.tokens.colors.green200 },
+            headerTintColor: config.tokens.colors.primary600,
             contentStyle: { backgroundColor: colors.lightColor },
           }}
         >
@@ -29,15 +32,14 @@ export default function App() {
             }}
           />
           <Stack.Screen
-            name="DayOverview"
+            name={SCREENS.DAY_OVERVIEW}
             component={DayOverviewScreen}
             options={{
-              title: "Goals for today",
               headerBackTitle: "Back",
             }}
           />
           <Stack.Screen
-            name="TasksOfTheDay"
+            name={SCREENS.TASKS_OF_THE_DAY}
             component={TasksOfTheDay}
             options={{
               title: "Task for today",
@@ -46,6 +48,6 @@ export default function App() {
           />
         </Stack.Navigator>
       </NavigationContainer>
-    </>
+    </GluestackUIProvider>
   );
 }

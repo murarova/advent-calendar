@@ -1,17 +1,19 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  Button,
-  Switch,
-} from "react-native";
 import { useState } from "react";
 import { YoutubePlayer } from "./youtube-player";
-import { colors } from "../styles/colors";
 import { useNavigation } from "@react-navigation/native";
+import { SCREENS } from "../constants/constants";
+import {
+  Box,
+  Text,
+  Button,
+  ScrollView,
+  ButtonText,
+  CheckboxIndicator,
+  CheckboxIcon,
+  CheckboxLabel,
+  Checkbox,
+  CheckIcon,
+} from "@gluestack-ui/themed";
 
 export function Tasks({
   videoText,
@@ -32,76 +34,65 @@ export function Tasks({
   const navigation = useNavigation();
 
   function handleDayTaskBtnPress() {
-    navigation.navigate("TasksOfTheDay", {
+    navigation.navigate(SCREENS.TASKS_OF_THE_DAY, {
       dayTaskConfig,
     });
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-        <View>
-          {videoText && <Text style={styles.introduction}>{videoText}</Text>}
+    <Box safeArea flex={1}>
+      <ScrollView>
+        <Box>
+          {videoText && <Text pb="$4">{videoText}</Text>}
           {videoId && <YoutubePlayer videoId={videoId} />}
 
-          <View style={styles.sectionContainer}>
-            {dayTitle && <Text style={styles.title}>{dayTitle}</Text>}
-            {dayText && <Text style={styles.introduction}>{dayText}</Text>}
-            <View style={styles.sectionButton}>
-              <Button onPress={handleDayTaskBtnPress} title="Just do it" />
-            </View>
-          </View>
+          <Box p="$4" bg="$yellow100" rounded="$md" mb="$3">
+            {dayTitle && (
+              <Text py="$2" bold>
+                {dayTitle}
+              </Text>
+            )}
+            {dayText && <Text pb="$4">{dayText}</Text>}
+            <Box
+              flexDirection="row"
+              alignItems="center"
+              justifyContent="flex-end"
+            >
+              <Button onPress={handleDayTaskBtnPress}>
+                <ButtonText>Just do it</ButtonText>
+              </Button>
+            </Box>
+          </Box>
 
           {moodTaskConfig && (
-            <View style={styles.sectionContainer}>
+            <Box p="$4" bg="$yellow100" rounded="$md" mb="$3">
               {moodTaskConfig.dayTitle && (
-                <Text style={styles.title}>{moodTaskConfig.dayTitle}</Text>
+                <Text py="$2" bold>
+                  {moodTaskConfig.dayTitle}
+                </Text>
               )}
-              <Text style={styles.introduction}>{moodTaskConfig.dayText}</Text>
-              <View style={styles.sectionButton}>
-                <Switch
-                  trackColor={{ false: "#767577", true: "#81b0ff" }}
-                  thumbColor={isMoodTaskDone ? "#f5dd4b" : "#f4f3f4"}
-                  ios_backgroundColor="#3e3e3e"
-                  onValueChange={handleDayMoodSwitch}
+              <Text pb="$4">{moodTaskConfig.dayText}</Text>
+              <Box
+                flexDirection="row"
+                alignItems="center"
+                justifyContent="flex-end"
+              >
+                <Checkbox
                   value={isMoodTaskDone}
-                />
-                <Text style={styles.dayMoodGrade}>Виконано</Text>
-              </View>
-            </View>
+                  onChange={handleDayMoodSwitch}
+                  size="lg"
+                  aria-label="виконано"
+                >
+                  <CheckboxIndicator mr="$2">
+                    <CheckboxIcon as={CheckIcon} />
+                  </CheckboxIndicator>
+                  <CheckboxLabel color="$primary500">Виконано</CheckboxLabel>
+                </Checkbox>
+              </Box>
+            </Box>
           )}
-        </View>
+        </Box>
       </ScrollView>
-    </SafeAreaView>
+    </Box>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: StatusBar.currentHeight + 10,
-  },
-  sectionContainer: {
-    borderRadius: 10,
-    padding: 10,
-    backgroundColor: colors.accentColor,
-    marginBottom: 20,
-  },
-  sectionButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-end",
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: "700",
-    paddingBottom: 15,
-  },
-  introduction: {
-    fontSize: 16,
-    paddingBottom: 15,
-  },
-  dayMoodGrade: {
-    paddingLeft: 5,
-  },
-});

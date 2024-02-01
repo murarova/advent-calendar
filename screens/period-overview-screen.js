@@ -3,7 +3,8 @@ import { DayIcon } from "../components/day-icon";
 import moment from "moment";
 import { useMemo } from "react";
 import { enumerateDaysBetweenDates } from "../utils/utils";
-import { END_DAY, START_DAY } from "../constants/constants";
+import { END_DAY, SCREENS, START_DAY } from "../constants/constants";
+import { Box } from "@gluestack-ui/themed";
 
 function PeriodOverviewScreen({ navigation }) {
   const days = useMemo(() => {
@@ -12,7 +13,7 @@ function PeriodOverviewScreen({ navigation }) {
 
   function renderDayItem(itemData) {
     function pressHandler() {
-      navigation.navigate("DayOverview", {
+      navigation.navigate(SCREENS.DAY_OVERVIEW, {
         currentDay: moment(itemData.item).format("YYYY-MM-DD"),
       });
     }
@@ -20,7 +21,11 @@ function PeriodOverviewScreen({ navigation }) {
     return <DayIcon date={itemData.item} onPress={pressHandler} />;
   }
 
-  return <FlatList data={days} renderItem={renderDayItem} numColumns={3} />;
+  return (
+    <Box p="$2">
+      <FlatList data={days} renderItem={renderDayItem} numColumns={3} />
+    </Box>
+  );
 }
 
 export default PeriodOverviewScreen;

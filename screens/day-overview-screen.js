@@ -1,14 +1,16 @@
 import { useLayoutEffect, useState } from "react";
 import moment from "moment";
-import { Tasks } from "../components/tasks";
+import { Tasks } from "../components";
 import { getDayTasks } from "../config/day-tasks-config";
 import { Box, Text, Center } from "@gluestack-ui/themed";
+import { useTranslation } from "react-i18next";
 
 function DayOverviewScreen({ route, navigation }) {
   const currentDay = route.params.currentDay;
   const day = moment(currentDay).format("DD");
   const month = moment(currentDay).format("MMMM");
   const config = getDayTasks(day);
+  const { t } = useTranslation();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -41,7 +43,7 @@ function DayOverviewScreen({ route, navigation }) {
         </>
       ) : (
         <Center flex={1}>
-          <Text fontSize="$xl">На сьогодні завдань немає</Text>
+          <Text fontSize="$xl">{t("screens.emptyScreen")}</Text>
         </Center>
       )}
     </Box>

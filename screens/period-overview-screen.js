@@ -1,5 +1,5 @@
 import { FlatList } from "react-native";
-import { DayIcon } from "../components/day-icon";
+import { DayIcon } from "../components";
 import moment from "moment";
 import { useMemo } from "react";
 import { enumerateDaysBetweenDates } from "../utils/utils";

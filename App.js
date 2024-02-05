@@ -9,10 +9,14 @@ import PeriodOverviewScreen from "./screens/period-overview-screen";
 import DayOverviewScreen from "./screens/day-overview-screen";
 import TasksOfTheDay from "./screens/task-of-the-day-screen";
 import { SCREENS } from "./constants/constants";
+import "./i18n/i18n";
+import { useTranslation } from "react-i18next";
+import { LanguageMenu } from "./components";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const { t } = useTranslation();
   return (
     <GluestackUIProvider config={config}>
       <StatusBar style="dark" />
@@ -28,22 +32,25 @@ export default function App() {
             name="PeriodOverview"
             component={PeriodOverviewScreen}
             options={{
-              title: "Your current path",
+              title: t("screens.periodOverview.title"),
+              headerRight: LanguageMenu,
             }}
           />
           <Stack.Screen
             name={SCREENS.DAY_OVERVIEW}
             component={DayOverviewScreen}
             options={{
-              headerBackTitle: "Back",
+              headerBackTitle: t("common.back"),
+              headerRight: LanguageMenu,
             }}
           />
           <Stack.Screen
             name={SCREENS.TASKS_OF_THE_DAY}
             component={TasksOfTheDay}
             options={{
-              title: "Task for today",
-              headerBackTitle: "Back",
+              title: t("screens.tasksOfTheDay.title"),
+              headerBackTitle: t("common.back"),
+              headerRight: LanguageMenu,
             }}
           />
         </Stack.Navigator>

@@ -1,4 +1,4 @@
-import { ImagePicker } from "../components/image-picker";
+import { ImagePicker } from "../components";
 import { Box, Text } from "@gluestack-ui/themed";
 
 function TasksOfTheDay({ route }) {

@@ -16,17 +16,17 @@ export function DayIcon({ date, onPress }) {
   function getIconBg(pressed) {
     if (isCurrentDay) {
       return pressed ? "$teal400" : "$teal500";
-    } else if (isDayAvailableForUser()) {
-      return pressed ? "$primary300" : "$primary400";
-    } else {
-      return "$warmGray400";
     }
+    if (isDayAvailableForUser()) {
+      return pressed ? "$primary300" : "$primary400";
+    }
+
+    return "$warmGray400";
   }
 
   return (
     <Pressable
       onPress={onPress}
-      softShadow="3"
       m="$2"
       flex={1}
       disabled={!isDayAvailableForUser()}

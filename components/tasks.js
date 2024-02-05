@@ -14,6 +14,7 @@ import {
   Checkbox,
   CheckIcon,
 } from "@gluestack-ui/themed";
+import { useTranslation } from "react-i18next";
 
 export function Tasks({
   videoText,
@@ -32,6 +33,7 @@ export function Tasks({
     setGrade((grade) => ({ ...grade, moodTask: moodTaskGrade }));
   };
   const navigation = useNavigation();
+  const { t } = useTranslation();
 
   function handleDayTaskBtnPress() {
     navigation.navigate(SCREENS.TASKS_OF_THE_DAY, {
@@ -81,12 +83,14 @@ export function Tasks({
                   value={isMoodTaskDone}
                   onChange={handleDayMoodSwitch}
                   size="lg"
-                  aria-label="виконано"
+                  aria-label={t("common.done")}
                 >
                   <CheckboxIndicator mr="$2">
                     <CheckboxIcon as={CheckIcon} />
                   </CheckboxIndicator>
-                  <CheckboxLabel color="$primary500">Виконано</CheckboxLabel>
+                  <CheckboxLabel color="$primary500">
+                    {t("common.done")}
+                  </CheckboxLabel>
                 </Checkbox>
               </Box>
             </Box>

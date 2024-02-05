@@ -3,8 +3,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { GluestackUIProvider } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
-
-import { colors } from "./styles/colors";
 import PeriodOverviewScreen from "./screens/period-overview-screen";
 import DayOverviewScreen from "./screens/day-overview-screen";
 import TasksOfTheDay from "./screens/task-of-the-day-screen";
@@ -25,7 +23,7 @@ export default function App() {
           screenOptions={{
             headerStyle: { backgroundColor: config.tokens.colors.green200 },
             headerTintColor: config.tokens.colors.primary600,
-            contentStyle: { backgroundColor: colors.lightColor },
+            contentStyle: { backgroundColor: config.tokens.colors.primary100 },
           }}
         >
           <Stack.Screen

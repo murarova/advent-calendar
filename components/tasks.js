@@ -26,14 +26,14 @@ export function Tasks({
   setGrade,
 }) {
   const [isMoodTaskDone, setIsMoodTaskDone] = useState(false);
+  const navigation = useNavigation();
+  const { t } = useTranslation();
 
-  const handleDayMoodSwitch = (value) => {
+  const handleDayMoodTaskProgress = (value) => {
     const moodTaskGrade = value ? moodTaskConfig.grade : 0;
     setIsMoodTaskDone(value);
     setGrade((grade) => ({ ...grade, moodTask: moodTaskGrade }));
   };
-  const navigation = useNavigation();
-  const { t } = useTranslation();
 
   function handleDayTaskBtnPress() {
     navigation.navigate(SCREENS.TASKS_OF_THE_DAY, {
@@ -81,7 +81,7 @@ export function Tasks({
               >
                 <Checkbox
                   value={isMoodTaskDone}
-                  onChange={handleDayMoodSwitch}
+                  onChange={handleDayMoodTaskProgress}
                   size="lg"
                   aria-label={t("common.done")}
                 >

@@ -29,7 +29,7 @@ export default function App() {
           }}
         >
           <Stack.Screen
-            name="PeriodOverview"
+            name={SCREENS.PERIOD_OVERVIEW}
             component={PeriodOverviewScreen}
             options={{
               title: t("screens.periodOverview.title"),

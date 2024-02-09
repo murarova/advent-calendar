@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from "react";
 import { Alert } from "react-native";
 import YoutubeIframe from "react-native-youtube-iframe";
-import Loader from "./common/loader";
-import AnimatedView from "./common/animated-view";
 import { Box } from "@gluestack-ui/themed";
+import { AnimatedView } from "./animated-view";
+import { Loader } from "./loader";
 
 export function YoutubePlayer({ videoId }) {
   const [playing, setPlaying] = useState(false);

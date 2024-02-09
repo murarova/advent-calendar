@@ -6,6 +6,7 @@ export default {
   },
   screens: {
     emptyScreen: "There are no tasks for today",
+    processText: "You have completed: {{grade}}% of the tasks!",
     periodOverview: {
       title: "Your current path",
     },

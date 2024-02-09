@@ -6,6 +6,7 @@ export default {
   },
   screens: {
     emptyScreen: "На сьогодні завдань немає",
+    processText: "Ти виконав: {{grade}}% завдань!",
     periodOverview: {
       title: "Твій шлях",
     },

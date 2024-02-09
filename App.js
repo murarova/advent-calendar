@@ -9,7 +9,7 @@ import TasksOfTheDay from "./screens/task-of-the-day-screen";
 import { SCREENS } from "./constants/constants";
 import "./i18n/i18n";
 import { useTranslation } from "react-i18next";
-import { LanguageMenu } from "./components";
+import { LanguageMenu } from "./components/common";
 
 const Stack = createNativeStackNavigator();
 

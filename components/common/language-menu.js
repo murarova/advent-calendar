@@ -7,13 +7,14 @@ import {
   Box,
 } from "@gluestack-ui/themed";
 import { useTranslation } from "react-i18next";
+import { LANGUAGES } from "../../constants/constants";
 
 export function LanguageMenu() {
-  const lngs = {
-    en: { icon: "us", nativeName: "English" },
-    ua: { icon: "ua", nativeName: "Українська" },
-  };
   const { i18n } = useTranslation();
+
+  function handleLanguageChanged(lng) {
+    i18n.changeLanguage(lng);
+  }
 
   return (
     <Menu
@@ -21,22 +22,25 @@ export function LanguageMenu() {
       trigger={({ ...triggerProps }) => {
         return (
           <Button {...triggerProps} variant="link" size="xs">
-            <CountryFlag isoCode={lngs[i18n.resolvedLanguage].icon} size={16} />
+            <CountryFlag
+              isoCode={LANGUAGES[i18n.resolvedLanguage].icon}
+              size={16}
+            />
           </Button>
         );
       }}
     >
-      {Object.keys(lngs).map((lng) => (
+      {Object.keys(LANGUAGES).map((lng) => (
         <MenuItem
-          key={lngs[lng].icon}
-          onPress={() => i18n.changeLanguage(lng)}
-          textValue={lngs[lng].nativeName}
+          key={LANGUAGES[lng].icon}
+          onPress={() => handleLanguageChanged(lng)}
+          textValue={LANGUAGES[lng].nativeName}
         >
           <Box mr={8}>
-            <CountryFlag isoCode={lngs[lng].icon} size={16} />
+            <CountryFlag isoCode={LANGUAGES[lng].icon} size={16} />
           </Box>
 
-          <MenuItemLabel size="sm">{lngs[lng].nativeName}</MenuItemLabel>
+          <MenuItemLabel size="sm">{LANGUAGES[lng].nativeName}</MenuItemLabel>
         </MenuItem>
       ))}
     </Menu>

@@ -1,10 +1,14 @@
 import { Pressable, Box, Text, VStack, Center } from "@gluestack-ui/themed";
+import { LANGUAGES, OPEN_DAYS_FROM_TODAY } from "../constants/constants";
 import moment from "moment";
-import { OPEN_DAYS_FROM_TODAY } from "../constants/constants";
+import { useTranslation } from "react-i18next";
 
 export function DayIcon({ date, onPress }) {
+  const { i18n } = useTranslation();
   const day = moment(date).format("DD");
-  const dayOfWeek = moment(date).format("ddd");
+  const dayOfWeek = moment(date)
+    .locale(LANGUAGES[i18n.resolvedLanguage].moment)
+    .format("ddd");
   //current day hardcoded
   const currentDate = moment("20231214");
   const isCurrentDay = currentDate.isSame(moment(date));

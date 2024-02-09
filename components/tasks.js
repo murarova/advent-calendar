@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { YoutubePlayer } from "./youtube-player";
 import { useNavigation } from "@react-navigation/native";
 import { SCREENS } from "../constants/constants";
 import {
@@ -15,6 +14,7 @@ import {
   CheckIcon,
 } from "@gluestack-ui/themed";
 import { useTranslation } from "react-i18next";
+import { YoutubePlayer } from "./common";
 
 export function Tasks({
   videoText,

@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { Animated } from "react-native";
 
-const AnimatedView = ({ show, children, style }) => {
+export const AnimatedView = ({ show, children, style }) => {
   const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
 
   useEffect(() => {
@@ -26,4 +26,3 @@ const AnimatedView = ({ show, children, style }) => {
   );
 };
 
-export default AnimatedView;

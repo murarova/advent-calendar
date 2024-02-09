@@ -1,22 +1,25 @@
 import { useLayoutEffect, useState } from "react";
-import moment from "moment";
 import { Tasks } from "../components";
 import { getDayTasks } from "../config/day-tasks-config";
 import { Box, Text, Center } from "@gluestack-ui/themed";
 import { useTranslation } from "react-i18next";
+import moment from "moment";
+import { LANGUAGES } from "../constants/constants";
 
 function DayOverviewScreen({ route, navigation }) {
+  const { t, i18n } = useTranslation();
   const currentDay = route.params.currentDay;
   const day = moment(currentDay).format("DD");
-  const month = moment(currentDay).format("MMMM");
-  const config = getDayTasks(day);
-  const { t } = useTranslation();
+  const month = moment(currentDay)
+    .locale(LANGUAGES[i18n.resolvedLanguage].moment)
+    .format("MMMM");
+  const config = getDayTasks(day, i18n.resolvedLanguage);
 
   useLayoutEffect(() => {
     navigation.setOptions({
       title: `${day} of ${month}`,
     });
-  }, [currentDay, navigation]);
+  }, [currentDay, navigation, month]);
 
   const [grade, setGrade] = useState({
     dayTask: 0,
@@ -36,7 +39,7 @@ function DayOverviewScreen({ route, navigation }) {
         <>
           <Box my="$2.5">
             <Text size="md" color="$red600">
-              Ти виконав: {getTotalGrade()}% завдань
+              {t("screens.processText", { grade: getTotalGrade() })}
             </Text>
           </Box>
           <Tasks {...config} setGrade={setGrade} />

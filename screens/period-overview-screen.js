@@ -1,10 +1,10 @@
 import { FlatList } from "react-native";
 import { DayIcon } from "../components";
-import moment from "moment";
 import { useMemo } from "react";
 import { enumerateDaysBetweenDates } from "../utils/utils";
 import { END_DAY, SCREENS, START_DAY } from "../constants/constants";
 import { Box } from "@gluestack-ui/themed";
+import moment from "moment";
 
 function PeriodOverviewScreen({ navigation }) {
   const days = useMemo(() => {

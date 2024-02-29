@@ -13,7 +13,7 @@ function DayOverviewScreen({ route, navigation }) {
   const month = moment(currentDay)
     .locale(LANGUAGES[i18n.resolvedLanguage].moment)
     .format("MMMM");
-  const config = getDayTasks(day, i18n.resolvedLanguage);
+  const dayTasks = getDayTasks(day, i18n.resolvedLanguage);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -35,14 +35,14 @@ function DayOverviewScreen({ route, navigation }) {
 
   return (
     <Box bg="$primary100" p="$2" flex="1">
-      {config ? (
+      {dayTasks ? (
         <>
           <Box my="$2.5">
             <Text size="md" color="$red600">
               {t("screens.processText", { grade: getTotalGrade() })}
             </Text>
           </Box>
-          <Tasks {...config} setGrade={setGrade} />
+          <Tasks {...dayTasks} setGrade={setGrade} />
         </>
       ) : (
         <Center flex={1}>

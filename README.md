@@ -38,8 +38,8 @@ To get started with the Advent Calendar App, follow these steps:
 
 4. **Access the App in development mode::**
 Make sure you have the necessary Android emulator or Xcode installed on your machine. Open the Android Emulator or/and iOS Simulator.
-**Android:** Press **a** from the command line.
-**iOS:** Press **i** from the command line.
+   * Android: Press **a** from the command line.
+   * iOS: Press **i** from the command line.
 
 
 ## License

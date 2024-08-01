@@ -34,7 +34,7 @@ function DayOverviewScreen({ route, navigation }) {
   }
 
   return (
-    <Box bg="$primary100" p="$2" flex="1">
+    <Box p="$2" flex="1">
       {dayTasks ? (
         <>
           <Box my="$2.5">

@@ -5,7 +5,6 @@ import { GluestackUIProvider } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
 import PeriodOverviewScreen from "./screens/period-overview-screen";
 import DayOverviewScreen from "./screens/day-overview-screen";
-import TasksOfTheDay from "./screens/task-of-the-day-screen";
 import { SCREENS } from "./constants/constants";
 import "./i18n/i18n";
 import { useTranslation } from "react-i18next";
@@ -21,9 +20,9 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
-            headerStyle: { backgroundColor: config.tokens.colors.green200 },
+            headerStyle: { backgroundColor: config.tokens.colors.primary0 },
             headerTintColor: config.tokens.colors.primary600,
-            contentStyle: { backgroundColor: config.tokens.colors.primary100 },
+            contentStyle: { backgroundColor: config.tokens.colors.primary0 },
           }}
         >
           <Stack.Screen
@@ -38,15 +37,6 @@ export default function App() {
             name={SCREENS.DAY_OVERVIEW}
             component={DayOverviewScreen}
             options={{
-              headerBackTitle: t("common.back"),
-              headerRight: LanguageMenu,
-            }}
-          />
-          <Stack.Screen
-            name={SCREENS.TASKS_OF_THE_DAY}
-            component={TasksOfTheDay}
-            options={{
-              title: t("screens.tasksOfTheDay.title"),
               headerBackTitle: t("common.back"),
               headerRight: LanguageMenu,
             }}

@@ -1,5 +1,5 @@
 import { useLayoutEffect, useState } from "react";
-import { Tasks } from "../components";
+import { TasksList } from "../components";
 import { getDayTasks } from "../config/day-tasks-config";
 import { Box, Text, Center } from "@gluestack-ui/themed";
 import { useTranslation } from "react-i18next";
@@ -42,7 +42,7 @@ function DayOverviewScreen({ route, navigation }) {
               {t("screens.processText", { grade: getTotalGrade() })}
             </Text>
           </Box>
-          <Tasks {...dayTasks} setGrade={setGrade} />
+          <TasksList {...dayTasks} setGrade={setGrade} />
         </>
       ) : (
         <Center flex={1}>

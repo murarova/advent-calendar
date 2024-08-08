@@ -12,6 +12,8 @@ export default {
     },
     tasksOfTheDay: {
       title: "Task for today",
+      textareaPlaceholder: "Your text goes here",
+      submitBtnText: "Done",
     },
   },
 };

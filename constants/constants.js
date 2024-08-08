@@ -7,11 +7,20 @@ export const OPEN_DAYS_FROM_TODAY = 0;
 
 export const SCREENS = {
   PERIOD_OVERVIEW: "PeriodOverview",
-  TASKS_OF_THE_DAY: "TaskItem",
   DAY_OVERVIEW: "DayOverview",
 };
 
 export const LANGUAGES = {
-  en: { icon: "us", nativeName: "English", moment: "en-gb" },
   ua: { icon: "ua", nativeName: "Українська", moment: "uk" },
+  en: { icon: "us", nativeName: "English", moment: "en-gb" },
+};
+
+export const TASK_OUTPUT_TYPE = {
+  TEXT: "text",
+  IMAGE: "image",
+};
+
+export const TASK_TYPE = {
+  DAY: "day",
+  MOOD: "mood",
 };

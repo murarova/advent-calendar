@@ -6,36 +6,43 @@ import {
   AccordionTitleText,
   AccordionIcon,
   AccordionContent,
-  AccordionContentText,
-  Divider,
   ChevronUpIcon,
   ChevronDownIcon,
   Box,
   Text,
   Textarea,
   TextareaInput,
+  Button,
+  ButtonText,
 } from "@gluestack-ui/themed";
 import { ImagePicker } from "./common";
+import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import { TASK_OUTPUT_TYPE } from "../constants/constants";
 
-export function TaskItem({ dayTaskConfig }) {
+export function TaskItem({ taskConfig, onTaskDataUpdate }) {
+  const { t } = useTranslation();
+  const [text, setText] = useState("");
+  const [image, setImage] = useState("");
+
+  function onTaskSubmit() {
+    onTaskDataUpdate({
+      text,
+      image,
+      taskOutputType: taskConfig.taskOutputType,
+      taskType: taskConfig.taskType,
+    });
+  }
+
   return (
-    <Accordion
-      size="md"
-      my="$2"
-      variant="filled"
-      type="single"
-      isCollapsible={true}
-      isDisabled={false}
-    >
+    <Accordion size="md" my="$2" variant="filled" type="single">
       <AccordionItem value="a">
         <AccordionHeader>
           <AccordionTrigger>
             {({ isExpanded }) => {
               return (
                 <>
-                  <AccordionTitleText>
-                    {dayTaskConfig.dayTitle}
-                  </AccordionTitleText>
+                  <AccordionTitleText>{taskConfig.title}</AccordionTitleText>
                   {isExpanded ? (
                     <AccordionIcon as={ChevronUpIcon} ml="$3" />
                   ) : (
@@ -47,24 +54,41 @@ export function TaskItem({ dayTaskConfig }) {
           </AccordionTrigger>
         </AccordionHeader>
         <AccordionContent>
-          <AccordionContentText>
-            <Box display="flex" alignItems="center">
+          <Box>
+            <Text>{taskConfig.text}</Text>
+          </Box>
+          <Box pt="$4">
+            {taskConfig.taskOutputType === TASK_OUTPUT_TYPE.IMAGE && (
               <Box>
-                <Text>{dayTaskConfig.dayText}</Text>
-              </Box>
-              <Box pt="$4">
-                {dayTaskConfig.pickImage && <ImagePicker />}
-                {dayTaskConfig.addText && (
-                  <Textarea width="100%">
-                    <TextareaInput placeholder="Your text goes here..." />
-                  </Textarea>
+                <ImagePicker image={image} setImage={setImage} />
+                {image && (
+                  <Button onPress={onTaskSubmit} mt="$4">
+                    <ButtonText>
+                      {t("screens.tasksOfTheDay.submitBtnText")}
+                    </ButtonText>
+                  </Button>
                 )}
               </Box>
-            </Box>
-          </AccordionContentText>
+            )}
+            {taskConfig.taskOutputType === TASK_OUTPUT_TYPE.TEXT && (
+              <Box>
+                <Textarea width="100%">
+                  <TextareaInput
+                    onChangeText={setText}
+                    value={text}
+                    placeholder={t("screens.tasksOfTheDay.textareaPlaceholder")}
+                  />
+                </Textarea>
+                <Button onPress={onTaskSubmit} mt="$4">
+                  <ButtonText>
+                    {t("screens.tasksOfTheDay.submitBtnText")}
+                  </ButtonText>
+                </Button>
+              </Box>
+            )}
+          </Box>
         </AccordionContent>
       </AccordionItem>
-      <Divider />
     </Accordion>
   );
 }

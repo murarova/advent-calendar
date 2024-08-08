@@ -21,6 +21,7 @@ i18n
     compatibilityJSON: "v3",
     resources,
     fallbackLng: "en",
+    lng: 'ua',
     interpolation: {
       escapeValue: false, // react already safes from xss
     },
@@ -32,11 +33,5 @@ i18n
     console.error("Initializing i18n failed:", err);
   });
 
-// export function declareTranslations(namespace, translations) {
-//   Object.keys(translations).forEach((language) => {
-//     const resource = translations[language];
-//     i18n.addResourceBundle(language, namespace, resource);
-//   });
-// }
 
 export default i18n;

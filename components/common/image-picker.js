@@ -1,11 +1,9 @@
-import { useState } from "react";
 import { Alert } from "react-native";
 import * as ExpoImagePicker from "expo-image-picker";
 import { Box, ButtonText, Button, Image } from "@gluestack-ui/themed";
 import { useTranslation } from "react-i18next";
 
-export function ImagePicker() {
-  const [image, setImage] = useState(null);
+export function ImagePicker({ image, setImage }) {
   const { t } = useTranslation();
 
   const pickImage = async () => {

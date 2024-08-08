@@ -12,6 +12,8 @@ export default {
     },
     tasksOfTheDay: {
       title: "Завдання на сьогодні",
+      textareaPlaceholder: "Напишить щось тут",
+      submitBtnText: "Готово"
     },
   },
 };

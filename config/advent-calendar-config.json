@@ -4,32 +4,36 @@
       "videoText": "Ранок вівторка після Різдва може бути важким. Три вихідних позаду і ніби все, рік має на цьому закінчитись. Але ні, ще треба працювати, ще стільки всього ми маємо встигнути.\nНе знаю як вам, але мені це трошечки псує настрій. \n\nТому оголошую цей день – Днем Грінча!",
       "videoId": "cGSneujgGT8",
       "moodTaskConfig": {
-        "dayTitle": "Завдання для настрою",
-        "dayText": "А давайте посмакуємо святковий настрій. Який він на смак для вас? Які у кого гастрономічні асоціації з Різдвом, Новим роком та взагалі груднем? Якщо про Різдво, то в мене це кутя, звісно. бо кожне Різдво ми з батьками несли її до хрещеної. А якшо Новий Рік, то це оселедець під шубою. Вибачайте, це моя слабкість. Але може ви зараз накидаєте мені більш вишуканих гастрономічних асоціацій і я спробую змінити свої)",
-        "grade": 30
+        "title": "Завдання для настрою",
+        "text": "А давайте посмакуємо святковий настрій. Який він на смак для вас? Які у кого гастрономічні асоціації з Різдвом, Новим роком та взагалі груднем? Якщо про Різдво, то в мене це кутя, звісно. бо кожне Різдво ми з батьками несли її до хрещеної. А якшо Новий Рік, то це оселедець під шубою. Вибачайте, це моя слабкість. Але може ви зараз накидаєте мені більш вишуканих гастрономічних асоціацій і я спробую змінити свої)",
+        "grade": 30,
+        "taskOutputType": "image",
+        "taskType": "mood"
       },
       "dayTaskConfig": {
-        "dayTitle": "Завдання дня",
-        "dayText": "Сьогодні згадуємо жовтень 2023. 10 місяць. Ми майже там) Гортайте фоточки, гугл календар, соц.мережі, щоденникові записи. Переглядайте цю короткометражку пам’яті та діліться враженнями)",
+        "title": "Завдання дня",
+        "text": "Сьогодні згадуємо жовтень 2023. 10 місяць. Ми майже там) Гортайте фоточки, гугл календар, соц.мережі, щоденникові записи. Переглядайте цю короткометражку пам’яті та діліться враженнями)",
         "grade": 30,
-        "pickImage": false,
-        "addText": true
+        "taskOutputType": "text",
+        "taskType": "day"
       }
     },
     "en": {
       "videoText": "The Tuesday morning after Christmas can be rough. Three weekends behind and that's it, the year should end there. But no, we still have to work, we still have so much to do.\nI don't know about you, but it spoils my mood a little. \n\nThat's why I declare this day - Grinch Day!",
       "videoId": "cGSneujgGT8",
       "moodTaskConfig": {
-        "dayTitle": "Task for mood",
-        "dayText": "And let's taste the festive mood. How does it taste to you? What gastronomic associations do you have with Christmas, New Year and December in general? If it's about Christmas, then I have it in my corner, of course. because every Christmas my parents and I took her to the christening. And if the New Year is a herring under a fur coat. Sorry, that's my weakness. But maybe you can now give me more sophisticated gastronomic associations and I will try to change mine)",
-        "grade": 30
+        "title": "Task for mood",
+        "text": "And let's taste the festive mood. How does it taste to you? What gastronomic associations do you have with Christmas, New Year and December in general? If it's about Christmas, then I have it in my corner, of course. because every Christmas my parents and I took her to the christening. And if the New Year is a herring under a fur coat. Sorry, that's my weakness. But maybe you can now give me more sophisticated gastronomic associations and I will try to change mine)",
+        "grade": 30,
+        "taskOutputType": "image",
+        "taskType": "mood"
       },
       "dayTaskConfig": {
-        "dayTitle": "Task of the day",
-        "dayText": "Today we remember October 2023. The 10th month. We are almost there) Scroll through photos, Google calendar, social networks, diary entries. Watch this memory short and share your impressions)",
+        "title": "Task of the day",
+        "text": "Today we remember October 2023. The 10th month. We are almost there) Scroll through photos, Google calendar, social networks, diary entries. Watch this memory short and share your impressions)",
         "grade": 30,
-        "pickImage": true,
-        "addText": false
+        "taskOutputType": "text",
+        "taskType": "day"
       }
     }
   }

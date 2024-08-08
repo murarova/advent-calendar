@@ -4,7 +4,7 @@ import { getDayTasks } from "../config/day-tasks-config";
 import { Box, Text, Center } from "@gluestack-ui/themed";
 import { useTranslation } from "react-i18next";
 import moment from "moment";
-import { LANGUAGES } from "../constants/constants";
+import { LANGUAGES, TASK_OUTPUT_TYPE, TASK_TYPE } from "../constants/constants";
 
 function DayOverviewScreen({ route, navigation }) {
   const { t, i18n } = useTranslation();
@@ -22,15 +22,32 @@ function DayOverviewScreen({ route, navigation }) {
   }, [currentDay, navigation, month]);
 
   const [grade, setGrade] = useState({
-    dayTask: 0,
-    moodTask: 0,
+    day: 0,
+    mood: 0,
   });
+
+  console.log("grade", grade);
 
   function getTotalGrade() {
     return Object.values(grade).reduce(
       (taskGrade, total) => taskGrade + total,
       0
     );
+  }
+
+  function onTaskDataUpdate({ text, image, taskOutputType, taskType }) {
+    //TODO: save text or images to the DB. Once it set - change the grade
+    if (text.trim() || image) {
+      setGrade((prevValue) => ({
+        ...prevValue,
+        [taskType]: 30,
+      }));
+    } else {
+      setGrade((prevValue) => ({
+        ...prevValue,
+        [taskType]: 0,
+      }));
+    }
   }
 
   return (
@@ -42,7 +59,7 @@ function DayOverviewScreen({ route, navigation }) {
               {t("screens.processText", { grade: getTotalGrade() })}
             </Text>
           </Box>
-          <TasksList {...dayTasks} setGrade={setGrade} />
+          <TasksList {...dayTasks} onTaskDataUpdate={onTaskDataUpdate} />
         </>
       ) : (
         <Center flex={1}>

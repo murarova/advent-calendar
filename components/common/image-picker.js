@@ -1,40 +1,58 @@
 import { Alert } from "react-native";
 import * as ExpoImagePicker from "expo-image-picker";
-import { Box, ButtonText, Button, Image } from "@gluestack-ui/themed";
+import {
+  Box,
+  ButtonText,
+  Button,
+  Image,
+  VStack,
+  ScrollView,
+} from "@gluestack-ui/themed";
 import { useTranslation } from "react-i18next";
+import isEmpty from "lodash/isEmpty";
 
-export function ImagePicker({ image, setImage }) {
+export function ImagePicker({ images, setImages, edit }) {
   const { t } = useTranslation();
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ExpoImagePicker.launchImageLibraryAsync({
       mediaTypes: ExpoImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
+      allowsMultipleSelection: true,
     });
-
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      setImages(result.assets);
     } else {
       Alert.alert("Canceled");
     }
   };
-
+  console.log("images", images);
   return (
     <Box>
-      <Button onPress={pickImage}>
-        <ButtonText>{t("common.choosePhoto")}</ButtonText>
-      </Button>
-      {image && (
-        <Box mt="$4">
-          <Image
-            alt="user photo"
-            source={{ uri: image }}
-            width="100%"
-            height={200}
-          />
+      {edit && (
+        <Button onPress={pickImage}>
+          <ButtonText>
+            {!isEmpty(images) ? t("common.pickAnother") : t("common.pickPhoto")}
+          </ButtonText>
+        </Button>
+      )}
+      {!isEmpty(images) && (
+        <Box maxHeight="$80" justifyContent="center" my="$2">
+          <ScrollView>
+            <VStack space="md" reversed={false}>
+              {images.map(({ uri, assetId }) => (
+                <Image
+                  key={assetId}
+                  alt="user photo"
+                  source={{ uri }}
+                  width="100%"
+                  height={200}
+                />
+              ))}
+            </VStack>
+          </ScrollView>
         </Box>
       )}
     </Box>

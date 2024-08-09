@@ -1,8 +1,9 @@
 export default {
   common: {
     back: "Назад",
-    choosePhoto: "Вибери фото",
-    done: "Виконано"
+    pickPhoto: "Вибери фото",
+    pickAnother: "Вибрати інше",
+    done: "Виконано",
   },
   screens: {
     emptyScreen: "На сьогодні завдань немає",
@@ -13,7 +14,7 @@ export default {
     tasksOfTheDay: {
       title: "Завдання на сьогодні",
       textareaPlaceholder: "Напишить щось тут",
-      submitBtnText: "Готово"
+      submitBtnText: "Готово",
     },
   },
 };

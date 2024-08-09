@@ -19,19 +19,35 @@ import { ImagePicker } from "./common";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { TASK_OUTPUT_TYPE } from "../constants/constants";
+import isEmpty from "lodash/isEmpty";
 
 export function TaskItem({ taskConfig, onTaskDataUpdate }) {
   const { t } = useTranslation();
   const [text, setText] = useState("");
-  const [image, setImage] = useState("");
+  const [images, setImages] = useState([]);
+  const [edit, setEdit] = useState(true);
 
   function onTaskSubmit() {
-    onTaskDataUpdate({
-      text,
-      image,
-      taskOutputType: taskConfig.taskOutputType,
-      taskType: taskConfig.taskType,
-    });
+    if (taskConfig.taskOutputType === TASK_OUTPUT_TYPE.TEXT && text.trim()) {
+      onTaskDataUpdate({
+        text,
+        taskOutputType: taskConfig.taskOutputType,
+        taskType: taskConfig.taskType,
+      });
+      setEdit(false);
+    }
+
+    if (
+      taskConfig.taskOutputType === TASK_OUTPUT_TYPE.IMAGE &&
+      !isEmpty(images)
+    ) {
+      onTaskDataUpdate({
+        images,
+        taskOutputType: taskConfig.taskOutputType,
+        taskType: taskConfig.taskType,
+      });
+      setEdit(false);
+    }
   }
 
   return (
@@ -60,9 +76,13 @@ export function TaskItem({ taskConfig, onTaskDataUpdate }) {
           <Box pt="$4">
             {taskConfig.taskOutputType === TASK_OUTPUT_TYPE.IMAGE && (
               <Box>
-                <ImagePicker image={image} setImage={setImage} />
-                {image && (
-                  <Button onPress={onTaskSubmit} mt="$4">
+                <ImagePicker
+                  edit={edit}
+                  images={images}
+                  setImages={setImages}
+                />
+                {!isEmpty(images) && edit && (
+                  <Button onPress={onTaskSubmit}>
                     <ButtonText>
                       {t("screens.tasksOfTheDay.submitBtnText")}
                     </ButtonText>
@@ -70,7 +90,7 @@ export function TaskItem({ taskConfig, onTaskDataUpdate }) {
                 )}
               </Box>
             )}
-            {taskConfig.taskOutputType === TASK_OUTPUT_TYPE.TEXT && (
+            {taskConfig.taskOutputType === TASK_OUTPUT_TYPE.TEXT && edit ? (
               <Box>
                 <Textarea width="100%">
                   <TextareaInput
@@ -79,11 +99,15 @@ export function TaskItem({ taskConfig, onTaskDataUpdate }) {
                     placeholder={t("screens.tasksOfTheDay.textareaPlaceholder")}
                   />
                 </Textarea>
-                <Button onPress={onTaskSubmit} mt="$4">
+                <Button onPress={onTaskSubmit} mt="$2">
                   <ButtonText>
                     {t("screens.tasksOfTheDay.submitBtnText")}
                   </ButtonText>
                 </Button>
+              </Box>
+            ) : (
+              <Box>
+                <Text>{text}</Text>
               </Box>
             )}
           </Box>

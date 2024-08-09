@@ -35,9 +35,9 @@ function DayOverviewScreen({ route, navigation }) {
     );
   }
 
-  function onTaskDataUpdate({ text, image, taskOutputType, taskType }) {
+  function onTaskDataUpdate({ text, images, taskOutputType, taskType }) {
     //TODO: save text or images to the DB. Once it set - change the grade
-    if (text.trim() || image) {
+    if (text?.trim() || images) {
       setGrade((prevValue) => ({
         ...prevValue,
         [taskType]: 30,

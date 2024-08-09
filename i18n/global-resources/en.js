@@ -1,7 +1,8 @@
 export default {
   common: {
     back: "Back",
-    choosePhoto: "Choose photo",
+    pickPhoto: "Pick photo",
+    pickAnother: "Pick another",
     done: "Done",
   },
   screens: {

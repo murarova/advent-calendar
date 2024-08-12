@@ -18,7 +18,7 @@ import {
 import { ImagePicker } from "./common";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
-import { TASK_OUTPUT_TYPE } from "../constants/constants";
+import { TASK_OUTPUT_TYPE, TASK_TYPE } from "../constants/constants";
 import isEmpty from "lodash/isEmpty";
 
 export function TaskItem({ taskConfig, onTaskDataUpdate }) {
@@ -58,7 +58,11 @@ export function TaskItem({ taskConfig, onTaskDataUpdate }) {
             {({ isExpanded }) => {
               return (
                 <>
-                  <AccordionTitleText>{taskConfig.title}</AccordionTitleText>
+                  <AccordionTitleText>
+                    {taskConfig.taskType === TASK_TYPE.DAY
+                      ? t("screens.tasksOfTheDay.dayTitle")
+                      : t("screens.tasksOfTheDay.moodTitle")}
+                  </AccordionTitleText>
                   {isExpanded ? (
                     <AccordionIcon as={ChevronUpIcon} ml="$3" />
                   ) : (
@@ -71,6 +75,7 @@ export function TaskItem({ taskConfig, onTaskDataUpdate }) {
         </AccordionHeader>
         <AccordionContent>
           <Box>
+            <Text fontWeight="bold" pb="$2">{taskConfig.title}</Text>
             <Text>{taskConfig.text}</Text>
           </Box>
           <Box pt="$4">

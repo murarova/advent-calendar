@@ -9,6 +9,8 @@ import { SCREENS } from "./constants/constants";
 import "./i18n/i18n";
 import { useTranslation } from "react-i18next";
 import { LanguageMenu } from "./components/common";
+import { AppMenu } from "./components";
+import { Register } from "./screens/register";
 
 const Stack = createNativeStackNavigator();
 
@@ -30,7 +32,7 @@ export default function App() {
             component={PeriodOverviewScreen}
             options={{
               title: t("screens.periodOverview.title"),
-              headerRight: LanguageMenu,
+              headerRight: AppMenu,
             }}
           />
           <Stack.Screen
@@ -38,7 +40,14 @@ export default function App() {
             component={DayOverviewScreen}
             options={{
               headerBackTitle: t("common.back"),
-              headerRight: LanguageMenu,
+              headerRight: AppMenu,
+            }}
+          />
+          <Stack.Screen
+            name={SCREENS.REGISTER}
+            component={Register}
+            options={{
+              headerRight: AppMenu,
             }}
           />
         </Stack.Navigator>

@@ -12,7 +12,8 @@ export default {
       title: "Your current path",
     },
     tasksOfTheDay: {
-      title: "Task for today",
+      dayTitle: "Task for today",
+      moodTitle: "Task for the mood",
       textareaPlaceholder: "Your text goes here",
       submitBtnText: "Done",
     },

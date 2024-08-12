@@ -8,6 +8,7 @@ export const OPEN_DAYS_FROM_TODAY = 0;
 export const SCREENS = {
   PERIOD_OVERVIEW: "PeriodOverview",
   DAY_OVERVIEW: "DayOverview",
+  REGISTER: "Register",
 };
 
 export const LANGUAGES = {

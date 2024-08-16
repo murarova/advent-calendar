@@ -8,9 +8,10 @@ import DayOverviewScreen from "./screens/day-overview-screen";
 import { SCREENS } from "./constants/constants";
 import "./i18n/i18n";
 import { useTranslation } from "react-i18next";
-import { LanguageMenu } from "./components/common";
 import { AppMenu } from "./components";
 import { Register } from "./screens/register";
+import { LoadingScreen } from "./screens/loading-screen";
+import { Login } from "./screens/login";
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +29,27 @@ export default function App() {
           }}
         >
           <Stack.Screen
+            name={SCREENS.LOADING}
+            component={LoadingScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name={SCREENS.LOGIN}
+            component={Login}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name={SCREENS.REGISTER}
+            component={Register}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
             name={SCREENS.PERIOD_OVERVIEW}
             component={PeriodOverviewScreen}
             options={{
@@ -40,13 +62,6 @@ export default function App() {
             component={DayOverviewScreen}
             options={{
               headerBackTitle: t("common.back"),
-              headerRight: AppMenu,
-            }}
-          />
-          <Stack.Screen
-            name={SCREENS.REGISTER}
-            component={Register}
-            options={{
               headerRight: AppMenu,
             }}
           />

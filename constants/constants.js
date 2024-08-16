@@ -9,6 +9,8 @@ export const SCREENS = {
   PERIOD_OVERVIEW: "PeriodOverview",
   DAY_OVERVIEW: "DayOverview",
   REGISTER: "Register",
+  LOGIN: "Login",
+  LOADING: "Loading",
 };
 
 export const LANGUAGES = {

@@ -43,7 +43,8 @@
     "react-native-web": "^0.19.9",
     "react-native-webview": "13.2.2",
     "react-native-youtube-iframe": "^2.3.0",
-    "expo-splash-screen": "~0.20.5"
+    "expo-splash-screen": "~0.20.5",
+    "@types/react": "~18.2.14"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

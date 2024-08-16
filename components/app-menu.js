@@ -5,36 +5,60 @@ import {
   MenuItemLabel,
   Button,
   Box,
-  Icon,
   MenuIcon,
   ButtonIcon,
+  Icon,
+  Text,
+  SettingsIcon,
 } from "@gluestack-ui/themed";
 import { useTranslation } from "react-i18next";
+import { LANGUAGES, SCREENS } from "../constants/constants";
 import { useNavigation } from "@react-navigation/native";
-import { SCREENS } from "../constants/constants";
+import auth from "@react-native-firebase/auth";
 
 export function AppMenu() {
   const { i18n } = useTranslation();
   const nav = useNavigation();
+
+  function handleLanguageChanged(lng) {
+    i18n.changeLanguage(lng);
+  }
+
+  function handleLogout() {
+    auth()
+      .signOut()
+      .then(() => {
+        nav.replace(SCREENS.LOADING);
+      });
+  }
+
   return (
     <Menu
       placement="top"
       trigger={({ ...triggerProps }) => {
         return (
-          <Button {...triggerProps} variant="link" size="xl">
-            <ButtonIcon as={MenuIcon} />
+          <Button {...triggerProps} variant="link">
+            <ButtonIcon as={MenuIcon} size="xl" />
           </Button>
         );
       }}
     >
-      <MenuItem
-        key="login"
-        onPress={() => {
-          nav.push(SCREENS.REGISTER);
-        }}
-        textValue={"Login"}
-      >
-        <MenuItemLabel size="sm">Login</MenuItemLabel>
+      {Object.keys(LANGUAGES).map((lng) => (
+        <MenuItem
+          key={LANGUAGES[lng].icon}
+          onPress={() => handleLanguageChanged(lng)}
+          textValue={LANGUAGES[lng].nativeName}
+        >
+          <Box mr={8}>
+            <CountryFlag isoCode={LANGUAGES[lng].icon} size={16} />
+          </Box>
+
+          <MenuItemLabel size="sm">{LANGUAGES[lng].nativeName}</MenuItemLabel>
+        </MenuItem>
+      ))}
+      <MenuItem key="Logout" onPress={handleLogout} textValue="Logout">
+        <Icon as={SettingsIcon} size="sm" mr="$2" />
+        <Text>Logout</Text>
       </MenuItem>
     </Menu>
   );

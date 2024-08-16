@@ -26,7 +26,6 @@ function DayOverviewScreen({ route, navigation }) {
     mood: 0,
   });
 
-  console.log("grade", grade);
 
   function getTotalGrade() {
     return Object.values(grade).reduce(

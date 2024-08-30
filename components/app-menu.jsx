@@ -1,3 +1,4 @@
+// @ts-nocheck
 import CountryFlag from "react-native-country-flag";
 import {
   Menu,

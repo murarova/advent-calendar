@@ -1,10 +1,18 @@
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { TasksList } from "../components";
 import { getDayTasks } from "../config/day-tasks-config";
 import { Box, Text, Center } from "@gluestack-ui/themed";
 import { useTranslation } from "react-i18next";
 import moment from "moment";
-import { LANGUAGES, TASK_OUTPUT_TYPE, TASK_TYPE } from "../constants/constants";
+import { LANGUAGES, TASK_TYPE } from "../constants/constants";
+
+import {
+  getCurrentUser,
+  getUserDayTasks,
+  saveTaskByType,
+  saveUserTask,
+} from "../services/services";
+import { Alert } from "react-native";
 
 function DayOverviewScreen({ route, navigation }) {
   const { t, i18n } = useTranslation();
@@ -14,6 +22,19 @@ function DayOverviewScreen({ route, navigation }) {
     .locale(LANGUAGES[i18n.resolvedLanguage].moment)
     .format("MMMM");
   const dayTasks = getDayTasks(day, i18n.resolvedLanguage);
+  const currentUser = getCurrentUser();
+
+  const [doneTask, setDoneTask] = useState(null);
+
+  useEffect(() => {
+    async function getDayTasks() {
+      const doneTask = await getUserDayTasks(currentUser, day);
+      if (doneTask) {
+        setDoneTask(doneTask);
+      }
+    }
+    getDayTasks();
+  }, []);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -26,7 +47,6 @@ function DayOverviewScreen({ route, navigation }) {
     mood: 0,
   });
 
-
   function getTotalGrade() {
     return Object.values(grade).reduce(
       (taskGrade, total) => taskGrade + total,
@@ -34,12 +54,33 @@ function DayOverviewScreen({ route, navigation }) {
     );
   }
 
-  function onTaskDataUpdate({ text, images, taskOutputType, taskType }) {
+  const submitForCompletion = async ({ text, taskType, type }) => {
+    const currentUser = getCurrentUser();
+    if (currentUser) {
+      const sessionId = Date.now();
+      const task = {
+        text,
+        date: sessionId,
+      };
+      try {
+        saveUserTask({ type, task, currentUser, day });
+        //TODO: do we need summary for mood tasks?
+        if (taskType.type !== TASK_TYPE.MOOD) {
+          saveTaskByType({ currentUser, taskType, task });
+        }
+      } catch (error) {
+        Alert.alert("Oops", "Something wrong");
+      }
+    }
+  };
+
+  async function onTaskDataUpdate({ text, images, taskType, type }) {
     //TODO: save text or images to the DB. Once it set - change the grade
     if (text?.trim() || images) {
+      await submitForCompletion({ text, taskType, type });
       setGrade((prevValue) => ({
         ...prevValue,
-        [taskType]: 30,
+        [taskType]: 50,
       }));
     } else {
       setGrade((prevValue) => ({
@@ -50,7 +91,7 @@ function DayOverviewScreen({ route, navigation }) {
   }
 
   return (
-    <Box p="$2" flex="1">
+    <Box p="$2" flex={1}>
       {dayTasks ? (
         <>
           <Box my="$2.5">
@@ -58,7 +99,11 @@ function DayOverviewScreen({ route, navigation }) {
               {t("screens.processText", { grade: getTotalGrade() })}
             </Text>
           </Box>
-          <TasksList {...dayTasks} onTaskDataUpdate={onTaskDataUpdate} />
+          <TasksList
+            {...dayTasks}
+            doneTask={doneTask}
+            onTaskDataUpdate={onTaskDataUpdate}
+          />
         </>
       ) : (
         <Center flex={1}>

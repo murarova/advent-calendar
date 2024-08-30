@@ -11,6 +11,9 @@ export const SCREENS = {
   REGISTER: "Register",
   LOGIN: "Login",
   LOADING: "Loading",
+  SUMMARY: "Summary",
+  HOME: "Home",
+  PLANS: "Plans"
 };
 
 export const LANGUAGES = {
@@ -24,6 +27,7 @@ export const TASK_OUTPUT_TYPE = {
 };
 
 export const TASK_TYPE = {
-  DAY: "day",
+  HEALTH: "health",
   MOOD: "mood",
+  LEARNING: "learning",
 };

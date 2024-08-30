@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+// @ts-nocheck
+import { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import auth from "@react-native-firebase/auth";
 import { SCREENS } from "../constants/constants";
@@ -9,7 +10,7 @@ export const LoadingScreen = () => {
 
   function onAuthStateChanged(user) {
     if (user) {
-      nav.replace(SCREENS.PERIOD_OVERVIEW);
+      nav.replace(SCREENS.HOME);
     } else {
       nav.replace(SCREENS.LOGIN);
     }

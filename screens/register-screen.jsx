@@ -1,5 +1,6 @@
+// @ts-nocheck
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Box,
   ButtonText,
@@ -14,32 +15,25 @@ import {
 } from "@gluestack-ui/themed";
 import { Alert, Keyboard } from "react-native";
 import { SCREENS } from "../constants/constants";
-import auth from "@react-native-firebase/auth";
-import db from "@react-native-firebase/database";
+import {
+  createProfile,
+  createUserWithEmailAndPassword,
+} from "../services/services";
 
-export const Register = () => {
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+export const RegisterScreen = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const nav = useNavigation();
 
-  const createProfile = async (response) => {
-    db().ref(`/users/${response.user.uid}`).set({ name });
-  };
   const registerAndGoToMainFlow = async () => {
     if (email && password) {
       try {
-        const response = await auth().createUserWithEmailAndPassword(
-          email,
-          password
-        );
-
-        console.log("response", response);
-
-        if (response.user) {
-          await createProfile(response);
-          nav.replace(SCREENS.PERIOD_OVERVIEW);
+        const user = await createUserWithEmailAndPassword(email, password);
+        if (user) {
+          await createProfile(user.uid, name);
+          nav.replace(SCREENS.HOME);
         }
       } catch (e) {
         Alert.alert("Oops", "Please check your form and try again");
@@ -77,7 +71,6 @@ export const Register = () => {
                   value={name}
                   onChangeText={setName}
                   inputMode="text"
-                  isRequired
                   placeholder="Name"
                 />
               </Input>
@@ -90,7 +83,6 @@ export const Register = () => {
                   onChangeText={setEmail}
                   autoCapitalize="none"
                   inputMode="text"
-                  isRequired
                   placeholder="Email"
                 />
               </Input>
@@ -101,62 +93,17 @@ export const Register = () => {
                 <InputField
                   value={password}
                   onChangeText={setPassword}
-                  isRequired
                   type="password"
                   placeholder="Password"
                 />
               </Input>
             </VStack>
           </Box>
-          <Button
-            mb={30}
-            size="md"
-            variant="primary"
-            action="primary"
-            onPress={registerAndGoToMainFlow}
-          >
+          <Button mb={30} size="md" onPress={registerAndGoToMainFlow}>
             <ButtonText>Register</ButtonText>
           </Button>
         </Box>
       </SafeAreaView>
     </Pressable>
-    // <Pressable style={styles.contentView} onPress={Keyboard.dismiss}>
-    //   <SafeAreaView style={styles.contentView}>
-    //     <View style={styles.container}>
-    //       <View style={styles.titleContainer}>
-    //         <Text style={styles.titleText}>Register</Text>
-    //       </View>
-    //       <View style={styles.mainContent}>
-    //         <TextInput
-    //           style={styles.loginTextField}
-    //           placeholder="Name"
-    //           value={name}
-    //           onChangeText={setName}
-    //         />
-    //         <TextInput
-    //           style={styles.loginTextField}
-    //           placeholder="Email"
-    //           value={email}
-    //           onChangeText={setEmail}
-    //           inputMode="email"
-    //           autoCapitalize="none"
-    //         />
-    //         <TextInput
-    //           style={styles.loginTextField}
-    //           placeholder="Password"
-    //           value={password}
-    //           onChangeText={setPassword}
-    //           secureTextEntry
-    //         />
-    //       </View>
-    //       <Button
-    //         title="Sign Up"
-    //         onPress={registerAndGoToMainFlow}
-    //         variant="primary"
-    //       />
-    //       <Button title="Go Back" onPress={nav.goBack} variant="secondary" />
-    //     </View>
-    //   </SafeAreaView>
-    // </Pressable>
   );
 };

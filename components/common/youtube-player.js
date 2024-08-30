@@ -21,17 +21,17 @@ export function YoutubePlayer({ videoId }) {
   }
 
   return (
-    <Box flex="1">
-      {isLoading && (
+    <Box flex={1}>
+      {true && (
         <Box
           position="absolute"
           top="$0"
           bottom="$0"
           left="$0"
           right="$0"
-          zIndex="1"
+          zIndex={1}
         >
-          <Loader />
+          <Loader size="large" />
         </Box>
       )}
       <AnimatedView style={{ zIndex: 2 }} show={!isLoading}>

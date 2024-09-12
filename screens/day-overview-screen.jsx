@@ -4,11 +4,11 @@ import { getDayTasks } from "../config/day-tasks-config";
 import { Box, Text, Center } from "@gluestack-ui/themed";
 import { useTranslation } from "react-i18next";
 import moment from "moment";
-import { LANGUAGES, TASK_TYPE } from "../constants/constants";
+import { LANGUAGES, TASK_CONTEXT } from "../constants/constants";
 
 import {
-  getCurrentUser,
   getUserDayTasks,
+  getUserPlans,
   saveTaskByType,
   saveUserTask,
 } from "../services/services";
@@ -22,19 +22,6 @@ function DayOverviewScreen({ route, navigation }) {
     .locale(LANGUAGES[i18n.resolvedLanguage].moment)
     .format("MMMM");
   const dayTasks = getDayTasks(day, i18n.resolvedLanguage);
-  const currentUser = getCurrentUser();
-
-  const [doneTask, setDoneTask] = useState(null);
-
-  useEffect(() => {
-    async function getDayTasks() {
-      const doneTask = await getUserDayTasks(currentUser, day);
-      if (doneTask) {
-        setDoneTask(doneTask);
-      }
-    }
-    getDayTasks();
-  }, []);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -54,38 +41,36 @@ function DayOverviewScreen({ route, navigation }) {
     );
   }
 
-  const submitForCompletion = async ({ text, taskType, type }) => {
-    const currentUser = getCurrentUser();
-    if (currentUser) {
-      const sessionId = Date.now();
-      const task = {
-        text,
-        date: sessionId,
-      };
-      try {
-        saveUserTask({ type, task, currentUser, day });
-        //TODO: do we need summary for mood tasks?
-        if (taskType.type !== TASK_TYPE.MOOD) {
-          saveTaskByType({ currentUser, taskType, task });
-        }
-      } catch (error) {
-        Alert.alert("Oops", "Something wrong");
+  const saveTaskData = async ({ text, category, context, type }) => {
+    const sessionId = Date.now();
+    const task = {
+      text,
+      date: sessionId,
+    };
+    try {
+      saveUserTask({ type, task, day, category });
+
+      //TODO: do we need summary for mood tasks?
+      if (category !== TASK_CONTEXT.MOOD) {
+        saveTaskByType({ category, task, context });
       }
+    } catch (error) {
+      Alert.alert("Oops", "Something wrong");
     }
   };
 
-  async function onTaskDataUpdate({ text, images, taskType, type }) {
+  async function onTaskDataUpdate({ text, images, category, context, type }) {
     //TODO: save text or images to the DB. Once it set - change the grade
     if (text?.trim() || images) {
-      await submitForCompletion({ text, taskType, type });
+      await saveTaskData({ text, category, context, type });
       setGrade((prevValue) => ({
         ...prevValue,
-        [taskType]: 50,
+        [category]: 50,
       }));
     } else {
       setGrade((prevValue) => ({
         ...prevValue,
-        [taskType]: 0,
+        [category]: 0,
       }));
     }
   }
@@ -99,11 +84,7 @@ function DayOverviewScreen({ route, navigation }) {
               {t("screens.processText", { grade: getTotalGrade() })}
             </Text>
           </Box>
-          <TasksList
-            {...dayTasks}
-            doneTask={doneTask}
-            onTaskDataUpdate={onTaskDataUpdate}
-          />
+          <TasksList {...dayTasks} day={day} onTaskDataUpdate={onTaskDataUpdate} />
         </>
       ) : (
         <Center flex={1}>

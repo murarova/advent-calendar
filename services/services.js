@@ -20,62 +20,83 @@ export function getCurrentUser() {
   return auth().currentUser;
 }
 
-export async function saveUserTask({ type, task, currentUser, day }) {
-  const response = await firebase
-    .app()
-    .database(process.env.DB)
-    .ref(`/users/${currentUser.uid}/tasks/${day}/${type}`)
-    .set(task);
+export async function saveUserTask({ type, task, day, category }) {
+  const currentUser = getCurrentUser();
+  if (currentUser) {
+    const response = await firebase
+      .app()
+      .database(process.env.DB)
+      .ref(`/users/${currentUser.uid}/tasks/${day}/${type}/${category}`)
+      .set(task);
 
-  return response;
+    return response;
+  }
 }
 
-export async function saveTaskByType({ currentUser, taskType, task }) {
-  const response = await firebase
-    .app()
-    .database(process.env.DB)
-    .ref(`/users/${currentUser.uid}/${taskType.type}/${taskType.area}`)
-    .set(task);
+export async function saveTaskByType({ category, task, context }) {
+  console.log(" category, task, context ", category, task, context);
 
-  return response;
+  const currentUser = getCurrentUser();
+  if (currentUser) {
+    const response = await firebase
+      .app()
+      .database(process.env.DB)
+      .ref(`/users/${currentUser.uid}/${category}/${context}`)
+      .set(task);
+
+    return response;
+  }
 }
 
-export async function getUserTasks(currentUser) {
-  const response = await firebase
-    .app()
-    .database(process.env.DB)
-    .ref(`/users/${currentUser.uid}/tasks`)
-    .once("value");
+export async function getUserTasks() {
+  const currentUser = getCurrentUser();
+  if (currentUser) {
+    const response = await firebase
+      .app()
+      .database(process.env.DB)
+      .ref(`/users/${currentUser.uid}/tasks`)
+      .once("value");
 
-  return response.val();
+    return response.val();
+  }
 }
 
-export async function getUserDayTasks(currentUser, day) {
-  const response = await firebase
-    .app()
-    .database(process.env.DB)
-    .ref(`/users/${currentUser.uid}/tasks/${day}`)
-    .once("value");
+//TODO: do we need to save it?
+export async function getUserDayTasks(day) {
+  const currentUser = getCurrentUser();
+  if (currentUser) {
+    const response = await firebase
+      .app()
+      .database(process.env.DB)
+      .ref(`/users/${currentUser.uid}/tasks/${day}`)
+      .once("value");
 
-  return response.val();
+    return response.val();
+  }
 }
 
-export async function getUserSummary(currentUser) {
-  const response = await firebase
-    .app()
-    .database(process.env.DB)
-    .ref(`/users/${currentUser.uid}/summary`)
-    .once("value");
+export async function getUserSummary() {
+  const currentUser = getCurrentUser();
+  if (currentUser) {
+    const response = await firebase
+      .app()
+      .database(process.env.DB)
+      .ref(`/users/${currentUser.uid}/summary`)
+      .once("value");
 
-  return response.val();
+    return response.val();
+  }
 }
 
-export async function getUserPlans(currentUser) {
-  const response = await firebase
-    .app()
-    .database(process.env.DB)
-    .ref(`/users/${currentUser.uid}/plans`)
-    .once("value");
+export async function getUserPlans() {
+  const currentUser = getCurrentUser();
+  if (currentUser) {
+    const response = await firebase
+      .app()
+      .database(process.env.DB)
+      .ref(`/users/${currentUser.uid}/plans`)
+      .once("value");
 
-  return response.val();
+    return response.val();
+  }
 }

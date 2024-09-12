@@ -8,7 +8,7 @@ export function TasksList({
   dayTaskConfig,
   moodTaskConfig,
   onTaskDataUpdate,
-  doneTask,
+  day,
 }) {
   return (
     <ScrollView>
@@ -18,17 +18,15 @@ export function TasksList({
 
         {dayTaskConfig && (
           <TaskItem
-            doneTask={doneTask?.day}
+            day={day}
             taskConfig={dayTaskConfig}
-            type="day"
             onTaskDataUpdate={onTaskDataUpdate}
           />
         )}
         {moodTaskConfig && (
           <TaskItem
-            doneTask={doneTask?.mood}
+            day={day}
             taskConfig={moodTaskConfig}
-            type="mood"
             onTaskDataUpdate={onTaskDataUpdate}
           />
         )}

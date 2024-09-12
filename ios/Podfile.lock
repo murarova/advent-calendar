@@ -17,8 +17,6 @@ PODS:
     - React-Core
   - Expo (49.0.23):
     - ExpoModulesCore
-  - ExpoAsset (10.0.10):
-    - ExpoModulesCore
   - ExpoImagePicker (14.3.2):
     - ExpoModulesCore
   - ExpoKeepAwake (12.3.0):
@@ -587,7 +585,6 @@ DEPENDENCIES:
   - EXFont (from `../node_modules/expo-font/ios`)
   - EXImageLoader (from `../node_modules/expo-image-loader/ios`)
   - Expo (from `../node_modules/expo`)
-  - ExpoAsset (from `../../../../../node_modules/expo-asset/ios`)
   - ExpoImagePicker (from `../node_modules/expo-image-picker/ios`)
   - ExpoKeepAwake (from `../node_modules/expo-keep-awake/ios`)
   - ExpoLocalization (from `../node_modules/expo-localization/ios`)
@@ -680,8 +677,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-image-loader/ios"
   Expo:
     :path: "../node_modules/expo"
-  ExpoAsset:
-    :path: "../../../../../node_modules/expo-asset/ios"
   ExpoImagePicker:
     :path: "../node_modules/expo-image-picker/ios"
   ExpoKeepAwake:
@@ -797,7 +792,6 @@ SPEC CHECKSUMS:
   EXFont: 738c44c390953ebcbab075a4848bfbef025fd9ee
   EXImageLoader: 34b214f9387e98f3c73989f15d8d5b399c9ab3f7
   Expo: ba9abdf444dc6d2c05a82c4c1b51a2400beb6167
-  ExpoAsset: 323700f291684f110fb55f0d4022a3362ea9f875
   ExpoImagePicker: c58fdf28be551681a8edc550bcec76c397a8dfcd
   ExpoKeepAwake: be4cbd52d9b177cde0fd66daa1913afa3161fc1d
   ExpoLocalization: be37fdd0b5930c6a49cd307b4542f4b426d6134c

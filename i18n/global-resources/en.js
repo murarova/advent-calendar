@@ -9,6 +9,8 @@ export default {
     home: "Home",
     plans: "Plans",
     empty: "There is nothing here at the moment",
+    add: "Add",
+    cancel: "Cancel"
   },
   screens: {
     emptyScreen: "There are no tasks for today",
@@ -22,6 +24,7 @@ export default {
       textareaPlaceholder: "Your text goes here",
       submitBtnText: "Done",
       taskResult: "Task result",
+      addPlanItem: "Add plan item",
     },
     summaryScreen: {
       health: "Health",
@@ -30,6 +33,10 @@ export default {
     plansScreen: {
       health: "Health",
       learning: "Learning",
+    },
+    plansModal: {
+      addPlanTitle: "Add plan item",
+      placeholder: "Type your plan here"
     },
   },
 };

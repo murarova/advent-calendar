@@ -8,7 +8,9 @@ export default {
     summary: "Підсумки",
     plans: "Плани",
     home: "Додому",
-    empty: "Зараз тут нічого немає"
+    add: "Додати",
+    empty: "Зараз тут нічого немає",
+    cancel: "Відмінити",
   },
   screens: {
     emptyScreen: "На сьогодні завдань немає",
@@ -22,6 +24,7 @@ export default {
       textareaPlaceholder: "Напишить щось тут",
       submitBtnText: "Готово",
       taskResult: "Відповідь",
+      addPlanItem: "Додати пункт плану",
     },
     summaryScreen: {
       health: "Здоров'я",
@@ -30,6 +33,10 @@ export default {
     plansScreen: {
       health: "Здоров'я",
       learning: "Розвиток",
+    },
+    plansModal: {
+      addPlanTitle: "Додайте пункт плану",
+      placeholder: "Напишить щось тут",
     },
   },
 };

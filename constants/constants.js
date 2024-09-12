@@ -13,7 +13,7 @@ export const SCREENS = {
   LOADING: "Loading",
   SUMMARY: "Summary",
   HOME: "Home",
-  PLANS: "Plans"
+  PLANS: "Plans",
 };
 
 export const LANGUAGES = {
@@ -24,10 +24,18 @@ export const LANGUAGES = {
 export const TASK_OUTPUT_TYPE = {
   TEXT: "text",
   IMAGE: "image",
+  LIST: "list",
 };
 
-export const TASK_TYPE = {
+export const TASK_CONTEXT = {
   HEALTH: "health",
   MOOD: "mood",
   LEARNING: "learning",
+};
+
+export const TASK_CATEGORY = {
+  MOOD: "mood",
+  SUMMARY: "summary",
+  PLANS: "plans",
+  DAY: "day",
 };

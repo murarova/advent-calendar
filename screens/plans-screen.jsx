@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react";
 import { Box, Heading, Text } from "@gluestack-ui/themed";
 import { useTranslation } from "react-i18next";
-
-import { getCurrentUser, getUserPlans } from "../services/services";
+import { getUserPlans } from "../services/services";
 
 export function PlansScreen() {
   const { t } = useTranslation();
-  const currentUser = getCurrentUser();
   const [plans, setPlans] = useState(null);
 
   useEffect(() => {
     async function getTasks() {
-      const plans = await getUserPlans(currentUser);
+      const plans = await getUserPlans();
       setPlans(plans);
     }
     getTasks();

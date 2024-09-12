@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react";
 import { Box, Heading, Text } from "@gluestack-ui/themed";
 import { useTranslation } from "react-i18next";
-
-import { getCurrentUser, getUserSummary } from "../services/services";
+import { getUserSummary } from "../services/services";
 
 export function SummaryScreen() {
   const { t } = useTranslation();
-  const currentUser = getCurrentUser();
   const [summary, setSummary] = useState(null);
 
   useEffect(() => {
     async function getTasks() {
-      const summary = await getUserSummary(currentUser);
+      const summary = await getUserSummary();
       setSummary(summary);
     }
     getTasks();

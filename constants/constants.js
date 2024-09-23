@@ -39,3 +39,5 @@ export const TASK_CATEGORY = {
   PLANS: "plans",
   DAY: "day",
 };
+
+export const MAX_PLANS_AMOUNT = 10;

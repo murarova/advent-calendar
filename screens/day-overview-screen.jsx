@@ -9,7 +9,7 @@ import { LANGUAGES, TASK_CONTEXT } from "../constants/constants";
 import {
   getUserDayTasks,
   getUserPlans,
-  saveTaskByType,
+  saveTaskByCategory,
   saveUserTask,
 } from "../services/services";
 import { Alert } from "react-native";
@@ -52,7 +52,7 @@ function DayOverviewScreen({ route, navigation }) {
 
       //TODO: do we need summary for mood tasks?
       if (category !== TASK_CONTEXT.MOOD) {
-        saveTaskByType({ category, task, context });
+        saveTaskByCategory({ category, data: task, context });
       }
     } catch (error) {
       Alert.alert("Oops", "Something wrong");
@@ -84,7 +84,11 @@ function DayOverviewScreen({ route, navigation }) {
               {t("screens.processText", { grade: getTotalGrade() })}
             </Text>
           </Box>
-          <TasksList {...dayTasks} day={day} onTaskDataUpdate={onTaskDataUpdate} />
+          <TasksList
+            {...dayTasks}
+            day={day}
+            onTaskDataUpdate={onTaskDataUpdate}
+          />
         </>
       ) : (
         <Center flex={1}>

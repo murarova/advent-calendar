@@ -1,4 +1,3 @@
-import { useSharedValue } from "react-native-reanimated";
 import {
   Center,
   Slider,

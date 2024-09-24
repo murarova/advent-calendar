@@ -65,9 +65,9 @@
       "dayTaskConfig": {
         "title": "Summary of Health",
         "text": "The base and the foundation, the starting capital without which no success and achievements are possible, without it it is impossible to earn new money, it is impossible to get love, it is impossible to think thoughts - this is our body. So, the task for today is to analyze everything you have done for the health of your body in 2023. Remember massages, planned visits to doctors, sports, psychotherapy, diets (if they were for health), all the cases when the body spoke to you, and you did not freeze, but took care.",
+        "taskOutputType": "text",
         "category": "summary",
-        "context": "health",
-        "taskOutputType": "text"
+        "context": "health"
       }
     }
   },

@@ -16,7 +16,7 @@ import { EditIcon, Trash2, Ellipsis } from "lucide-react-native";
 import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
 
-export function ListItems({ plans, onEdit, onDelete }) {
+export function PlansList({ plans, onEdit, onDelete }) {
   const { t } = useTranslation();
   return (
     <ScrollView h="$80" w="$80">

@@ -1,9 +1,7 @@
-import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Button, ButtonText, GluestackUIProvider } from "@gluestack-ui/themed";
+import { GluestackUIProvider } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
-import PeriodOverviewScreen from "./screens/period-overview-screen";
 import DayOverviewScreen from "./screens/day-overview-screen";
 import { SCREENS } from "./constants/constants";
 import "./i18n/i18n";

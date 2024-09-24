@@ -25,6 +25,7 @@ export default {
       moodTitle: "Завдання для настрою",
       textareaPlaceholder: "Напишить щось тут",
       submitBtnText: "Готово",
+      editBtnText: "Редагувати",
       taskResult: "Відповідь",
       addPlanItem: "Додати пункт плану",
     },

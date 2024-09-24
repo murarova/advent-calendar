@@ -25,6 +25,7 @@ export default {
       moodTitle: "Task for the mood",
       textareaPlaceholder: "Your text goes here",
       submitBtnText: "Done",
+      editBtnText: "Edit",
       taskResult: "Task result",
       addPlanItem: "Add plan item",
     },

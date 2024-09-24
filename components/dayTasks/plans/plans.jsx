@@ -1,12 +1,12 @@
 import { Box, Button, ButtonText } from "@gluestack-ui/themed";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
-import { MAX_PLANS_AMOUNT, TASK_CATEGORY } from "../constants/constants";
+import { MAX_PLANS_AMOUNT, TASK_CATEGORY } from "../../../constants/constants";
 import isEmpty from "lodash/isEmpty";
 
 import { AddPlanModal } from "./add-plan-modal";
-import { ListItems } from "./list-items";
-import { saveTaskByCategory } from "../services/services";
+import { PlansList } from "./plans-list";
+import { saveTaskByCategory } from "../../../services/services";
 import { Alert } from "react-native";
 import uuid from "react-native-uuid";
 
@@ -89,7 +89,7 @@ export function Plans({ context, data, setData }) {
         <ButtonText>{t("screens.tasksOfTheDay.addPlanItem")}</ButtonText>
       </Button>
       {!isEmpty(data) && (
-        <ListItems
+        <PlansList
           plans={data}
           onEdit={handleEditPlan}
           onDelete={handleDeletePlan}

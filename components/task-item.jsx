@@ -32,21 +32,12 @@ import {
   saveTaskByCategory,
   saveUserTask,
 } from "../services/services";
-import { Plans } from "./plans";
+import { Plans } from "./dayTasks/plans/plans";
+import { Summary } from "./dayTasks/summary/summary";
 
 export function TaskItem({ taskConfig, onTaskDataUpdate, day }) {
   const { t } = useTranslation();
   const [data, setData] = useState([]);
-
-  // const [text, setText] = useState("");
-  // const [images, setImages] = useState([]);
-  // const [edit, setEdit] = useState(true);
-  // const [task, setTask] = useState(null);
-
-  // const type =
-  //   taskConfig.category === TASK_CATEGORY.MOOD
-  //     ? TASK_CATEGORY.MOOD
-  //     : TASK_CATEGORY.DAY;
 
   useEffect(() => {
     async function getDayData() {
@@ -61,31 +52,7 @@ export function TaskItem({ taskConfig, onTaskDataUpdate, day }) {
     getDayData();
   }, []);
 
-  // function onTaskSubmit() {
-  //   if (taskConfig.taskOutputType === TASK_OUTPUT_TYPE.TEXT && text.trim()) {
-  //     onTaskDataUpdate({
-  //       text,
-  //       taskOutputType: taskConfig.taskOutputType,
-  //       type,
-  //       category: taskConfig.category,
-  //       context: taskConfig.context,
-  //     });
-  //     setEdit(false);
-  //   }
-  //   if (
-  //     taskConfig.taskOutputType === TASK_OUTPUT_TYPE.IMAGE &&
-  //     !isEmpty(images)
-  //   ) {
-  //     onTaskDataUpdate({
-  //       images,
-  //       taskOutputType: taskConfig.taskOutputType,
-  //       type,
-  //       category: taskConfig.category,
-  //       context: taskConfig.context,
-  //     });
-  //     setEdit(false);
-  //   }
-  // }
+  console.log("data", data);
 
   return (
     <>
@@ -134,6 +101,13 @@ export function TaskItem({ taskConfig, onTaskDataUpdate, day }) {
                   setData={setData}
                 />
               )}
+              {taskConfig.taskOutputType === TASK_OUTPUT_TYPE.TEXT && (
+                <Summary
+                  context={taskConfig.context}
+                  data={data}
+                  setData={setData}
+                />
+              )}
               {/* {taskConfig.taskOutputType === TASK_OUTPUT_TYPE.IMAGE && (
                 <Box>
                   <ImagePicker
@@ -149,48 +123,7 @@ export function TaskItem({ taskConfig, onTaskDataUpdate, day }) {
                     </Button>
                   )}
                 </Box>
-              )}
-              {taskConfig.taskOutputType === TASK_OUTPUT_TYPE.TEXT &&
-                (edit ? (
-                  <Box>
-                    <Textarea width="100%">
-                      <TextareaInput
-                        onChangeText={setText}
-                        value={text}
-                        placeholder={t(
-                          "screens.tasksOfTheDay.textareaPlaceholder"
-                        )}
-                      />
-                    </Textarea>
-                    <Button onPress={onTaskSubmit} mt="$2">
-                      <ButtonText>
-                        {t("screens.tasksOfTheDay.submitBtnText")}
-                      </ButtonText>
-                    </Button>
-                  </Box>
-                ) : (
-                  <Box>
-                    <Heading size="sm" pb="$2">
-                      {t("screens.tasksOfTheDay.taskResult")}
-                    </Heading>
-                    <Text>{text}</Text>
-                    <HStack
-                      space="md"
-                      height={60}
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="flex-end"
-                    >
-                      <Button borderRadius="$full" size="lg">
-                        <ButtonIcon as={EditIcon} />
-                      </Button>
-
-                      <Button borderRadius="$full" size="lg">
-                        <ButtonIcon as={Trash2} />
-                      </Button>
-                    </HStack>
-                  </Box>
-                ))} */}
+              )} */}
             </Box>
           </AccordionContent>
         </AccordionItem>

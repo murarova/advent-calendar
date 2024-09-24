@@ -1,6 +1,4 @@
 import { useSharedValue } from "react-native-reanimated";
-// import { Slider } from "react-native-awesome-slider";
-// import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
   Center,
   Slider,

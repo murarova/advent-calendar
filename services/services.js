@@ -33,16 +33,14 @@ export async function saveUserTask({ type, task, day, category }) {
   }
 }
 
-export async function saveTaskByType({ category, task, context }) {
-  console.log(" category, task, context ", category, task, context);
-
+export async function saveTaskByCategory({ category, data, context }) {
   const currentUser = getCurrentUser();
   if (currentUser) {
     const response = await firebase
       .app()
       .database(process.env.DB)
       .ref(`/users/${currentUser.uid}/${category}/${context}`)
-      .set(task);
+      .set(data);
 
     return response;
   }
@@ -62,13 +60,13 @@ export async function getUserTasks() {
 }
 
 //TODO: do we need to save it?
-export async function getUserDayTasks(day) {
+export async function getUserDayTasks(category, context) {
   const currentUser = getCurrentUser();
   if (currentUser) {
     const response = await firebase
       .app()
       .database(process.env.DB)
-      .ref(`/users/${currentUser.uid}/tasks/${day}`)
+      .ref(`/users/${currentUser.uid}/${category}/${context}`)
       .once("value");
 
     return response.val();

@@ -11,6 +11,8 @@ export default {
     add: "Додати",
     empty: "Зараз тут нічого немає",
     cancel: "Відмінити",
+    edit: "Редагувати",
+    delete: "Видалити",
   },
   screens: {
     emptyScreen: "На сьогодні завдань немає",
@@ -33,6 +35,7 @@ export default {
     plansScreen: {
       health: "Здоров'я",
       learning: "Розвиток",
+      maxPlansError: "Ви не можете додати більше ніж 10 пунктів",
     },
     plansModal: {
       addPlanTitle: "Додайте пункт плану",

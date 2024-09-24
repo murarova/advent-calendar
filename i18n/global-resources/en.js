@@ -10,7 +10,9 @@ export default {
     plans: "Plans",
     empty: "There is nothing here at the moment",
     add: "Add",
-    cancel: "Cancel"
+    cancel: "Cancel",
+    edit: "Edit",
+    delete: "Delete"
   },
   screens: {
     emptyScreen: "There are no tasks for today",
@@ -33,6 +35,7 @@ export default {
     plansScreen: {
       health: "Health",
       learning: "Learning",
+      maxPlansError: "You cannot add more than 10 points",
     },
     plansModal: {
       addPlanTitle: "Add plan item",

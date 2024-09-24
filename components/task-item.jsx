@@ -26,111 +26,79 @@ import {
   TASK_CONTEXT,
   TASK_CATEGORY,
 } from "../constants/constants";
-import isEmpty from "lodash/isEmpty";
-import { EditIcon, Trash2 } from "lucide-react-native";
-import { AddPlanModal } from "./add-plan-modal";
-import { ListItems } from "./list-items";
+
 import {
   getUserDayTasks,
-  saveTaskByType,
+  saveTaskByCategory,
   saveUserTask,
 } from "../services/services";
-import { Alert } from "react-native";
-import uuid from "react-native-uuid";
+import { Plans } from "./plans";
 
 export function TaskItem({ taskConfig, onTaskDataUpdate, day }) {
   const { t } = useTranslation();
-  const [text, setText] = useState("");
-  const [plans, setPlans] = useState([]);
-  const [images, setImages] = useState([]);
-  const [edit, setEdit] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  const [task, setTask] = useState(null);
+  const [data, setData] = useState([]);
 
-  const type =
-    taskConfig.category === TASK_CATEGORY.MOOD
-      ? TASK_CATEGORY.MOOD
-      : TASK_CATEGORY.DAY;
+  // const [text, setText] = useState("");
+  // const [images, setImages] = useState([]);
+  // const [edit, setEdit] = useState(true);
+  // const [task, setTask] = useState(null);
+
+  // const type =
+  //   taskConfig.category === TASK_CATEGORY.MOOD
+  //     ? TASK_CATEGORY.MOOD
+  //     : TASK_CATEGORY.DAY;
 
   useEffect(() => {
     async function getDayData() {
-      const task = await getUserDayTasks(day);
-      if (task) {
-        setTask(task);
+      const data = await getUserDayTasks(
+        taskConfig.category,
+        taskConfig.context
+      );
+      if (data) {
+        setData(data);
       }
     }
     getDayData();
   }, []);
 
-  useEffect(() => {
-    if (task) {
-      if (!isEmpty(task?.day?.plans)) {
-        setPlans(task?.day?.plans);
-      }
-      setText(task?.text);
-      setEdit(false);
-    }
-  }, [task]);
-
-  function onTaskSubmit() {
-    if (taskConfig.taskOutputType === TASK_OUTPUT_TYPE.TEXT && text.trim()) {
-      onTaskDataUpdate({
-        text,
-        taskOutputType: taskConfig.taskOutputType,
-        type,
-        category: taskConfig.category,
-        context: taskConfig.context,
-      });
-      setEdit(false);
-    }
-    if (
-      taskConfig.taskOutputType === TASK_OUTPUT_TYPE.IMAGE &&
-      !isEmpty(images)
-    ) {
-      onTaskDataUpdate({
-        images,
-        taskOutputType: taskConfig.taskOutputType,
-        type,
-        category: taskConfig.category,
-        context: taskConfig.context,
-      });
-      setEdit(false);
-    }
-  }
-
-  async function handleAddPlan(text) {
-    const id = uuid.v4();
-    try {
-      const updatedPlans = [
-        ...plans,
-        {
-          id,
-          text,
-        },
-      ];
-
-      await saveTaskByType({
-        category: taskConfig.category,
-        task: updatedPlans,
-        context: taskConfig.context,
-      });
-      await saveUserTask({
-        type,
-        task: updatedPlans,
-        day,
-        category: taskConfig.category,
-      });
-
-      setPlans(updatedPlans);
-    } catch (error) {
-      Alert.alert("Oops", "Something wrong");
-    }
-  }
+  // function onTaskSubmit() {
+  //   if (taskConfig.taskOutputType === TASK_OUTPUT_TYPE.TEXT && text.trim()) {
+  //     onTaskDataUpdate({
+  //       text,
+  //       taskOutputType: taskConfig.taskOutputType,
+  //       type,
+  //       category: taskConfig.category,
+  //       context: taskConfig.context,
+  //     });
+  //     setEdit(false);
+  //   }
+  //   if (
+  //     taskConfig.taskOutputType === TASK_OUTPUT_TYPE.IMAGE &&
+  //     !isEmpty(images)
+  //   ) {
+  //     onTaskDataUpdate({
+  //       images,
+  //       taskOutputType: taskConfig.taskOutputType,
+  //       type,
+  //       category: taskConfig.category,
+  //       context: taskConfig.context,
+  //     });
+  //     setEdit(false);
+  //   }
+  // }
 
   return (
     <>
-      <Accordion size="md" my="$2" variant="filled" type="single">
-        <AccordionItem value="a">
+      <Accordion
+        size="md"
+        my="$2"
+        type="multiple"
+        borderRadius="$lg"
+        elevation="$0.5"
+        shadowRadius="$1"
+        shadowOpacity="$5"
+      >
+        <AccordionItem value="a" borderRadius="$lg">
           <AccordionHeader>
             <AccordionTrigger>
               {({ isExpanded }) => {
@@ -159,7 +127,14 @@ export function TaskItem({ taskConfig, onTaskDataUpdate, day }) {
               <Text>{taskConfig.text}</Text>
             </Box>
             <Box pt="$4">
-              {taskConfig.taskOutputType === TASK_OUTPUT_TYPE.IMAGE && (
+              {taskConfig.taskOutputType === TASK_OUTPUT_TYPE.LIST && (
+                <Plans
+                  context={taskConfig.context}
+                  data={data}
+                  setData={setData}
+                />
+              )}
+              {/* {taskConfig.taskOutputType === TASK_OUTPUT_TYPE.IMAGE && (
                 <Box>
                   <ImagePicker
                     edit={edit}
@@ -173,18 +148,6 @@ export function TaskItem({ taskConfig, onTaskDataUpdate, day }) {
                       </ButtonText>
                     </Button>
                   )}
-                </Box>
-              )}
-              {taskConfig.taskOutputType === TASK_OUTPUT_TYPE.LIST && (
-                <Box>
-                  <Box alignItems="center">
-                    <Button onPress={() => setShowModal(true)}>
-                      <ButtonText>
-                        {t("screens.tasksOfTheDay.addPlanItem")}
-                      </ButtonText>
-                    </Button>
-                  </Box>
-                  {!isEmpty(plans) && <ListItems plans={plans} />}
                 </Box>
               )}
               {taskConfig.taskOutputType === TASK_OUTPUT_TYPE.TEXT &&
@@ -227,17 +190,11 @@ export function TaskItem({ taskConfig, onTaskDataUpdate, day }) {
                       </Button>
                     </HStack>
                   </Box>
-                ))}
+                ))} */}
             </Box>
           </AccordionContent>
         </AccordionItem>
       </Accordion>
-      {showModal && (
-        <AddPlanModal
-          setShowModal={setShowModal}
-          handleAddPlan={handleAddPlan}
-        />
-      )}
     </>
   );
 }

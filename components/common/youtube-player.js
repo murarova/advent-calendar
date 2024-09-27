@@ -12,7 +12,7 @@ export function YoutubePlayer({ videoId }) {
   const onStateChange = useCallback((state) => {
     if (state === "ended") {
       setPlaying(false);
-      Alert.alert("video has finished playing!");
+      // Alert.alert("video has finished playing!");
     }
   }, []);
 

@@ -1,5 +1,6 @@
 import { firebase } from "@react-native-firebase/database";
 import auth from "@react-native-firebase/auth";
+import storage from "@react-native-firebase/storage";
 
 export const createProfile = async (uid, name) => {
   firebase.app().database(process.env.DB).ref(`/users/${uid}`).set({ name });
@@ -59,7 +60,6 @@ export async function getUserTasks() {
   }
 }
 
-//TODO: do we need to save it?
 export async function getUserDayTasks(category, context) {
   const currentUser = getCurrentUser();
   if (currentUser) {
@@ -96,5 +96,27 @@ export async function getUserPlans() {
       .once("value");
 
     return response.val();
+  }
+}
+
+export async function saveImage(image) {
+  const currentUser = getCurrentUser();
+  if (currentUser) {
+    const reference = storage().ref(`/images/${currentUser.uid}/${image.id}`);
+
+    await reference.putFile(image.img.uri);
+  }
+  image;
+}
+
+export async function getImageUrl(id) {
+  const currentUser = getCurrentUser();
+  if (currentUser) {
+    // const reference = storage().ref(`/images/${currentUser.uid}/${id}`);
+
+    const url = await storage()
+      .ref(`/images/${currentUser.uid}/${id}`)
+      .getDownloadURL();
+    return url;
   }
 }

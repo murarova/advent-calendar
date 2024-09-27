@@ -32,10 +32,11 @@ import {
   saveTaskByCategory,
   saveUserTask,
 } from "../services/services";
-import { Plans } from "./dayTasks/plans/plans";
-import { Summary } from "./dayTasks/summary/summary";
+import { Plans } from "./day-tasks/plans/plans";
+import { Summary } from "./day-tasks/summary/summary";
+import { MonthPhoto } from "./day-tasks/month-photo/month-photo";
 
-export function TaskItem({ taskConfig, onTaskDataUpdate, day }) {
+export function TaskItem({ taskConfig, onTaskDataUpdate }) {
   const { t } = useTranslation();
   const [data, setData] = useState([]);
 
@@ -108,22 +109,13 @@ export function TaskItem({ taskConfig, onTaskDataUpdate, day }) {
                   setData={setData}
                 />
               )}
-              {/* {taskConfig.taskOutputType === TASK_OUTPUT_TYPE.IMAGE && (
-                <Box>
-                  <ImagePicker
-                    edit={edit}
-                    images={images}
-                    setImages={setImages}
-                  />
-                  {!isEmpty(images) && edit && (
-                    <Button onPress={onTaskSubmit}>
-                      <ButtonText>
-                        {t("screens.tasksOfTheDay.submitBtnText")}
-                      </ButtonText>
-                    </Button>
-                  )}
-                </Box>
-              )} */}
+              {taskConfig.taskOutputType === TASK_OUTPUT_TYPE.IMAGE && (
+                <MonthPhoto
+                  data={data}
+                  setData={setData}
+                  context={taskConfig.context}
+                />
+              )}
             </Box>
           </AccordionContent>
         </AccordionItem>

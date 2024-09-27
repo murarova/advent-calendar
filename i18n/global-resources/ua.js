@@ -1,7 +1,7 @@
 export default {
   common: {
     back: "Назад",
-    pickPhoto: "Вибери фото",
+    pickPhoto: "Додати фото",
     pickAnother: "Вибрати інше",
     done: "Виконано",
     goToTheMainScreen: "На головну",

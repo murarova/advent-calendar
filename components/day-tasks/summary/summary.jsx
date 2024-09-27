@@ -12,15 +12,22 @@ import { TASK_CATEGORY } from "../../../constants/constants";
 import uuid from "react-native-uuid";
 import { saveTaskByCategory } from "../../../services/services";
 import { Alert } from "react-native";
+import isEmpty from "lodash/isEmpty";
 import { HappySlider } from "./happy-slider";
 
 export function Summary({ context, data, setData }) {
   const { t } = useTranslation();
   const [text, setText] = useState("");
   const [rate, setRate] = useState(50);
-  const [edit, setEdit] = useState(!Boolean(data));
+  const [edit, setEdit] = useState(false);
 
   useEffect(() => {
+    if (isEmpty(data)) {
+      setEdit(true);
+    } else {
+      setEdit(false);
+    }
+
     if (data.text) {
       setText(data.text);
     }

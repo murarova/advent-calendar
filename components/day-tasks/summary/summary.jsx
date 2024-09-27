@@ -28,10 +28,10 @@ export function Summary({ context, data, setData }) {
       setEdit(false);
     }
 
-    if (data.text) {
+    if (data?.text) {
       setText(data.text);
     }
-    if (data.rate) {
+    if (data?.rate) {
       setRate(data.rate);
     }
   }, [data]);

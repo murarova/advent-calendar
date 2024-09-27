@@ -38,7 +38,7 @@ import { MonthPhoto } from "./day-tasks/month-photo/month-photo";
 
 export function TaskItem({ taskConfig, onTaskDataUpdate }) {
   const { t } = useTranslation();
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     async function getDayData() {
@@ -52,8 +52,6 @@ export function TaskItem({ taskConfig, onTaskDataUpdate }) {
     }
     getDayData();
   }, []);
-
-  console.log("data", data);
 
   return (
     <>

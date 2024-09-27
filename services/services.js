@@ -103,20 +103,29 @@ export async function saveImage(image) {
   const currentUser = getCurrentUser();
   if (currentUser) {
     const reference = storage().ref(`/images/${currentUser.uid}/${image.id}`);
-
     await reference.putFile(image.img.uri);
   }
-  image;
 }
 
 export async function getImageUrl(id) {
   const currentUser = getCurrentUser();
   if (currentUser) {
-    // const reference = storage().ref(`/images/${currentUser.uid}/${id}`);
-
     const url = await storage()
       .ref(`/images/${currentUser.uid}/${id}`)
       .getDownloadURL();
     return url;
+  }
+}
+
+export async function removeTask({ category, context }) {
+  const currentUser = getCurrentUser();
+  if (currentUser) {
+    const response = await firebase
+      .app()
+      .database(process.env.DB)
+      .ref(`/users/${currentUser.uid}/${category}/${context}`)
+      .remove();
+
+    return response;
   }
 }

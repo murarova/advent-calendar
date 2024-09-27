@@ -13,6 +13,7 @@ import isEmpty from "lodash/isEmpty";
 
 import {
   getImageUrl,
+  removeTask,
   saveImage,
   saveTaskByCategory,
 } from "../../../services/services";
@@ -34,10 +35,10 @@ export function MonthPhoto({ context, data, setData }) {
     } else {
       setEdit(false);
     }
-    if (data.text) {
+    if (data?.text) {
       setText(data.text);
     }
-    if (data.image) {
+    if (data?.image) {
       setUploadedImg({
         id: data.image.id,
         img: {
@@ -49,44 +50,63 @@ export function MonthPhoto({ context, data, setData }) {
 
   async function saveUserImage() {
     try {
+      setIsImageLoading(true);
       await saveImage(uploadedImg);
       const uri = await getImageUrl(uploadedImg.id);
       return uri;
     } catch (error) {
       Alert.alert("Oops", "Image was not saved");
+    } finally {
+      setIsImageLoading(false);
+    }
+  }
+
+  async function handleTaskRemove() {
+    try {
+      await removeTask({
+        category: TASK_CATEGORY.MONTH_PHOTO,
+        context,
+      });
+    } catch (error) {
+      Alert.alert("Oops", "Something wrong");
+    } finally {
+      setData(null);
+      setText("");
+      setUploadedImg(null);
     }
   }
 
   async function onTaskSubmit() {
-    setEdit(false);
-    setIsImageLoading(true);
-    const id = data.id ?? uuid.v4();
-    try {
-      const uri = await saveUserImage();
-      if (!uri) {
-        setEdit(true);
-        return;
+    if (uploadedImg) {
+      setEdit(false);
+      const id = data?.id ?? uuid.v4();
+      try {
+        const uri = await saveUserImage();
+        if (!uri) {
+          setEdit(true);
+          return;
+        }
+        const updatedData = {
+          id,
+          text,
+          image: {
+            id: uploadedImg.id,
+            uri,
+            width: uploadedImg.img.width,
+            height: uploadedImg.img.height,
+          },
+        };
+        await saveTaskByCategory({
+          category: TASK_CATEGORY.MONTH_PHOTO,
+          data: updatedData,
+          context,
+        });
+        setData(updatedData);
+      } catch (error) {
+        Alert.alert("Oops", "Something wrong");
       }
-      const updatedData = {
-        id,
-        text,
-        image: {
-          id: uploadedImg.id,
-          uri,
-          width: uploadedImg.img.width,
-          height: uploadedImg.img.height,
-        },
-      };
-      await saveTaskByCategory({
-        category: TASK_CATEGORY.MONTH_PHOTO,
-        data: updatedData,
-        context,
-      });
-      setData(updatedData);
-    } catch (error) {
-      Alert.alert("Oops", "Something wrong");
-    } finally {
-      setIsImageLoading(false);
+    } else {
+      Alert.alert("Помилка", "Будь ласка додайте фото");
     }
   }
 
@@ -117,23 +137,27 @@ export function MonthPhoto({ context, data, setData }) {
           <Box mb="$2">
             <Text>{data?.text || t("common.empty")}</Text>
           </Box>
-          {uploadedImg && (
+          {uploadedImg?.img?.uri && (
             <Box flex={1}>
-              <Box
-                position="absolute"
-                top="$0"
-                bottom="$0"
-                left="$0"
-                right="$0"
-                zIndex={1}
-              >
-                <Loader size="large" />
-              </Box>
-              <AnimatedView style={{ zIndex: 2 }} show={isImageLoading}>
+              {isImageLoading && (
+                <Box
+                  position="absolute"
+                  backgroundColor="$blueGray100"
+                  opacity="$60"
+                  top="$0"
+                  bottom="$0"
+                  left="$0"
+                  right="$0"
+                  zIndex={2}
+                >
+                  <Loader size="large" />
+                </Box>
+              )}
+              <AnimatedView style={{ zIndex: 1 }} show={isImageLoading}>
                 <Box height={300} width="100%" flex={1}>
                   <ImageBackground
                     style={{ flex: 1, justifyContent: "center" }}
-                    source={{ uri: uploadedImg.img.uri }}
+                    src={uploadedImg?.img?.uri}
                     onLoadStart={() => setIsImageLoading(true)}
                     onLoadEnd={() => setIsImageLoading(false)}
                   />
@@ -143,6 +167,9 @@ export function MonthPhoto({ context, data, setData }) {
           )}
           <Button onPress={() => setEdit(true)} mt="$2" borderRadius="$lg">
             <ButtonText>{t("screens.tasksOfTheDay.editBtnText")}</ButtonText>
+          </Button>
+          <Button onPress={handleTaskRemove} mt="$2" borderRadius="$lg">
+            <ButtonText>{t("common.delete")}</ButtonText>
           </Button>
         </Box>
       )}

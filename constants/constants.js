@@ -38,6 +38,7 @@ export const TASK_CATEGORY = {
   SUMMARY: "summary",
   PLANS: "plans",
   DAY: "day",
+  MONTH_PHOTO: "monthPhoto",
 };
 
 export const MAX_PLANS_AMOUNT = 10;

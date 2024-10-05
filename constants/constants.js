@@ -29,7 +29,6 @@ export const TASK_OUTPUT_TYPE = {
 
 export const TASK_CONTEXT = {
   HEALTH: "health",
-  MOOD: "mood",
   LEARNING: "learning",
 };
 
@@ -37,7 +36,6 @@ export const TASK_CATEGORY = {
   MOOD: "mood",
   SUMMARY: "summary",
   PLANS: "plans",
-  DAY: "day",
   MONTH_PHOTO: "monthPhoto",
 };
 

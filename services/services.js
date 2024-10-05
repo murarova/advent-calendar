@@ -1,6 +1,7 @@
 import { firebase } from "@react-native-firebase/database";
 import auth from "@react-native-firebase/auth";
 import storage from "@react-native-firebase/storage";
+import { TASK_CATEGORY } from "../constants/constants";
 
 export const createProfile = async (uid, name) => {
   firebase.app().database(process.env.DB).ref(`/users/${uid}`).set({ name });
@@ -47,6 +48,19 @@ export async function saveTaskByCategory({ category, data, context }) {
   }
 }
 
+export async function saveMoodTask({ category, data }) {
+  const currentUser = getCurrentUser();
+  if (currentUser) {
+    const response = await firebase
+      .app()
+      .database(process.env.DB)
+      .ref(`/users/${currentUser.uid}/${category}`)
+      .set(data);
+
+    return response;
+  }
+}
+
 export async function getUserTasks() {
   const currentUser = getCurrentUser();
   if (currentUser) {
@@ -63,10 +77,14 @@ export async function getUserTasks() {
 export async function getUserDayTasks(category, context) {
   const currentUser = getCurrentUser();
   if (currentUser) {
+    const ref =
+      category === TASK_CATEGORY.MOOD
+        ? `/users/${currentUser.uid}/${category}`
+        : `/users/${currentUser.uid}/${category}/${context}`;
     const response = await firebase
       .app()
       .database(process.env.DB)
-      .ref(`/users/${currentUser.uid}/${category}/${context}`)
+      .ref(ref)
       .once("value");
 
     return response.val();
@@ -103,7 +121,7 @@ export async function saveImage(image) {
   const currentUser = getCurrentUser();
   if (currentUser) {
     const reference = storage().ref(`/images/${currentUser.uid}/${image.id}`);
-    await reference.putFile(image.img.uri);
+    await reference.putFile(image.uri);
   }
 }
 
@@ -120,12 +138,61 @@ export async function getImageUrl(id) {
 export async function removeTask({ category, context }) {
   const currentUser = getCurrentUser();
   if (currentUser) {
+    const ref =
+      category === TASK_CATEGORY.MOOD
+        ? `/users/${currentUser.uid}/${category}`
+        : `/users/${currentUser.uid}/${category}/${context}`;
     const response = await firebase
       .app()
       .database(process.env.DB)
-      .ref(`/users/${currentUser.uid}/${category}/${context}`)
+      .ref(ref)
       .remove();
 
     return response;
+  }
+}
+
+export async function getComplited() {
+  const currentUser = getCurrentUser();
+  if (currentUser) {
+    const response = await firebase
+      .app()
+      .database(process.env.DB)
+      .ref(`/users/${currentUser.uid}/complited`)
+      .once("value");
+
+    return response.val();
+  }
+}
+
+export async function setComplited({ day }) {
+  const currentUser = getCurrentUser();
+  if (currentUser) {
+    const complited = (await getComplited()) ?? [];
+
+    const response = await firebase
+      .app()
+      .database(process.env.DB)
+      .ref(`/users/${currentUser.uid}/complited`)
+      .set([...complited, day]);
+
+    return response;
+  }
+}
+
+export async function removeComplited({ day }) {
+  const currentUser = getCurrentUser();
+  if (currentUser) {
+    const complited = await getComplited();
+    if (complited) {
+      const newComplited = complited.filter((item) => item !== day);
+      const response = await firebase
+        .app()
+        .database(process.env.DB)
+        .ref(`/users/${currentUser.uid}/complited`)
+        .set(newComplited);
+
+      return response;
+    }
   }
 }

@@ -10,12 +10,12 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { TASK_CATEGORY } from "../../../constants/constants";
 import uuid from "react-native-uuid";
-import { saveTaskByCategory } from "../../../services/services";
+import { removeTask, saveTaskByCategory } from "../../../services/services";
 import { Alert } from "react-native";
 import isEmpty from "lodash/isEmpty";
 import { HappySlider } from "./happy-slider";
 
-export function Summary({ context, data, setData }) {
+export function Summary({ context, data, setData, removeGrade }) {
   const { t } = useTranslation();
   const [text, setText] = useState("");
   const [rate, setRate] = useState(50);
@@ -37,7 +37,7 @@ export function Summary({ context, data, setData }) {
   }, [data]);
 
   function onTaskSubmit() {
-    const id = data.id ?? uuid.v4();
+    const id = data?.id ?? uuid.v4();
     const updatedSummary = {
       id,
       text,
@@ -54,6 +54,22 @@ export function Summary({ context, data, setData }) {
     } finally {
       setData(updatedSummary);
       setEdit(false);
+    }
+  }
+
+  async function handleTaskRemove() {
+    try {
+      await removeTask({
+        category: TASK_CATEGORY.SUMMARY,
+        context,
+      });
+      await removeGrade({ category: TASK_CATEGORY.SUMMARY });
+    } catch (error) {
+      Alert.alert("Oops", "Something wrong");
+    } finally {
+      setData(null);
+      setText("");
+      setRate(50);
     }
   }
 
@@ -80,6 +96,14 @@ export function Summary({ context, data, setData }) {
           </Box>
           <Button onPress={() => setEdit(true)} mt="$2" borderRadius="$lg">
             <ButtonText>{t("screens.tasksOfTheDay.editBtnText")}</ButtonText>
+          </Button>
+          <Button
+            onPress={handleTaskRemove}
+            variant="link"
+            mt="$2"
+            borderRadius="$lg"
+          >
+            <ButtonText>{t("common.delete")}</ButtonText>
           </Button>
         </Box>
       )}

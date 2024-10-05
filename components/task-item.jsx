@@ -10,15 +10,8 @@ import {
   ChevronDownIcon,
   Box,
   Text,
-  Textarea,
-  TextareaInput,
-  Button,
-  ButtonText,
   Heading,
-  HStack,
-  ButtonIcon,
 } from "@gluestack-ui/themed";
-import { ImagePicker } from "./common";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import {
@@ -27,31 +20,42 @@ import {
   TASK_CATEGORY,
 } from "../constants/constants";
 
-import {
-  getUserDayTasks,
-  saveTaskByCategory,
-  saveUserTask,
-} from "../services/services";
+import { getUserDayTasks } from "../services/services";
 import { Plans } from "./day-tasks/plans/plans";
 import { Summary } from "./day-tasks/summary/summary";
 import { MonthPhoto } from "./day-tasks/month-photo/month-photo";
+import { Alert } from "react-native";
+import { MoodTask } from "./day-tasks/mood/mood-task";
 
-export function TaskItem({ taskConfig, onTaskDataUpdate }) {
+export function TaskItem({ taskConfig, updateGrade, removeGrade }) {
   const { t } = useTranslation();
   const [data, setData] = useState(null);
 
   useEffect(() => {
     async function getDayData() {
-      const data = await getUserDayTasks(
-        taskConfig.category,
-        taskConfig.context
-      );
-      if (data) {
-        setData(data);
+      try {
+        const data = await getUserDayTasks(
+          taskConfig.category,
+          taskConfig.context
+        );
+        if (data) {
+          setData(data);
+        }
+      } catch (error) {
+        Alert.alert("Oops", "Something wrong");
       }
     }
     getDayData();
   }, []);
+
+  useEffect(() => {
+    if (data) {
+      updateGrade({
+        category: taskConfig.category,
+        grade: taskConfig.grade,
+      });
+    }
+  }, [data]);
 
   return (
     <>
@@ -71,7 +75,7 @@ export function TaskItem({ taskConfig, onTaskDataUpdate }) {
                 return (
                   <>
                     <AccordionTitleText>
-                      {taskConfig.category === TASK_CONTEXT.MOOD
+                      {taskConfig.category === TASK_CATEGORY.MOOD
                         ? t("screens.tasksOfTheDay.moodTitle")
                         : t("screens.tasksOfTheDay.dayTitle")}
                     </AccordionTitleText>
@@ -98,20 +102,31 @@ export function TaskItem({ taskConfig, onTaskDataUpdate }) {
                   context={taskConfig.context}
                   data={data}
                   setData={setData}
+                  removeGrade={removeGrade}
                 />
               )}
-              {taskConfig.taskOutputType === TASK_OUTPUT_TYPE.TEXT && (
-                <Summary
-                  context={taskConfig.context}
-                  data={data}
-                  setData={setData}
-                />
-              )}
+              {taskConfig.taskOutputType === TASK_OUTPUT_TYPE.TEXT &&
+                taskConfig.category === TASK_CATEGORY.SUMMARY && (
+                  <Summary
+                    context={taskConfig.context}
+                    data={data}
+                    setData={setData}
+                    removeGrade={removeGrade}
+                  />
+                )}
               {taskConfig.taskOutputType === TASK_OUTPUT_TYPE.IMAGE && (
                 <MonthPhoto
                   data={data}
                   setData={setData}
                   context={taskConfig.context}
+                  removeGrade={removeGrade}
+                />
+              )}
+              {taskConfig.category === TASK_CATEGORY.MOOD && (
+                <MoodTask
+                  data={data}
+                  setData={setData}
+                  removeGrade={removeGrade}
                 />
               )}
             </Box>

@@ -11,18 +11,14 @@ import { useEffect, useState } from "react";
 import { TASK_CATEGORY } from "../../../constants/constants";
 import isEmpty from "lodash/isEmpty";
 
-import {
-  getImageUrl,
-  removeTask,
-  saveTaskByCategory,
-} from "../../../services/services";
+import { removeTask, saveMoodTask } from "../../../services/services";
 import { Alert } from "react-native";
 import uuid from "react-native-uuid";
 import { AnimatedView, ImagePicker, Loader } from "../../common";
 import { ImageBackground } from "@gluestack-ui/themed";
 import { useImage } from "../../hooks/useImage";
 
-export function MonthPhoto({ context, data, setData, removeGrade }) {
+export function MoodTask({ data, setData, removeGrade }) {
   const { t } = useTranslation();
   const [edit, setEdit] = useState(false);
   const [text, setText] = useState("");
@@ -45,10 +41,10 @@ export function MonthPhoto({ context, data, setData, removeGrade }) {
   async function handleTaskRemove() {
     try {
       await removeTask({
-        category: TASK_CATEGORY.MONTH_PHOTO,
-        context,
+        category: TASK_CATEGORY.MOOD,
+        context: null,
       });
-      await removeGrade({ category: TASK_CATEGORY.MONTH_PHOTO });
+      await removeGrade({ category: TASK_CATEGORY.MOOD });
     } catch (error) {
       Alert.alert("Oops", "Something wrong");
     } finally {
@@ -59,21 +55,29 @@ export function MonthPhoto({ context, data, setData, removeGrade }) {
   }
 
   async function onTaskSubmit() {
-    if (image) {
+    const id = data?.id ?? uuid.v4();
+
+    let updatedData = {
+      id,
+      text,
+      image,
+    };
+
+    if (image || text) {
       setEdit(false);
-      const id = data?.id ?? uuid.v4();
       try {
-        const newImage = await saveImage();
-        const updatedData = {
-          id,
-          text,
-          image: newImage,
-        };
-        await saveTaskByCategory({
-          category: TASK_CATEGORY.MONTH_PHOTO,
+        if (image) {
+          const newImage = await saveImage();
+          updatedData = {
+            ...updatedData,
+            image: newImage,
+          };
+        }
+        await saveMoodTask({
+          category: TASK_CATEGORY.MOOD,
           data: updatedData,
-          context,
         });
+
         setData(updatedData);
       } catch (error) {
         Alert.alert("Oops", "Something wrong");
@@ -143,8 +147,8 @@ export function MonthPhoto({ context, data, setData, removeGrade }) {
           </Button>
           <Button
             onPress={handleTaskRemove}
-            mt="$2"
             variant="link"
+            mt="$2"
             borderRadius="$lg"
           >
             <ButtonText>{t("common.delete")}</ButtonText>

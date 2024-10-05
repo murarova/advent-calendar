@@ -1,10 +1,6 @@
 import { Alert } from "react-native";
 import * as ExpoImagePicker from "expo-image-picker";
-import {
-  Box,
-  ButtonText,
-  Button,
-} from "@gluestack-ui/themed";
+import { Box, ButtonText, Button } from "@gluestack-ui/themed";
 import { useTranslation } from "react-i18next";
 import { ImageBackground } from "@gluestack-ui/themed";
 import uuid from "react-native-uuid";
@@ -12,8 +8,8 @@ import { Loader } from "./loader";
 import { AnimatedView } from "./animated-view";
 
 export function ImagePicker({
-  uploadedImg,
-  setUploadedImg,
+  image,
+  setImage,
   edit,
   setIsImageLoading,
   isImageLoading,
@@ -22,19 +18,20 @@ export function ImagePicker({
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
-    setIsImageLoading(true);
     let result = await ExpoImagePicker.launchImageLibraryAsync({
       mediaTypes: ExpoImagePicker.MediaTypeOptions.All,
       quality: 1,
     });
     if (!result.canceled) {
-      const id = uploadedImg?.id ?? uuid.v4();
+      const id = image?.id ?? uuid.v4();
+
       const newImage = {
         id,
-        img: result.assets[0],
+        uri: result.assets[0].uri,
+        width: result.assets[0].width,
+        height: result.assets[0].height,
       };
-      setUploadedImg(newImage);
-      setIsImageLoading(false);
+      setImage(newImage);
     } else {
       Alert.alert("Canceled");
     }
@@ -42,23 +39,27 @@ export function ImagePicker({
 
   return (
     <Box>
-      {uploadedImg && (
+      {image && (
         <Box flex={1}>
-          <Box
-            position="absolute"
-            top="$0"
-            bottom="$0"
-            left="$0"
-            right="$0"
-            zIndex={1}
-          >
-            <Loader size="large" />
-          </Box>
-          <AnimatedView style={{ zIndex: 2 }} show={isImageLoading}>
+          {isImageLoading && (
+            <Box
+              position="absolute"
+              backgroundColor="$blueGray100"
+              opacity="$60"
+              top="$0"
+              bottom="$0"
+              left="$0"
+              right="$0"
+              zIndex={2}
+            >
+              <Loader size="large" />
+            </Box>
+          )}
+          <AnimatedView style={{ zIndex: 2 }} show={!isImageLoading}>
             <Box height={300} width="100%" flex={1}>
               <ImageBackground
                 style={{ flex: 1, justifyContent: "center" }}
-                source={{ uri: uploadedImg.img.uri }}
+                source={{ uri: image.uri }}
                 onLoadStart={() => setIsImageLoading(true)}
                 onLoadEnd={() => setIsImageLoading(false)}
               />
@@ -69,7 +70,7 @@ export function ImagePicker({
       {edit && (
         <Button variant="link" onPress={pickImage}>
           <ButtonText>
-            {uploadedImg ? t("common.pickAnother") : t("common.pickPhoto")}
+            {image ? t("common.pickAnother") : t("common.pickPhoto")}
           </ButtonText>
         </Button>
       )}

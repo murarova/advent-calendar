@@ -42,5 +42,10 @@ export default {
       addPlanTitle: "Add plan item",
       placeholder: "Type your plan here"
     },
+    completedTaskModal: {
+      title: "Nice work!",
+      text: "You have completed 100% of the tasks for today. Now it's time to rest, you deserve it!",
+      btn: "Cool"
+    }
   },
 };

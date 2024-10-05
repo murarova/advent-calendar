@@ -6,14 +6,14 @@
       "moodTaskConfig": {
         "title": "Який на смак святковий настрій?",
         "text": "А давайте посмакуємо святковий настрій. Який він на смак для вас? Які у кого гастрономічні асоціації з Різдвом, Новим роком та взагалі груднем? Якщо про Різдво, то в мене це кутя, звісно. бо кожне Різдво ми з батьками несли її до хрещеної. А якшо Новий Рік, то це оселедець під шубою. Вибачайте, це моя слабкість. Але може ви зараз накидаєте мені більш вишуканих гастрономічних асоціацій і я спробую змінити свої)",
-        "grade": 30,
+        "grade": 50,
         "taskOutputType": "text",
         "category": "mood"
       },
       "dayTaskConfig": {
         "title": "Згадуємо September 2023",
         "text": "Сьогодні згадуємо жовтень 2023. 10 місяць. Ми майже там) Гортайте фоточки, гугл календар, соц.мережі, щоденникові записи. Переглядайте цю короткометражку пам’яті та діліться враженнями)",
-        "grade": 30,
+        "grade": 50,
         "taskOutputType": "image",
         "category": "monthPhoto",
         "context": "september"
@@ -26,12 +26,14 @@
         "title": "What Christmas mood it tastes like",
         "text": "And let's taste the Christmas mood. How does it taste to you? What gastronomic associations do you have with Christmas, New Year and December in general? If it's about Christmas, then I have it in my corner, of course. because every Christmas my parents and I took her to the christening. And if the New Year is a herring under a fur coat. Sorry, that's my weakness. But maybe you can now give me more sophisticated gastronomic associations and I will try to change mine)",
         "taskOutputType": "text",
-        "category": "mood"
+        "category": "mood",
+        "grade": 50
       },
       "dayTaskConfig": {
         "title": "Today we remember September 2023",
         "text": "The 10th month. We are almost there) Scroll through photos, Google calendar, social networks, diary entries. Watch this memory short and share your impressions)",
         "category": "monthPhoto",
+        "grade": 50,
         "context": "september",
         "taskOutputType": "image"
       }
@@ -45,14 +47,16 @@
         "title": "Cвятковий образ",
         "text": "Святковий настрій напряму залежить від святкового образу. Пропоную вже зараз прикинути, у чому ви хочете зустрічати різдвяну ніч, а в чому новорічну. Який хочете лук? Який хочете мейк? \n\nІнколи буває таке, що збиратись на вечірку таааак лінь, а потім пару рухів: блискітки на щічки, піджак чи спідниця в паєтках, яку нема коли носити, окрім як сьогодні ввечорі, трохи волосся вклали й не помітили, як настрій з нікуди взяв і взявся)) Може в когось образ вже готовий?",
         "taskOutputType": "text",
-        "category": "mood"
+        "category": "mood",
+        "grade": 50
       },
       "dayTaskConfig": {
         "title": "Плани здоров'є",
         "text": "База й основа, стартовий капітал без якого не можливі ніякі успіхи та досягнення, без нього неможливо заробити нові гроші, неможливо здобути любов, неможливо думати думки  – це наше тіло. Отже, задачка на сьогодні –  проаналізувати все, що ви зробили для здоров'я свого тіла у 2023 році. Згадайте масажі, планові походи до лікарів, спорт, психотерапію, дієти (якщо вони були для здоров’я), всі випадки, коли тіло до вас промовляло, а ви не відморозились, а подбали.",
         "taskOutputType": "list",
         "category": "plans",
-        "context": "health"
+        "context": "health",
+        "grade": 50
       }
     },
     "en": {
@@ -62,14 +66,16 @@
         "title": "What Christmas mood it tastes like",
         "text": "And let's taste the Christmas mood. How does it taste to you? What gastronomic associations do you have with Christmas, New Year and December in general? If it's about Christmas, then I have it in my corner, of course. because every Christmas my parents and I took her to the christening. And if the New Year is a herring under a fur coat. Sorry, that's my weakness. But maybe you can now give me more sophisticated gastronomic associations and I will try to change mine)",
         "taskOutputType": "text",
-        "category": "mood"
+        "category": "mood",
+        "grade": 50
       },
       "dayTaskConfig": {
         "title": "Plans of Health",
         "text": "The base and the foundation, the starting capital without which no success and achievements are possible, without it it is impossible to earn new money, it is impossible to get love, it is impossible to think thoughts - this is our body. So, the task for today is to analyze everything you have done for the health of your body in 2023. Remember massages, planned visits to doctors, sports, psychotherapy, diets (if they were for health), all the cases when the body spoke to you, and you did not freeze, but took care.",
         "category": "plans",
         "context": "health",
-        "taskOutputType": "list"
+        "taskOutputType": "list",
+        "grade": 50
       }
     }
   },
@@ -81,14 +87,16 @@
         "title": "Cвятковий образ",
         "text": "Святковий настрій напряму залежить від святкового образу. Пропоную вже зараз прикинути, у чому ви хочете зустрічати різдвяну ніч, а в чому новорічну. Який хочете лук? Який хочете мейк? \n\nІнколи буває таке, що збиратись на вечірку таааак лінь, а потім пару рухів: блискітки на щічки, піджак чи спідниця в паєтках, яку нема коли носити, окрім як сьогодні ввечорі, трохи волосся вклали й не помітили, як настрій з нікуди взяв і взявся)) Може в когось образ вже готовий?",
         "taskOutputType": "text",
-        "category": "mood"
+        "category": "mood",
+        "grade": 50
       },
       "dayTaskConfig": {
         "title": "Підсумки Здоров’я",
         "text": "База й основа, стартовий капітал без якого не можливі ніякі успіхи та досягнення, без нього неможливо заробити нові гроші, неможливо здобути любов, неможливо думати думки  – це наше тіло. Отже, задачка на сьогодні –  проаналізувати все, що ви зробили для здоров'я свого тіла у 2023 році. Згадайте масажі, планові походи до лікарів, спорт, психотерапію, дієти (якщо вони були для здоров’я), всі випадки, коли тіло до вас промовляло, а ви не відморозились, а подбали.",
         "taskOutputType": "text",
         "category": "summary",
-        "context": "health"
+        "context": "health",
+        "grade": 50
       }
     },
     "en": {
@@ -98,14 +106,16 @@
         "title": "What Christmas mood it tastes like",
         "text": "And let's taste the Christmas mood. How does it taste to you? What gastronomic associations do you have with Christmas, New Year and December in general? If it's about Christmas, then I have it in my corner, of course. because every Christmas my parents and I took her to the christening. And if the New Year is a herring under a fur coat. Sorry, that's my weakness. But maybe you can now give me more sophisticated gastronomic associations and I will try to change mine)",
         "taskOutputType": "text",
-        "category": "mood"
+        "category": "mood",
+        "grade": 50
       },
       "dayTaskConfig": {
         "title": "Summary of Health",
         "text": "The base and the foundation, the starting capital without which no success and achievements are possible, without it it is impossible to earn new money, it is impossible to get love, it is impossible to think thoughts - this is our body. So, the task for today is to analyze everything you have done for the health of your body in 2023. Remember massages, planned visits to doctors, sports, psychotherapy, diets (if they were for health), all the cases when the body spoke to you, and you did not freeze, but took care.",
         "taskOutputType": "text",
         "category": "summary",
-        "context": "health"
+        "context": "health",
+        "grade": 50
       }
     }
   },
@@ -117,14 +127,16 @@
         "title": "Cвятковий образ",
         "text": "Святковий настрій напряму залежить від святкового образу. Пропоную вже зараз прикинути, у чому ви хочете зустрічати різдвяну ніч, а в чому новорічну. Який хочете лук? Який хочете мейк? \n\nІнколи буває таке, що збиратись на вечірку таааак лінь, а потім пару рухів: блискітки на щічки, піджак чи спідниця в паєтках, яку нема коли носити, окрім як сьогодні ввечорі, трохи волосся вклали й не помітили, як настрій з нікуди взяв і взявся)) Може в когось образ вже готовий?",
         "taskOutputType": "text",
-        "category": "mood"
+        "category": "mood",
+        "grade": 50
       },
       "dayTaskConfig": {
         "title": "Підсумки з навчання/особистісного розвитку",
         "text": "Порахуйте весь час, який ви приділили навчанню в різних жанрах: сюди і професійне навчання, і мови, навчання з медитації на цвяхах теж сюди, майстер-класи з малювання портрета під вино теж сюди, і курс з нутриціології теж сюди – все-все, що ви обрали вивчати, витрачати на це час та гроші.",
         "taskOutputType": "text",
         "category": "summary",
-        "context": "learning"
+        "context": "learning",
+        "grade": 50
       }
     },
     "en": {
@@ -134,14 +146,16 @@
         "title": "What Christmas mood it tastes like",
         "text": "And let's taste the Christmas mood. How does it taste to you? What gastronomic associations do you have with Christmas, New Year and December in general? If it's about Christmas, then I have it in my corner, of course. because every Christmas my parents and I took her to the christening. And if the New Year is a herring under a fur coat. Sorry, that's my weakness. But maybe you can now give me more sophisticated gastronomic associations and I will try to change mine)",
         "taskOutputType": "text",
-        "category": "mood"
+        "category": "mood",
+        "grade": 50
       },
       "dayTaskConfig": {
         "title": "Summary of training/personal development",
         "text": "Count all the time you spent studying in different genres: professional training and languages ​​are here, nail meditation training is also here, wine portrait painting workshops are also here, and a nutrition course is also here - everything, everything. what you chose to study, spend time and money on it.",
         "category": "summary",
         "context": "learning",
-        "taskOutputType": "text"
+        "taskOutputType": "text",
+        "grade": 50
       }
     }
   },
@@ -152,14 +166,14 @@
       "moodTaskConfig": {
         "title": "Який на смак святковий настрій?",
         "text": "А давайте посмакуємо святковий настрій. Який він на смак для вас? Які у кого гастрономічні асоціації з Різдвом, Новим роком та взагалі груднем? Якщо про Різдво, то в мене це кутя, звісно. бо кожне Різдво ми з батьками несли її до хрещеної. А якшо Новий Рік, то це оселедець під шубою. Вибачайте, це моя слабкість. Але може ви зараз накидаєте мені більш вишуканих гастрономічних асоціацій і я спробую змінити свої)",
-        "grade": 30,
+        "grade": 50,
         "taskOutputType": "text",
         "category": "mood"
       },
       "dayTaskConfig": {
         "title": "Згадуємо жовтень 2023",
         "text": "Сьогодні згадуємо жовтень 2023. 10 місяць. Ми майже там) Гортайте фоточки, гугл календар, соц.мережі, щоденникові записи. Переглядайте цю короткометражку пам’яті та діліться враженнями)",
-        "grade": 30,
+        "grade": 50,
         "taskOutputType": "image",
         "category": "monthPhoto",
         "context": "october"
@@ -172,14 +186,16 @@
         "title": "What Christmas mood it tastes like",
         "text": "And let's taste the Christmas mood. How does it taste to you? What gastronomic associations do you have with Christmas, New Year and December in general? If it's about Christmas, then I have it in my corner, of course. because every Christmas my parents and I took her to the christening. And if the New Year is a herring under a fur coat. Sorry, that's my weakness. But maybe you can now give me more sophisticated gastronomic associations and I will try to change mine)",
         "taskOutputType": "text",
-        "category": "mood"
+        "category": "mood",
+        "grade": 50
       },
       "dayTaskConfig": {
         "title": "Today we remember October 2023",
         "text": "The 10th month. We are almost there) Scroll through photos, Google calendar, social networks, diary entries. Watch this memory short and share your impressions)",
         "category": "monthPhoto",
         "context": "october",
-        "taskOutputType": "image"
+        "taskOutputType": "image",
+        "grade": 50
       }
     }
   }

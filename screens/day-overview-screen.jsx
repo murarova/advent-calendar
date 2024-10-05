@@ -1,16 +1,21 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import { TasksList } from "../components";
 import { getDayTasks } from "../config/day-tasks-config";
-import { Box, Text, Center } from "@gluestack-ui/themed";
+import {
+  Box,
+  Text,
+  Center,
+  Progress,
+  ProgressFilledTrack,
+} from "@gluestack-ui/themed";
 import { useTranslation } from "react-i18next";
 import moment from "moment";
-import { LANGUAGES, TASK_CONTEXT } from "../constants/constants";
-
+import { LANGUAGES, TASK_CATEGORY } from "../constants/constants";
+import { CompletedTaskModal } from "../components/completed-task-modal";
 import {
-  getUserDayTasks,
-  getUserPlans,
-  saveTaskByCategory,
-  saveUserTask,
+  getComplited,
+  removeComplited,
+  setComplited,
 } from "../services/services";
 import { Alert } from "react-native";
 
@@ -22,6 +27,16 @@ function DayOverviewScreen({ route, navigation }) {
     .locale(LANGUAGES[i18n.resolvedLanguage].moment)
     .format("MMMM");
   const dayTasks = getDayTasks(day, i18n.resolvedLanguage);
+  const [showComplitedModal, setShowComplitedModal] = useState(false);
+  const [complitedTasks, setComplitedTasks] = useState(null);
+  const [grade, setGrade] = useState({
+    [TASK_CATEGORY.MOOD]: 0,
+    [TASK_CATEGORY.SUMMARY]: 0,
+    [TASK_CATEGORY.MONTH_PHOTO]: 0,
+    [TASK_CATEGORY.PLANS]: 0,
+  });
+
+  const total = getTotalGrade();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -29,10 +44,29 @@ function DayOverviewScreen({ route, navigation }) {
     });
   }, [currentDay, navigation, month]);
 
-  const [grade, setGrade] = useState({
-    day: 0,
-    mood: 0,
-  });
+  useEffect(() => {
+    async function getComplitedTasks() {
+      try {
+        const data = await getComplited();
+        setComplitedTasks(data ?? []);
+      } catch (error) {
+        Alert.alert("Oops", "Something wrong");
+      }
+    }
+    getComplitedTasks();
+  }, []);
+
+  useEffect(() => {
+    if (Number(total) === 100 && complitedTasks) {
+      const alreadyComplited = complitedTasks.find(
+        (item) => Number(item) === Number(day)
+      );
+      if (!alreadyComplited) {
+        setComplited({ day });
+        setShowComplitedModal(true);
+      }
+    }
+  }, [total, complitedTasks]);
 
   function getTotalGrade() {
     return Object.values(grade).reduce(
@@ -41,38 +75,19 @@ function DayOverviewScreen({ route, navigation }) {
     );
   }
 
-  const saveTaskData = async ({ text, category, context, type }) => {
-    const sessionId = Date.now();
-    const task = {
-      text,
-      date: sessionId,
-    };
-    try {
-      saveUserTask({ type, task, day, category });
+  function updateGrade({ category, grade }) {
+    setGrade((prevValue) => ({
+      ...prevValue,
+      [category]: grade,
+    }));
+  }
 
-      //TODO: do we need summary for mood tasks?
-      if (category !== TASK_CONTEXT.MOOD) {
-        saveTaskByCategory({ category, data: task, context });
-      }
-    } catch (error) {
-      Alert.alert("Oops", "Something wrong");
-    }
-  };
-
-  async function onTaskDataUpdate({ text, images, category, context, type }) {
-    //TODO: save text or images to the DB. Once it set - change the grade
-    if (text?.trim() || images) {
-      await saveTaskData({ text, category, context, type });
-      setGrade((prevValue) => ({
-        ...prevValue,
-        [category]: 50,
-      }));
-    } else {
-      setGrade((prevValue) => ({
-        ...prevValue,
-        [category]: 0,
-      }));
-    }
+  async function removeGrade({ category }) {
+    setGrade((prevValue) => ({
+      ...prevValue,
+      [category]: 0,
+    }));
+    removeComplited({ day });
   }
 
   return (
@@ -80,20 +95,27 @@ function DayOverviewScreen({ route, navigation }) {
       {dayTasks ? (
         <>
           <Box my="$2.5">
-            <Text size="md" color="$red600">
-              {t("screens.processText", { grade: getTotalGrade() })}
-            </Text>
+            <Text size="md">{t("screens.processText", { grade: total })}</Text>
+            <Center my="$2.5" mb="$2.5">
+              <Progress value={total} size="sm">
+                <ProgressFilledTrack />
+              </Progress>
+            </Center>
           </Box>
           <TasksList
             {...dayTasks}
             day={day}
-            onTaskDataUpdate={onTaskDataUpdate}
+            updateGrade={updateGrade}
+            removeGrade={removeGrade}
           />
         </>
       ) : (
         <Center flex={1}>
           <Text fontSize="$xl">{t("screens.emptyScreen")}</Text>
         </Center>
+      )}
+      {showComplitedModal && (
+        <CompletedTaskModal setShowModal={setShowComplitedModal} />
       )}
     </Box>
   );

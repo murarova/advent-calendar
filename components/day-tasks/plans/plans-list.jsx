@@ -19,7 +19,7 @@ import { useTranslation } from "react-i18next";
 export function PlansList({ plans, onEdit, onDelete }) {
   const { t } = useTranslation();
   return (
-    <ScrollView h="$80" w="$80">
+    <ScrollView maxHeight="$80" w="$80">
       <VStack width="100%" flex={1} space="sm" mb={30} mt={10}>
         {plans.map((item) => (
           <Fragment key={item.id}>

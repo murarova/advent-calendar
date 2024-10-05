@@ -1,6 +1,6 @@
 import { Box, Button, ButtonText } from "@gluestack-ui/themed";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MAX_PLANS_AMOUNT, TASK_CATEGORY } from "../../../constants/constants";
 import isEmpty from "lodash/isEmpty";
 
@@ -10,7 +10,7 @@ import { saveTaskByCategory } from "../../../services/services";
 import { Alert } from "react-native";
 import uuid from "react-native-uuid";
 
-export function Plans({ context, data, setData }) {
+export function Plans({ context, data, setData, removeGrade }) {
   const { t } = useTranslation();
   const [updatedData, setUpdatedData] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -18,7 +18,7 @@ export function Plans({ context, data, setData }) {
   function handleAddPlan(text) {
     const id = uuid.v4();
     const updatedPlans = [
-      ...data,
+      ...(data ?? []),
       {
         id,
         text,
@@ -60,10 +60,14 @@ export function Plans({ context, data, setData }) {
     setUpdatedData(plan);
   }
 
-  function handleDeletePlan(id) {
+  async function handleDeletePlan(id) {
     const updatedPlans = data.filter((item) => item.id !== id);
+    if (isEmpty(updatedPlans)) {
+      await removeGrade({ category: TASK_CATEGORY.PLANS });
+    }
+
     try {
-      saveTaskByCategory({
+      await saveTaskByCategory({
         category: TASK_CATEGORY.PLANS,
         data: updatedPlans,
         context,
@@ -71,12 +75,13 @@ export function Plans({ context, data, setData }) {
     } catch (error) {
       Alert.alert("Oops", "Something wrong");
     } finally {
-      setData(updatedPlans);
+      const data = isEmpty(updatedPlans) ? null : updatedPlans;
+      setData(data);
     }
   }
 
   function handleAddPlanBtn() {
-    if (data.length === MAX_PLANS_AMOUNT) {
+    if (data?.length === MAX_PLANS_AMOUNT) {
       Alert.alert(t("screens.plansScreen.maxPlansError"));
       return;
     }

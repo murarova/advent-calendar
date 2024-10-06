@@ -138,14 +138,16 @@ export function MonthPhoto({ context, data, setData, removeGrade }) {
               </AnimatedView>
             </Box>
           )}
-          <Button onPress={() => setEdit(true)} mt="$2" borderRadius="$lg">
+          <Button
+            onPress={() => setEdit(true)}
+            mt="$2"
+          >
             <ButtonText>{t("screens.tasksOfTheDay.editBtnText")}</ButtonText>
           </Button>
           <Button
             onPress={handleTaskRemove}
             mt="$2"
             variant="link"
-            borderRadius="$lg"
           >
             <ButtonText>{t("common.delete")}</ButtonText>
           </Button>

@@ -7,7 +7,7 @@ export default {
     goToTheMainScreen: "На головну",
     summary: "Підсумки",
     plans: "Плани",
-    home: "Додому",
+    home: "Головна",
     add: "Додати",
     empty: "Зараз тут нічого немає",
     cancel: "Відмінити",
@@ -16,7 +16,7 @@ export default {
   },
   screens: {
     emptyScreen: "На сьогодні завдань немає",
-    processText: "Ти виконав: {{grade}}% завдань!",
+    processText: "Ти виконав:",
     periodOverview: {
       title: "Завдання",
     },

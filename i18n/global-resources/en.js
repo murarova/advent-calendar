@@ -16,7 +16,7 @@ export default {
   },
   screens: {
     emptyScreen: "There are no tasks for today",
-    processText: "You have completed: {{grade}}% of the tasks!",
+    processText: "You have completed:",
     periodOverview: {
       title: "Main",
     },

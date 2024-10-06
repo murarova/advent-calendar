@@ -7,6 +7,7 @@ import {
   Center,
   Progress,
   ProgressFilledTrack,
+  HStack,
 } from "@gluestack-ui/themed";
 import { useTranslation } from "react-i18next";
 import moment from "moment";
@@ -95,7 +96,11 @@ function DayOverviewScreen({ route, navigation }) {
       {dayTasks ? (
         <>
           <Box my="$2.5">
-            <Text size="md">{t("screens.processText", { grade: total })}</Text>
+            <HStack justifyContent="space-between">
+              <Text size="md">{t("screens.processText")}</Text>
+              <Text size="md">{total + "%"}</Text>
+            </HStack>
+
             <Center my="$2.5" mb="$2.5">
               <Progress value={total} size="sm">
                 <ProgressFilledTrack />

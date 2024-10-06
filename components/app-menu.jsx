@@ -39,7 +39,7 @@ export function AppMenu() {
       trigger={({ ...triggerProps }) => {
         return (
           <Button {...triggerProps} variant="link">
-            <ButtonIcon as={MenuIcon} size="xl" />
+            <ButtonIcon color="$warmGray400" as={MenuIcon} size="xl" />
           </Button>
         );
       }}

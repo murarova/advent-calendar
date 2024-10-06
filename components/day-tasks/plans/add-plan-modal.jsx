@@ -61,7 +61,6 @@ export function AddPlanModal({
           <Button
             variant="outline"
             size="sm"
-            action="secondary"
             mr="$3"
             onPress={() => {
               setShowModal(false);

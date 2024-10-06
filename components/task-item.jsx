@@ -64,9 +64,6 @@ export function TaskItem({ taskConfig, updateGrade, removeGrade }) {
         my="$2"
         type="multiple"
         borderRadius="$lg"
-        elevation="$0.5"
-        shadowRadius="$1"
-        shadowOpacity="$5"
       >
         <AccordionItem value="a" borderRadius="$lg">
           <AccordionHeader>

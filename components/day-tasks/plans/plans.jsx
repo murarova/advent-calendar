@@ -90,9 +90,6 @@ export function Plans({ context, data, setData, removeGrade }) {
 
   return (
     <Box>
-      <Button borderRadius="$lg" mb="$2" onPress={handleAddPlanBtn}>
-        <ButtonText>{t("screens.tasksOfTheDay.addPlanItem")}</ButtonText>
-      </Button>
       {!isEmpty(data) && (
         <PlansList
           plans={data}
@@ -100,6 +97,10 @@ export function Plans({ context, data, setData, removeGrade }) {
           onDelete={handleDeletePlan}
         />
       )}
+      <Button borderRadius="$lg" mb="$2" onPress={handleAddPlanBtn}>
+        <ButtonText>{t("screens.tasksOfTheDay.addPlanItem")}</ButtonText>
+      </Button>
+
       {showModal && (
         <AddPlanModal
           data={updatedData}

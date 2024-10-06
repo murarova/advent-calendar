@@ -75,10 +75,10 @@ export const HappySlider = ({ isDisabled, rate, setRate }) => {
           >
             <SliderTrack>
               <SliderFilledTrack
-                bg={isDisabled ? "$blueGray400" : "$primary500"}
+                bg={isDisabled ? "$warmGray400" : "$primary300"}
               />
             </SliderTrack>
-            <SliderThumb bg={isDisabled ? "$blueGray400" : "$primary500"} />
+            <SliderThumb bg={isDisabled ? "$warmGray400" : "$primary400"} />
           </Slider>
         </Center>
       </HStack>

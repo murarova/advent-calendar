@@ -1,5 +1,10 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { House, NotebookTabs, SquareChartGantt } from "lucide-react-native";
+import {
+  House,
+  Compass,
+  SquareChartGantt,
+  Medal,
+} from "lucide-react-native";
 import { useTranslation } from "react-i18next";
 import { SCREENS } from "../constants/constants";
 import PeriodOverviewScreen from "./period-overview-screen";
@@ -18,11 +23,15 @@ export const HomeScreen = () => {
         headerRightContainerStyle: {
           paddingRight: 16,
         },
+        tabBarActiveTintColor: "#fe434c",
+        tabBarInactiveTintColor: "#999999",
       }}
     >
       <Tab.Screen
         options={{
-          tabBarIcon: () => <House />,
+          tabBarIcon: ({ focused }) => (
+            <House color={focused ? "#fe434c" : "#999999"} />
+          ),
           title: t("screens.periodOverview.title"),
           tabBarLabel: t("common.home"),
         }}
@@ -35,7 +44,9 @@ export const HomeScreen = () => {
         options={{
           title: t("common.summary"),
           tabBarLabel: t("common.summary"),
-          tabBarIcon: () => <NotebookTabs />,
+          tabBarIcon: ({ focused }) => (
+            <Medal color={focused ? "#fe434c" : "#999999"} />
+          ),
         }}
       />
       <Tab.Screen
@@ -44,7 +55,9 @@ export const HomeScreen = () => {
         options={{
           tabBarLabel: t("common.plans"),
           title: t("common.plans"),
-          tabBarIcon: () => <SquareChartGantt />,
+          tabBarIcon: ({ focused }) => (
+            <Compass color={focused ? "#fe434c" : "#999999"} />
+          ),
         }}
       />
     </Tab.Navigator>

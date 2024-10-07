@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useState } from "react";
-import { TasksList } from "../components";
+import { TasksList } from "../components/tasks-list";
 import { getDayTasks } from "../config/day-tasks-config";
 import {
   Box,

@@ -5,7 +5,7 @@ import DayOverviewScreen from "./screens/day-overview-screen";
 import { SCREENS } from "./constants/constants";
 import "./i18n/i18n";
 import { useTranslation } from "react-i18next";
-import { AppMenu } from "./components";
+import { AppMenu } from "./components/app-menu";
 import { RegisterScreen } from "./screens/register-screen";
 import { LoadingScreen } from "./screens/loading-screen";
 import { LoginScreen } from "./screens/login-screen";
@@ -16,6 +16,7 @@ const MyTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
+    text: "#292524",
     background: "#ffffff",
     card: "#ffffff",
   },

@@ -2,13 +2,12 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   House,
   Compass,
-  SquareChartGantt,
   Medal,
 } from "lucide-react-native";
 import { useTranslation } from "react-i18next";
 import { SCREENS } from "../constants/constants";
 import PeriodOverviewScreen from "./period-overview-screen";
-import { AppMenu } from "../components";
+import { AppMenu } from "../components/app-menu";
 import { SummaryScreen } from "./summary-screen";
 import { PlansScreen } from "./plans-screen";
 

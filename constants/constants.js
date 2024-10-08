@@ -30,6 +30,8 @@ export const TASK_OUTPUT_TYPE = {
 export const TASK_CONTEXT = {
   HEALTH: "health",
   LEARNING: "learning",
+  WORK: "work",
+  RELATIONSHIP: "relationship",
 };
 
 export const TASK_CATEGORY = {

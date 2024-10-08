@@ -19,6 +19,7 @@ import {
   setComplited,
 } from "../services/services";
 import { Alert } from "react-native";
+import { useIsFocused } from "@react-navigation/native";
 
 function DayOverviewScreen({ route, navigation }) {
   const { t, i18n } = useTranslation();
@@ -36,7 +37,7 @@ function DayOverviewScreen({ route, navigation }) {
     [TASK_CATEGORY.MONTH_PHOTO]: 0,
     [TASK_CATEGORY.PLANS]: 0,
   });
-
+  const isFocused = useIsFocused();
   const total = getTotalGrade();
 
   useLayoutEffect(() => {
@@ -54,8 +55,10 @@ function DayOverviewScreen({ route, navigation }) {
         Alert.alert("Oops", "Something wrong");
       }
     }
-    getComplitedTasks();
-  }, []);
+    if (isFocused) {
+      getComplitedTasks();
+    }
+  }, [isFocused]);
 
   useEffect(() => {
     if (Number(total) === 100 && complitedTasks) {
@@ -116,7 +119,7 @@ function DayOverviewScreen({ route, navigation }) {
         </>
       ) : (
         <Center flex={1}>
-          <Text fontSize="$xl">{t("screens.emptyScreen")}</Text>
+          <Text fontSize="$xl">{t("common.empty")}</Text>
         </Center>
       )}
       {showComplitedModal && (

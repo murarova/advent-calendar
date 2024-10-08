@@ -19,12 +19,14 @@ function PeriodOverviewScreen({ navigation }) {
   }
 
   return (
-    <Box pt="$20">
-      <Calendar
-        pressHandler={pressHandler}
-        currentDate={currentDate}
-        days={days}
-      />
+    <Box flex={1} justifyContent="center">
+      <Box>
+        <Calendar
+          pressHandler={pressHandler}
+          currentDate={currentDate}
+          days={days}
+        />
+      </Box>
     </Box>
   );
 }

@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   House,
   Compass,
-  Medal,
+  // Medal,
 } from "lucide-react-native";
 import { useTranslation } from "react-i18next";
 import { SCREENS } from "../constants/constants";
@@ -10,6 +10,7 @@ import PeriodOverviewScreen from "./period-overview-screen";
 import { AppMenu } from "../components/app-menu";
 import { SummaryScreen } from "./summary-screen";
 import { PlansScreen } from "./plans-screen";
+import Medal from "../assets/svg/medal";
 
 const Tab = createBottomTabNavigator();
 
@@ -44,6 +45,7 @@ export const HomeScreen = () => {
           title: t("common.summary"),
           tabBarLabel: t("common.summary"),
           tabBarIcon: ({ focused }) => (
+            
             <Medal color={focused ? "#fe434c" : "#999999"} />
           ),
         }}

@@ -12,10 +12,9 @@ export default {
     add: "Add",
     cancel: "Cancel",
     edit: "Edit",
-    delete: "Delete"
+    delete: "Delete",
   },
   screens: {
-    emptyScreen: "There are no tasks for today",
     processText: "You have completed:",
     periodOverview: {
       title: "Main",
@@ -40,12 +39,19 @@ export default {
     },
     plansModal: {
       addPlanTitle: "Add plan item",
-      placeholder: "Type your plan here"
+      placeholder: "Type your plan here",
     },
     completedTaskModal: {
       title: "Nice work!",
       text: "You have completed 100% of the tasks for today. Now it's time to rest, you deserve it!",
-      btn: "Cool"
-    }
+      btn: "Cool",
+    },
+  },
+  rating: {
+    bad: "Bad",
+    notVeryGood: "Not very good",
+    normal: "Normal",
+    good: "Good",
+    veryGood: "Cool",
   },
 };

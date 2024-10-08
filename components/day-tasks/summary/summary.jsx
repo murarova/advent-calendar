@@ -38,6 +38,10 @@ export function Summary({ context, data, setData, removeGrade }) {
 
   function onTaskSubmit() {
     const id = data?.id ?? uuid.v4();
+    if (!text.trim()) {
+      Alert.alert("Oops", "Please add some text");
+      return;
+    }
     const updatedSummary = {
       id,
       text,

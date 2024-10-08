@@ -9,59 +9,17 @@ import {
   HStack,
   VStack,
 } from "@gluestack-ui/themed";
+import { useRating } from "../../hooks/useRating";
 
 export const HappySlider = ({ isDisabled, rate, setRate }) => {
-  const getRatingEmoji = () => {
-    if (rate >= 0 && rate < 20) {
-      return "😢";
-    }
-
-    if (rate >= 20 && rate < 40) {
-      return "🙁";
-    }
-
-    if (rate >= 40 && rate < 60) {
-      return "😐";
-    }
-
-    if (rate >= 60 && rate < 80) {
-      return "🙂";
-    }
-
-    if (rate >= 80) {
-      return "😁";
-    }
-  };
-
-  const getRatingText = () => {
-    if (rate >= 0 && rate < 20) {
-      return "Погано";
-    }
-
-    if (rate >= 20 && rate < 40) {
-      return "Не дуже";
-    }
-
-    if (rate >= 40 && rate < 60) {
-      return "Нормально";
-    }
-
-    if (rate >= 60 && rate < 80) {
-      return "Добре";
-    }
-
-    if (rate >= 80) {
-      return "Круто";
-    }
-  };
-
+  const getRating = useRating();
   return (
     <VStack space="2xl" mt="$4" mb="$10">
       <Box>
         <Text textAlign="center" fontSize="$6xl" pb="$2">
-          {getRatingEmoji()}
+          {getRating(rate).icon}
         </Text>
-        <Text textAlign="center">{getRatingText()}</Text>
+        <Text textAlign="center">{getRating(rate).text}</Text>
       </Box>
       <HStack space="lg">
         <Center w="$80">

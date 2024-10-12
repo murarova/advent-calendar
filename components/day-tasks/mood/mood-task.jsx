@@ -14,7 +14,7 @@ import isEmpty from "lodash/isEmpty";
 import { removeTask, saveMoodTask } from "../../../services/services";
 import { Alert } from "react-native";
 import uuid from "react-native-uuid";
-import { AnimatedView, ImagePicker, Loader } from "../../common";
+import { ActionButtons, AnimatedView, ImagePicker, Loader } from "../../common";
 import { ImageBackground } from "@gluestack-ui/themed";
 import { useImage } from "../../hooks/useImage";
 
@@ -142,17 +142,10 @@ export function MoodTask({ data, setData, removeGrade }) {
               </AnimatedView>
             </Box>
           )}
-          <Button onPress={() => setEdit(true)} mt="$2" borderRadius="$lg">
-            <ButtonText>{t("screens.tasksOfTheDay.editBtnText")}</ButtonText>
-          </Button>
-          <Button
-            onPress={handleTaskRemove}
-            variant="link"
-            mt="$2"
-            borderRadius="$lg"
-          >
-            <ButtonText>{t("common.delete")}</ButtonText>
-          </Button>
+          <ActionButtons
+            onEdit={() => setEdit(true)}
+            onDelete={handleTaskRemove}
+          />
         </Box>
       )}
     </Box>

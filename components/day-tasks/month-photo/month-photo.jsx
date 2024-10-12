@@ -10,15 +10,10 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { TASK_CATEGORY } from "../../../constants/constants";
 import isEmpty from "lodash/isEmpty";
-
-import {
-  getImageUrl,
-  removeTask,
-  saveTaskByCategory,
-} from "../../../services/services";
+import { removeTask, saveTaskByCategory } from "../../../services/services";
 import { Alert } from "react-native";
 import uuid from "react-native-uuid";
-import { AnimatedView, ImagePicker, Loader } from "../../common";
+import { ActionButtons, AnimatedView, ImagePicker, Loader } from "../../common";
 import { ImageBackground } from "@gluestack-ui/themed";
 import { useImage } from "../../hooks/useImage";
 
@@ -138,19 +133,10 @@ export function MonthPhoto({ context, data, setData, removeGrade }) {
               </AnimatedView>
             </Box>
           )}
-          <Button
-            onPress={() => setEdit(true)}
-            mt="$2"
-          >
-            <ButtonText>{t("screens.tasksOfTheDay.editBtnText")}</ButtonText>
-          </Button>
-          <Button
-            onPress={handleTaskRemove}
-            mt="$2"
-            variant="link"
-          >
-            <ButtonText>{t("common.delete")}</ButtonText>
-          </Button>
+          <ActionButtons
+            onEdit={() => setEdit(true)}
+            onDelete={handleTaskRemove}
+          />
         </Box>
       )}
     </Box>

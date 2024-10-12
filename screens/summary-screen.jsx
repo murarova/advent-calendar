@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useLayoutEffect } from "react";
 import {
   Box,
   Text,
@@ -11,14 +11,25 @@ import {
   AccordionContent,
   ChevronUpIcon,
   ChevronDownIcon,
+  Textarea,
+  TextareaInput,
+  Button,
+  ButtonText,
 } from "@gluestack-ui/themed";
 import { useTranslation } from "react-i18next";
-import { getUserSummary } from "../services/services";
+import {
+  getUserSummary,
+  removeTask,
+  saveTaskByCategory,
+} from "../services/services";
+import omit from "lodash/omit";
 import { EmptyScreen } from "../components/empty-screen";
-import { TASK_CONTEXT } from "../constants/constants";
-import { Loader } from "../components/common";
+import { TASK_CATEGORY, TASK_CONTEXT } from "../constants/constants";
+import { ActionButtons, Loader } from "../components/common";
 import { useRating } from "../components/hooks/useRating";
 import { useIsFocused } from "@react-navigation/native";
+import { Alert } from "react-native";
+import isEmpty from "lodash/isEmpty";
 
 export function SummaryScreen() {
   const { t } = useTranslation();
@@ -26,23 +37,78 @@ export function SummaryScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const getRating = useRating();
   const isFocused = useIsFocused();
+  const [edit, setEdit] = useState({
+    context: "",
+  });
+  const [text, setText] = useState("");
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    setIsLoading(true);
     async function getTasks() {
       try {
-        setIsLoading(true);
         const summary = await getUserSummary();
         setSummary(summary);
       } catch (error) {
         Alert.alert("Oops", "Something wrong");
       } finally {
-        setIsLoading(false);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 300);
       }
     }
     if (isFocused) {
       getTasks();
     }
   }, [isFocused]);
+
+  console.log("isFocused", isFocused);
+  console.log("summary", summary);
+  console.log("isLoading", isLoading);
+
+  function onTaskSubmit(context, item) {
+    if (!text.trim()) {
+      Alert.alert("Oops", "Please add some text");
+      return;
+    }
+
+    const updatedSummary = {
+      ...item,
+      text,
+    };
+    try {
+      saveTaskByCategory({
+        category: TASK_CATEGORY.SUMMARY,
+        data: updatedSummary,
+        context,
+      });
+    } catch (error) {
+      Alert.alert("Oops", "Something wrong");
+    } finally {
+      setSummary((prevSummary) => ({
+        ...prevSummary,
+        [context]: {
+          ...item,
+          text,
+        },
+      }));
+      setEdit({ context: "" });
+    }
+  }
+
+  async function handleTaskRemove(context) {
+    try {
+      await removeTask({
+        category: TASK_CATEGORY.SUMMARY,
+        context,
+      });
+    } catch (error) {
+      Alert.alert("Oops", "Something wrong");
+    } finally {
+      const updatedValues = omit(summary, [context]);
+      setSummary(isEmpty(updatedValues) ? null : updatedValues);
+      setText("");
+    }
+  }
 
   if (isLoading) {
     return <Loader />;
@@ -80,7 +146,7 @@ export function SummaryScreen() {
                               </Box>
                               <Box>
                                 <Text>
-                                  {getRating(summary[context].rate).icon}
+                                  {getRating(summary[context].rate)?.icon}
                                 </Text>
                               </Box>
                             </Box>
@@ -97,7 +163,42 @@ export function SummaryScreen() {
                 </AccordionHeader>
                 <AccordionContent>
                   <Box>
-                    <Text>{summary[context].text}</Text>
+                    {edit.context === context ? (
+                      <>
+                        <Textarea width="100%">
+                          <TextareaInput
+                            onChangeText={setText}
+                            defaultValue={summary[context].text}
+                            placeholder={t(
+                              "screens.tasksOfTheDay.textareaPlaceholder"
+                            )}
+                          />
+                        </Textarea>
+                        <Button
+                          onPress={() =>
+                            onTaskSubmit(context, summary[context])
+                          }
+                          mt="$2"
+                          borderRadius="$lg"
+                        >
+                          <ButtonText>
+                            {t("screens.tasksOfTheDay.submitBtnText")}
+                          </ButtonText>
+                        </Button>
+                      </>
+                    ) : (
+                      <Box>
+                        <Box mb="$2">
+                          <Text>
+                            {summary[context].text || t("common.empty")}
+                          </Text>
+                        </Box>
+                        <ActionButtons
+                          onEdit={() => setEdit({ context })}
+                          onDelete={() => handleTaskRemove(context)}
+                        />
+                      </Box>
+                    )}
                   </Box>
                 </AccordionContent>
               </AccordionItem>

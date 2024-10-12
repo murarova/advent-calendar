@@ -14,6 +14,7 @@ import { removeTask, saveTaskByCategory } from "../../../services/services";
 import { Alert } from "react-native";
 import isEmpty from "lodash/isEmpty";
 import { HappySlider } from "./happy-slider";
+import { ActionButtons } from "../../common";
 
 export function Summary({ context, data, setData, removeGrade }) {
   const { t } = useTranslation();
@@ -98,17 +99,10 @@ export function Summary({ context, data, setData, removeGrade }) {
           <Box mb="$2">
             <Text>{data?.text || t("common.empty")}</Text>
           </Box>
-          <Button onPress={() => setEdit(true)} mt="$2" borderRadius="$lg">
-            <ButtonText>{t("screens.tasksOfTheDay.editBtnText")}</ButtonText>
-          </Button>
-          <Button
-            onPress={handleTaskRemove}
-            variant="link"
-            mt="$2"
-            borderRadius="$lg"
-          >
-            <ButtonText>{t("common.delete")}</ButtonText>
-          </Button>
+          <ActionButtons
+            onEdit={() => setEdit(true)}
+            onDelete={handleTaskRemove}
+          />
         </Box>
       )}
     </Box>

@@ -16,7 +16,7 @@ import { Alert } from "react-native";
 import uuid from "react-native-uuid";
 import { ActionButtons, AnimatedView, ImagePicker, Loader } from "../../common";
 import { ImageBackground } from "@gluestack-ui/themed";
-import { useImage } from "../../hooks/useImage";
+import { useImage } from "../../../hooks/useImage";
 
 export function MoodTask({ data, setData, removeGrade }) {
   const { t } = useTranslation();

@@ -9,7 +9,7 @@ import {
   HStack,
   VStack,
 } from "@gluestack-ui/themed";
-import { useRating } from "../../hooks/useRating";
+import { useRating } from "../../../hooks/useRating";
 
 export const HappySlider = ({ isDisabled, rate, setRate }) => {
   const getRating = useRating();

@@ -23,6 +23,7 @@ export function AddPlanModal({
   data,
   handleUpdatePlan,
 }) {
+
   const { t } = useTranslation();
   const [text, setText] = useState(data?.text ?? "");
 

@@ -14,6 +14,7 @@ import {
   Textarea,
   TextareaInput,
   Button,
+  Heading,
   ButtonText,
 } from "@gluestack-ui/themed";
 import { useTranslation } from "react-i18next";
@@ -26,7 +27,7 @@ import omit from "lodash/omit";
 import { EmptyScreen } from "../components/empty-screen";
 import { TASK_CATEGORY, TASK_CONTEXT } from "../constants/constants";
 import { ActionButtons, Loader } from "../components/common";
-import { useRating } from "../components/hooks/useRating";
+import { useRating } from "../hooks/useRating";
 import { useIsFocused } from "@react-navigation/native";
 import { Alert } from "react-native";
 import isEmpty from "lodash/isEmpty";
@@ -60,10 +61,6 @@ export function SummaryScreen() {
       getTasks();
     }
   }, [isFocused]);
-
-  console.log("isFocused", isFocused);
-  console.log("summary", summary);
-  console.log("isLoading", isLoading);
 
   function onTaskSubmit(context, item) {
     if (!text.trim()) {
@@ -127,7 +124,7 @@ export function SummaryScreen() {
           return (
             summary[context] && (
               <AccordionItem
-                key={summary[context]?.rate}
+                key={context}
                 value={context}
                 borderRadius="$lg"
                 mb="$5"
@@ -138,13 +135,17 @@ export function SummaryScreen() {
                       return (
                         <>
                           <AccordionTitleText>
-                            <Box display="flex" flexDirection="row">
+                            <Box
+                              display="flex"
+                              flexDirection="row"
+                              alignItems="center"
+                            >
                               <Box mr="$2">
-                                <Text>
-                                  {t(`screens.summaryScreen.${context}`)}
-                                </Text>
+                                <Heading size="sm">
+                                  {t(`context.${context}`)}
+                                </Heading>
                               </Box>
-                              <Box>
+                              <Box display="flex" alignItems="center">
                                 <Text>
                                   {getRating(summary[context].rate)?.icon}
                                 </Text>

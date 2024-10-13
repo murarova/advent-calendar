@@ -59,12 +59,7 @@ export function TaskItem({ taskConfig, updateGrade, removeGrade }) {
 
   return (
     <>
-      <Accordion
-        size="md"
-        my="$2"
-        type="multiple"
-        borderRadius="$lg"
-      >
+      <Accordion size="md" my="$2" type="multiple" borderRadius="$lg">
         <AccordionItem value="a" borderRadius="$lg">
           <AccordionHeader>
             <AccordionTrigger>

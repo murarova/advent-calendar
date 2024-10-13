@@ -14,6 +14,11 @@ export default {
     edit: "Редагувати",
     delete: "Видалити",
   },
+  context: {
+    health: "Здоров'я",
+    learning: "Розвиток",
+    work: "Робота",
+  },
   screens: {
     emptyScreen: "На сьогодні завдань немає",
     processText: "Ти виконав:",
@@ -29,14 +34,9 @@ export default {
       taskResult: "Відповідь",
       addPlanItem: "Додати пункт плану",
     },
-    summaryScreen: {
-      health: "Здоров'я",
-      learning: "Розвиток",
-    },
     plansScreen: {
-      health: "Здоров'я",
-      learning: "Розвиток",
       maxPlansError: "Ви не можете додати більше ніж 10 пунктів",
+      title: "Мої плани",
     },
     plansModal: {
       addPlanTitle: "Додайте пункт плану",

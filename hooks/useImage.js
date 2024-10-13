@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getImageUrl, saveImage } from "../../services/services";
+import { getImageUrl, saveImage } from "../services/services";
 import { Alert } from "react-native";
 
 export function useImage() {

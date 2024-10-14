@@ -14,6 +14,11 @@ export default {
     edit: "Edit",
     delete: "Delete",
   },
+  context: {
+    health: "Health",
+    learning: "Learning",
+    work: "Work",
+  },
   screens: {
     processText: "You have completed:",
     periodOverview: {
@@ -28,14 +33,9 @@ export default {
       taskResult: "Task result",
       addPlanItem: "Add plan item",
     },
-    summaryScreen: {
-      health: "Health",
-      learning: "Learning",
-    },
     plansScreen: {
-      health: "Health",
-      learning: "Learning",
       maxPlansError: "You cannot add more than 10 points",
+      title: "My plans",
     },
     plansModal: {
       addPlanTitle: "Add plan item",

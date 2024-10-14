@@ -17,12 +17,12 @@ import { EditIcon, Trash2, Ellipsis } from "lucide-react-native";
 import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
 
-export function PlansList({ plans, onEdit, onDelete }) {
+export function PlansList({ plans, onEdit, onDelete, title }) {
   const { t } = useTranslation();
   return (
     <ScrollView maxHeight="$80" w="$80">
-      <VStack width="100%" flex={1} space="sm" mb={30} mt={10}>
-        <Heading size="sm">Мої плани</Heading>
+      <VStack width="100%" flex={1} space="sm">
+        {title && <Heading size="sm">{title}</Heading>}
         {plans.map((item, index, array) => (
           <Fragment key={item.id}>
             <HStack justifyContent="space-between" alignItems="center">

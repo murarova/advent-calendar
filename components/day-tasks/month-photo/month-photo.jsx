@@ -15,7 +15,7 @@ import { Alert } from "react-native";
 import uuid from "react-native-uuid";
 import { ActionButtons, AnimatedView, ImagePicker, Loader } from "../../common";
 import { ImageBackground } from "@gluestack-ui/themed";
-import { useImage } from "../../hooks/useImage";
+import { useImage } from "../../../hooks/useImage";
 
 export function MonthPhoto({ context, data, setData, removeGrade }) {
   const { t } = useTranslation();
@@ -82,13 +82,6 @@ export function MonthPhoto({ context, data, setData, removeGrade }) {
     <Box>
       {edit ? (
         <>
-          <Textarea width="100%" mb="$4">
-            <TextareaInput
-              onChangeText={setText}
-              defaultValue={text}
-              placeholder={t("screens.tasksOfTheDay.textareaPlaceholder")}
-            />
-          </Textarea>
           <ImagePicker
             setIsImageLoading={setIsLoading}
             isImageLoading={isLoading}
@@ -96,17 +89,19 @@ export function MonthPhoto({ context, data, setData, removeGrade }) {
             setImage={setImage}
             image={image}
           />
+          <Textarea width="100%" mt="$4">
+            <TextareaInput
+              onChangeText={setText}
+              defaultValue={text}
+              placeholder={t("screens.tasksOfTheDay.textareaPlaceholder")}
+            />
+          </Textarea>
           <Button onPress={onTaskSubmit} mt="$2" borderRadius="$lg">
             <ButtonText>{t("screens.tasksOfTheDay.submitBtnText")}</ButtonText>
           </Button>
         </>
       ) : (
         <Box>
-          {data?.text && (
-            <Box mb="$2">
-              <Text>{data?.text}</Text>
-            </Box>
-          )}
           {image && (
             <Box flex={1}>
               {isLoading && (
@@ -131,6 +126,11 @@ export function MonthPhoto({ context, data, setData, removeGrade }) {
                   />
                 </Box>
               </AnimatedView>
+            </Box>
+          )}
+          {data?.text && (
+            <Box mt="$2">
+              <Text>{data?.text}</Text>
             </Box>
           )}
           <ActionButtons

@@ -22,19 +22,6 @@ export function getCurrentUser() {
   return auth().currentUser;
 }
 
-export async function saveUserTask({ type, task, day, category }) {
-  const currentUser = getCurrentUser();
-  if (currentUser) {
-    const response = await firebase
-      .app()
-      .database(process.env.DB)
-      .ref(`/users/${currentUser.uid}/tasks/${day}/${type}/${category}`)
-      .set(task);
-
-    return response;
-  }
-}
-
 export async function saveTaskByCategory({ category, data, context }) {
   const currentUser = getCurrentUser();
   if (currentUser) {

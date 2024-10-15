@@ -34,6 +34,25 @@ export function PlansScreen() {
   const [showModal, setShowModal] = useState(false);
   const [context, setContext] = useState(null);
 
+  useLayoutEffect(() => {
+    setIsLoading(true);
+    async function getTasks() {
+      try {
+        const plans = await getUserPlans();
+        setPlans(plans);
+      } catch (error) {
+        Alert.alert("Oops", "Something wrong");
+      } finally {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 300);
+      }
+    }
+    if (isFocused) {
+      getTasks();
+    }
+  }, [isFocused]);
+
   function handleUpdatePlan(id, text) {
     const updatedPlans = plans[context].map((item) =>
       item.id === id ? { id, text } : item
@@ -56,7 +75,7 @@ export function PlansScreen() {
     }
   }
 
-  async function handleEditPlan(item, context) {
+  function handleEditPlan(item, context) {
     const plan = plans[context].find((plan) => plan.id === item.id);
     setContext(context);
     setUpdatedData(plan);
@@ -90,24 +109,27 @@ export function PlansScreen() {
     }
   }
 
-  useLayoutEffect(() => {
-    setIsLoading(true);
-    async function getTasks() {
-      try {
-        const plans = await getUserPlans();
-        setPlans(plans);
-      } catch (error) {
-        Alert.alert("Oops", "Something wrong");
-      } finally {
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 300);
-      }
+  async function handleComplitePlan(plan, done, context) {
+    const updatedPlans = plans[context].map((item) =>
+      item.id === plan.id ? { ...plan, done } : item
+    );
+    try {
+      await saveTaskByCategory({
+        category: TASK_CATEGORY.PLANS,
+        data: updatedPlans,
+        context,
+      });
+    } catch (error) {
+      Alert.alert("Oops", "Something wrong");
+    } finally {
+      setPlans((prevPlans) => ({
+        ...prevPlans,
+        [context]: updatedPlans,
+      }));
+      setUpdatedData(null);
+      setContext(null);
     }
-    if (isFocused) {
-      getTasks();
-    }
-  }, [isFocused]);
+  }
 
   if (isLoading) {
     return <Loader />;
@@ -156,9 +178,13 @@ export function PlansScreen() {
                 <AccordionContent>
                   <Box>
                     <PlansList
+                      showCheckbox
                       plans={plans[context]}
                       onEdit={(item) => handleEditPlan(item, context)}
                       onDelete={(id) => handleDeletePlan(id, context)}
+                      handleComplitePlan={(item, value) =>
+                        handleComplitePlan(item, value, context)
+                      }
                     />
                   </Box>
                 </AccordionContent>

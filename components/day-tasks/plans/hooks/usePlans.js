@@ -21,6 +21,7 @@ export function usePlans({ data, context, setData, removeGrade }) {
       {
         id,
         text,
+        isDone: false,
       },
     ];
     try {
@@ -38,7 +39,7 @@ export function usePlans({ data, context, setData, removeGrade }) {
 
   function handleUpdatePlan(id, text) {
     const updatedPlans = data.map((item) =>
-      item.id === id ? { id, text } : item
+      item.id === id ? { ...item, text } : item
     );
     try {
       saveTaskByCategory({

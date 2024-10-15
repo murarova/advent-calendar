@@ -10,17 +10,17 @@ export const CheckboxIndicator = createStyle({
   '_web': {
     ':focusVisible': {
       outlineWidth: '2px',
-      outlineColor: '$primary700',
+      outlineColor: '$green700',
       outlineStyle: 'solid',
       _dark: {
-        outlineColor: '$primary300',
+        outlineColor: '$green300',
       },
     },
   },
 
   ':checked': {
-    borderColor: '$primary600',
-    bg: '$primary600',
+    borderColor: '$green500',
+    bg: '$green500',
   },
 
   ':hover': {
@@ -30,11 +30,11 @@ export const CheckboxIndicator = createStyle({
       borderColor: '$error700',
     },
     ':checked': {
-      'bg': '$primary700',
-      'borderColor': '$primary700',
+      'bg': '$green700',
+      'borderColor': '$green700',
       ':disabled': {
-        'borderColor': '$primary600',
-        'bg': '$primary600',
+        'borderColor': '$green600',
+        'bg': '$green600',
         'opacity': 0.4,
         ':invalid': {
           borderColor: '$error700',
@@ -51,8 +51,8 @@ export const CheckboxIndicator = createStyle({
 
   ':active': {
     ':checked': {
-      bg: '$primary800',
-      borderColor: '$primary800',
+      bg: '$green800',
+      borderColor: '$green800',
     },
   },
   ':invalid': {
@@ -67,8 +67,8 @@ export const CheckboxIndicator = createStyle({
     'bg': '$transparent',
 
     ':checked': {
-      borderColor: '$primary500',
-      bg: '$primary500',
+      borderColor: '$green500',
+      bg: '$green500',
     },
     ':hover': {
       'borderColor': '$borderDark400',
@@ -77,11 +77,11 @@ export const CheckboxIndicator = createStyle({
         borderColor: '$error400',
       },
       ':checked': {
-        'bg': '$primary400',
-        'borderColor': '$primary400',
+        'bg': '$green400',
+        'borderColor': '$green400',
         ':disabled': {
-          'borderColor': '$primary500',
-          'bg': '$primary500',
+          'borderColor': '$green500',
+          'bg': '$green500',
           'opacity': 0.4,
           ':invalid': {
             borderColor: '$error400',
@@ -97,8 +97,8 @@ export const CheckboxIndicator = createStyle({
     },
     ':active': {
       ':checked': {
-        bg: '$primary300',
-        borderColor: '$primary300',
+        bg: '$green300',
+        borderColor: '$green300',
       },
     },
 

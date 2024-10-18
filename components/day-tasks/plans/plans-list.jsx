@@ -17,8 +17,11 @@ import {
   CheckboxIcon,
   CheckIcon,
   CheckboxLabel,
+  Badge,
+  BadgeText,
+  BadgeIcon,
 } from "@gluestack-ui/themed";
-import { EditIcon, Trash2, Ellipsis } from "lucide-react-native";
+import { EditIcon, Trash2, Ellipsis, CalendarDays } from "lucide-react-native";
 import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -28,7 +31,9 @@ export function PlansList({
   onDelete,
   title,
   handleComplitePlan,
-  showCheckbox,
+  isPlanScreen,
+  showSelectMonth,
+  onMonthSelect,
 }) {
   const { t } = useTranslation();
 
@@ -42,9 +47,22 @@ export function PlansList({
         {title && <Heading size="sm">{title}</Heading>}
         {plans.map((item, index, array) => (
           <Fragment key={item.id}>
+            {item.month && isPlanScreen && (
+              <HStack>
+                <Badge
+                  size="md"
+                  variant="outline"
+                  borderRadius="$lg"
+                  action={item?.done ? "success" : "error"}
+                >
+                  <BadgeText>{item.month}</BadgeText>
+                  <BadgeIcon as={CalendarDays} ml="$2" />
+                </Badge>
+              </HStack>
+            )}
             <HStack justifyContent="space-between" alignItems="center">
               <Box flex={1}>
-                {showCheckbox ? (
+                {isPlanScreen ? (
                   <Checkbox
                     value={item?.text}
                     defaultIsChecked={item?.done}
@@ -101,6 +119,7 @@ export function PlansList({
 
                 <MenuItem
                   key="delete"
+                  mb="$px"
                   textValue="delete"
                   backgroundColor="#fff"
                   display="flex"
@@ -110,6 +129,21 @@ export function PlansList({
                   <MenuItemLabel size="sm">{t("common.delete")}</MenuItemLabel>
                   <Icon as={Trash2} size="sm" ml="$2" />
                 </MenuItem>
+                {showSelectMonth && (
+                  <MenuItem
+                    key="selectMonth"
+                    textValue="selectMonth"
+                    backgroundColor="#fff"
+                    display="flex"
+                    justifyContent="space-between"
+                    onPress={() => onMonthSelect(item)}
+                  >
+                    <MenuItemLabel size="sm">
+                      {t("common.selectMonth")}
+                    </MenuItemLabel>
+                    <Icon as={CalendarDays} size="sm" ml="$2" />
+                  </MenuItem>
+                )}
               </Menu>
             </HStack>
             {index !== array.length - 1 && <Divider />}

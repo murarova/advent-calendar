@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect } from "react";
+import { useState, useLayoutEffect, useCallback } from "react";
 import {
   Box,
   Text,
@@ -16,7 +16,12 @@ import {
 import { useTranslation } from "react-i18next";
 import { getUserPlans, saveTaskByCategory } from "../services/services";
 import { EmptyScreen } from "../components/empty-screen";
-import { TASK_CATEGORY, TASK_CONTEXT } from "../constants/constants";
+import {
+  LANGUAGES,
+  SCREENS,
+  TASK_CATEGORY,
+  TASK_CONTEXT,
+} from "../constants/constants";
 import { Loader } from "../components/common";
 import { useIsFocused } from "@react-navigation/native";
 import { Alert } from "react-native";
@@ -24,6 +29,8 @@ import { PlansList } from "../components/day-tasks/plans/plans-list";
 import { AddPlanModal } from "../components/day-tasks/plans/add-plan-modal";
 import isEmpty from "lodash/isEmpty";
 import omit from "lodash/omit";
+import { useNavigation } from "@react-navigation/native";
+import { MonthSelectModal } from "../components/month-select-modal";
 
 export function PlansScreen() {
   const { t } = useTranslation();
@@ -32,6 +39,7 @@ export function PlansScreen() {
   const isFocused = useIsFocused();
   const [updatedData, setUpdatedData] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [showMonthModal, setShowMonthModal] = useState(false);
   const [context, setContext] = useState(null);
 
   useLayoutEffect(() => {
@@ -53,10 +61,7 @@ export function PlansScreen() {
     }
   }, [isFocused]);
 
-  function handleUpdatePlan(id, text) {
-    const updatedPlans = plans[context].map((item) =>
-      item.id === id ? { id, text } : item
-    );
+  function updatePlan(updatedPlans) {
     try {
       saveTaskByCategory({
         category: TASK_CATEGORY.PLANS,
@@ -73,6 +78,13 @@ export function PlansScreen() {
       setUpdatedData(null);
       setContext(null);
     }
+  }
+
+  function handleUpdatePlan(id, text) {
+    const updatedPlans = plans[context].map((item) =>
+      item.id === id ? { ...item, text } : item
+    );
+    updatePlan(updatedPlans);
   }
 
   function handleEditPlan(item, context) {
@@ -131,6 +143,20 @@ export function PlansScreen() {
     }
   }
 
+  function openMonthPicker(plan, context) {
+    setUpdatedData(plan);
+    setContext(context);
+    setShowMonthModal(true);
+  }
+
+  function handleMonthSelect(month) {
+    const updatedPlans = plans[context].map((item) =>
+      item.id === updatedData.id ? { ...updatedData, month } : item
+    );
+    updatePlan(updatedPlans);
+    setShowMonthModal(false);
+  }
+
   if (isLoading) {
     return <Loader />;
   }
@@ -178,8 +204,10 @@ export function PlansScreen() {
                 <AccordionContent>
                   <Box>
                     <PlansList
-                      showCheckbox
+                      isPlanScreen
+                      showSelectMonth
                       plans={plans[context]}
+                      onMonthSelect={(item) => openMonthPicker(item, context)}
                       onEdit={(item) => handleEditPlan(item, context)}
                       onDelete={(id) => handleDeletePlan(id, context)}
                       handleComplitePlan={(item, value) =>
@@ -198,6 +226,12 @@ export function PlansScreen() {
           data={updatedData}
           setShowModal={setShowModal}
           handleUpdatePlan={handleUpdatePlan}
+        />
+      )}
+      {showMonthModal && (
+        <MonthSelectModal
+          setShowMonthModal={setShowMonthModal}
+          onMonthSelect={handleMonthSelect}
         />
       )}
     </Box>

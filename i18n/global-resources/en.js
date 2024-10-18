@@ -13,6 +13,7 @@ export default {
     cancel: "Cancel",
     edit: "Edit",
     delete: "Delete",
+    selectMonth: "Select month",
   },
   context: {
     health: "Health",
@@ -53,5 +54,8 @@ export default {
     normal: "Normal",
     good: "Good",
     veryGood: "Cool",
+  },
+  monthSelect: {
+    title: "Pick the month",
   },
 };

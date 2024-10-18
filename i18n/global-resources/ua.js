@@ -13,6 +13,7 @@ export default {
     cancel: "Відмінити",
     edit: "Редагувати",
     delete: "Видалити",
+    selectMonth: "Обрати місяць",
   },
   context: {
     health: "Здоров'я",
@@ -54,5 +55,8 @@ export default {
     normal: "Нормально",
     good: "Добре",
     veryGood: "Круто",
+  },
+  monthSelect: {
+    title: "Оберіть місяць",
   },
 };

@@ -11,24 +11,10 @@ import {
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FlatList } from "react-native";
+import { months } from "../../constants/constants";
 
 export function MonthSelectModal({ onMonthSelect, setShowMonthModal }) {
   const { t } = useTranslation();
-
-  const monthNames = [
-    { short: "Січ", long: "Січень" },
-    { short: "Лют", long: "Лютий" },
-    { short: "Бер", long: "Березень" },
-    { short: "Квіт", long: "Квітень" },
-    { short: "Трав", long: "Травень" },
-    { short: "Черв", long: "Червень" },
-    { short: "Лип", long: "Липень" },
-    { short: "Серп", long: "Серпень" },
-    { short: "Вер", long: "Вересень" },
-    { short: "Жовт", long: "Жовтень" },
-    { short: "Лист", long: "Листопад" },
-    { short: "Груд", long: "Грудень" },
-  ];
 
   return (
     <Modal
@@ -50,19 +36,19 @@ export function MonthSelectModal({ onMonthSelect, setShowMonthModal }) {
         </ModalHeader>
         <Box p="$4">
           <FlatList
-            data={monthNames}
+            data={months}
             numColumns={3}
             columnWrapperStyle={{
               justifyContent: "space-between",
               alignItems: "center",
             }}
-            keyExtractor={(item) => item.long}
+            keyExtractor={(item) => item.value}
             renderItem={({ item }) => (
               <Button
                 width={85}
                 variant="link"
                 marginBottom="$3"
-                onPress={() => onMonthSelect(item.long)}
+                onPress={() => onMonthSelect(item.value)}
               >
                 <ButtonText fontWeight="400" color="$black">
                   {item.short}

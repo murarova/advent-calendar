@@ -60,8 +60,8 @@ export function usePlans({ data, context, setData, removeGrade }) {
     setUpdatedData(plan);
   }
 
-  async function handleDeletePlan(id) {
-    const updatedPlans = data.filter((item) => item.id !== id);
+  async function handleDeletePlan(planItem) {
+    const updatedPlans = data.filter((item) => item.id !== planItem.id);
     if (isEmpty(updatedPlans)) {
       await removeGrade({ category: TASK_CATEGORY.PLANS });
     }

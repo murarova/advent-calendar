@@ -104,6 +104,19 @@ export async function getUserPlans() {
   }
 }
 
+export async function getUserPhotos() {
+  const currentUser = getCurrentUser();
+  if (currentUser) {
+    const response = await firebase
+      .app()
+      .database(process.env.DB)
+      .ref(`/users/${currentUser.uid}/monthPhoto`)
+      .once("value");
+
+    return response.val();
+  }
+}
+
 export async function saveImage(image) {
   const currentUser = getCurrentUser();
   if (currentUser) {

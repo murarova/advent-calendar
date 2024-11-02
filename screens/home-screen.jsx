@@ -12,6 +12,8 @@ import { SummaryScreen } from "./summary-screen";
 import { PlansScreen } from "./plans-screen";
 import Medal from "../assets/svg/medal";
 import Compas from "../assets/svg/compas";
+import Album from "../assets/svg/album";
+import { AlbumScreen } from "./album-screen";
 
 const Tab = createBottomTabNavigator();
 
@@ -58,6 +60,17 @@ export const HomeScreen = () => {
           title: t("common.plans"),
           tabBarIcon: ({ focused }) => (
             <Compas color={focused ? "#fe434c" : "#999999"} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name={SCREENS.ALBUM}
+        component={AlbumScreen}
+        options={{
+          tabBarLabel: t("common.album"),
+          title: t("common.album"),
+          tabBarIcon: ({ focused }) => (
+            <Album color={focused ? "#fe434c" : "#999999"} />
           ),
         }}
       />

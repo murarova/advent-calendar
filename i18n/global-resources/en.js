@@ -8,6 +8,7 @@ export default {
     summary: "Summary",
     home: "Home",
     plans: "Plans",
+    album: "Album",
     empty: "There is nothing here at the moment",
     add: "Add",
     cancel: "Cancel",

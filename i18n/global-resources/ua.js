@@ -7,6 +7,7 @@ export default {
     goToTheMainScreen: "На головну",
     summary: "Підсумки",
     plans: "Плани",
+    album: "Альбом",
     home: "Головна",
     add: "Додати",
     empty: "Поки що тут нічого немає",

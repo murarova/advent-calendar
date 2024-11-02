@@ -14,6 +14,7 @@ export const SCREENS = {
   SUMMARY: "Summary",
   HOME: "Home",
   PLANS: "Plans",
+  ALBUM: "Album",
 };
 
 export const LANGUAGES = {
@@ -57,129 +58,6 @@ export const months = [
   { short: "Лист", long: "Листопад", value: "november" },
   { short: "Груд", long: "Грудень", value: "december" },
 ];
-
-export const months2 = {
-  january: {
-    en: {
-      short: "Jan",
-      long: "January",
-    },
-    ua: {
-      short: "Січ",
-      long: "Січень",
-    },
-  },
-  february: {
-    en: {
-      short: "Feb",
-      long: "February",
-    },
-    ua: {
-      short: "Лют",
-      long: "Лютий",
-    },
-  },
-  march: {
-    en: {
-      short: "Mar",
-      long: "March",
-    },
-    ua: {
-      short: "Бер",
-      long: "Березень",
-    },
-  },
-  april: {
-    en: {
-      short: "Apr",
-      long: "April",
-    },
-    ua: {
-      short: "Квіт",
-      long: "Квітень",
-    },
-  },
-  may: {
-    en: {
-      short: "May",
-      long: "May",
-    },
-    ua: {
-      short: "Трав",
-      long: "Травень",
-    },
-  },
-  june: {
-    en: {
-      short: "Jun",
-      long: "June",
-    },
-    ua: {
-      short: "Черв",
-      long: "Червень",
-    },
-  },
-  july: {
-    en: {
-      short: "Jul",
-      long: "July",
-    },
-    ua: {
-      short: "Лип",
-      long: "Липень",
-    },
-  },
-  august: {
-    en: {
-      short: "Aug",
-      long: "August",
-    },
-    ua: {
-      short: "Серп",
-      long: "Серпень",
-    },
-  },
-  september: {
-    en: {
-      short: "Sep",
-      long: "September",
-    },
-    ua: {
-      short: "Вер",
-      long: "Вересень",
-    },
-  },
-  october: {
-    en: {
-      short: "Oct",
-      long: "October",
-    },
-    ua: {
-      short: "Жовт",
-      long: "Жовтень",
-    },
-  },
-  november: {
-    en: {
-      short: "Nov",
-      long: "November",
-    },
-    ua: {
-      short: "Лист",
-      long: "Листопад",
-    },
-  },
-  december: {
-    en: {
-      short: "Dec",
-      long: "December",
-    },
-    ua: {
-      short: "Груд",
-      long: "Грудень",
-    },
-  },
-};
 
 export const plansViewOptions = {
   context: "context",

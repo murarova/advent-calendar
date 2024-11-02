@@ -12,7 +12,7 @@ import {
 import { useTranslation } from "react-i18next";
 import moment from "moment";
 import { LANGUAGES, TASK_CATEGORY } from "../constants/constants";
-import { CompletedTaskModal } from "../components/completed-task-modal";
+import { CompletedTaskModal } from "../components/modals/completed-task-modal";
 import {
   getComplited,
   removeComplited,

@@ -1,46 +1,21 @@
-import { useState, useLayoutEffect, useCallback } from "react";
-import {
-  Box,
-  Text,
-  Accordion,
-  AccordionHeader,
-  AccordionItem,
-  AccordionTrigger,
-  AccordionTitleText,
-  AccordionIcon,
-  AccordionContent,
-  ChevronUpIcon,
-  ChevronDownIcon,
-  Heading,
-} from "@gluestack-ui/themed";
-import { useTranslation } from "react-i18next";
-import { getUserPlans, saveTaskByCategory } from "../services/services";
+import { useState, useLayoutEffect } from "react";
+import { getUserPlans } from "../services/services";
 import { EmptyScreen } from "../components/empty-screen";
-import {
-  LANGUAGES,
-  SCREENS,
-  TASK_CATEGORY,
-  TASK_CONTEXT,
-} from "../constants/constants";
 import { Loader } from "../components/common";
 import { useIsFocused } from "@react-navigation/native";
 import { Alert } from "react-native";
-import { PlansList } from "../components/day-tasks/plans/plans-list";
-import { AddPlanModal } from "../components/day-tasks/plans/add-plan-modal";
-import isEmpty from "lodash/isEmpty";
-import omit from "lodash/omit";
-import { useNavigation } from "@react-navigation/native";
-import { MonthSelectModal } from "../components/month-select-modal";
+import { PlansContextView } from "../components/plans-view/plans-context-view";
+import { usePlansScreen } from "../components/plans-view/hooks/usePlansScreen";
+import SwitchSelector from "react-native-switch-selector";
+import { Box } from "@gluestack-ui/themed";
+import { PlansMonthView } from "../components/plans-view/plans-month-view";
+import { plansViewOptions } from "../constants/constants";
 
 export function PlansScreen() {
-  const { t } = useTranslation();
   const [plans, setPlans] = useState(null);
+  const [view, setView] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const isFocused = useIsFocused();
-  const [updatedData, setUpdatedData] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const [showMonthModal, setShowMonthModal] = useState(false);
-  const [context, setContext] = useState(null);
 
   useLayoutEffect(() => {
     setIsLoading(true);
@@ -48,6 +23,7 @@ export function PlansScreen() {
       try {
         const plans = await getUserPlans();
         setPlans(plans);
+        setView(plansViewOptions.context);
       } catch (error) {
         Alert.alert("Oops", "Something wrong");
       } finally {
@@ -61,181 +37,81 @@ export function PlansScreen() {
     }
   }, [isFocused]);
 
-  function updatePlan(updatedPlans) {
-    try {
-      saveTaskByCategory({
-        category: TASK_CATEGORY.PLANS,
-        data: updatedPlans,
-        context,
-      });
-    } catch (error) {
-      Alert.alert("Oops", "Something wrong");
-    } finally {
-      setPlans((prevPlans) => ({
-        ...prevPlans,
-        [context]: updatedPlans,
-      }));
-      setUpdatedData(null);
-      setContext(null);
-    }
-  }
-
-  function handleUpdatePlan(id, text) {
-    const updatedPlans = plans[context].map((item) =>
-      item.id === id ? { ...item, text } : item
-    );
-    updatePlan(updatedPlans);
-  }
-
-  function handleEditPlan(item, context) {
-    const plan = plans[context].find((plan) => plan.id === item.id);
-    setContext(context);
-    setUpdatedData(plan);
-    setShowModal(true);
-  }
-
-  async function handleDeletePlan(id, context) {
-    const updatedPlans = plans[context].filter((item) => item.id !== id);
-
-    try {
-      await saveTaskByCategory({
-        category: TASK_CATEGORY.PLANS,
-        data: updatedPlans,
-        context,
-      });
-    } catch (error) {
-      Alert.alert("Oops", "Something wrong");
-    } finally {
-      const data = isEmpty(updatedPlans) ? null : updatedPlans;
-      if (data) {
-        setPlans((prevPlans) => ({
-          ...prevPlans,
-          [context]: data,
-        }));
-      } else {
-        const updatedValues = isEmpty(omit(data, [context]))
-          ? null
-          : updatedPlans;
-        setPlans(updatedValues);
-      }
-    }
-  }
-
-  async function handleComplitePlan(plan, done, context) {
-    const updatedPlans = plans[context].map((item) =>
-      item.id === plan.id ? { ...plan, done } : item
-    );
-    try {
-      await saveTaskByCategory({
-        category: TASK_CATEGORY.PLANS,
-        data: updatedPlans,
-        context,
-      });
-    } catch (error) {
-      Alert.alert("Oops", "Something wrong");
-    } finally {
-      setPlans((prevPlans) => ({
-        ...prevPlans,
-        [context]: updatedPlans,
-      }));
-      setUpdatedData(null);
-      setContext(null);
-    }
-  }
-
-  function openMonthPicker(plan, context) {
-    setUpdatedData(plan);
-    setContext(context);
-    setShowMonthModal(true);
-  }
-
-  function handleMonthSelect(month) {
-    const updatedPlans = plans[context].map((item) =>
-      item.id === updatedData.id ? { ...updatedData, month } : item
-    );
-    updatePlan(updatedPlans);
-    setShowMonthModal(false);
-  }
+  const {
+    handleUpdatePlan,
+    handleEditPlan,
+    handleDeletePlan,
+    handleComplitePlan,
+    openMonthSelect,
+    handleMonthSelect,
+    showModal,
+    showMonthModal,
+    updatedData,
+    setShowModal,
+    setShowMonthModal,
+  } = usePlansScreen({ plans, setPlans });
 
   if (isLoading) {
     return <Loader />;
   }
 
-  return plans ? (
-    <Box p="$2" flex={1}>
-      <Accordion
-        key={plans}
-        size="md"
-        my="$2"
-        type="multiple"
-        borderRadius="$lg"
-      >
-        {Object.values(TASK_CONTEXT).map((context) => {
-          return (
-            plans[context] && (
-              <AccordionItem
-                key={context}
-                value={context}
-                borderRadius="$lg"
-                mb="$5"
-              >
-                <AccordionHeader>
-                  <AccordionTrigger>
-                    {({ isExpanded }) => {
-                      return (
-                        <>
-                          <AccordionTitleText>
-                            <Box mr="$2">
-                              <Heading size="sm">
-                                {t(`context.${context}`)}
-                              </Heading>
-                            </Box>
-                          </AccordionTitleText>
-                          {isExpanded ? (
-                            <AccordionIcon as={ChevronUpIcon} ml="$3" />
-                          ) : (
-                            <AccordionIcon as={ChevronDownIcon} ml="$3" />
-                          )}
-                        </>
-                      );
-                    }}
-                  </AccordionTrigger>
-                </AccordionHeader>
-                <AccordionContent>
-                  <Box>
-                    <PlansList
-                      isPlanScreen
-                      showSelectMonth
-                      plans={plans[context]}
-                      onMonthSelect={(item) => openMonthPicker(item, context)}
-                      onEdit={(item) => handleEditPlan(item, context)}
-                      onDelete={(id) => handleDeletePlan(id, context)}
-                      handleComplitePlan={(item, value) =>
-                        handleComplitePlan(item, value, context)
-                      }
-                    />
-                  </Box>
-                </AccordionContent>
-              </AccordionItem>
-            )
-          );
-        })}
-      </Accordion>
-      {showModal && (
-        <AddPlanModal
-          data={updatedData}
-          setShowModal={setShowModal}
-          handleUpdatePlan={handleUpdatePlan}
+  return (
+    <>
+      <Box mt="$4" ml="$2" mr="$2">
+        <SwitchSelector
+          initial={0}
+          onPress={setView}
+          textColor="#000" //'#7a44cf'
+          selectedColor="#000"
+          buttonColor="#fff"
+          borderColor="#EBEBEB"
+          backgroundColor="#EBEBEB"
+          hasPadding
+          height={32}
+          borderRadius={7}
+          options={[
+            { label: "По сферах", value: plansViewOptions.context },
+            { label: "По місяцях", value: plansViewOptions.month },
+          ]}
+          testID="gender-switch-selector"
+          accessibilityLabel="gender-switch-selector"
         />
+      </Box>
+      {plans ? (
+        view === plansViewOptions.context ? (
+          <PlansContextView
+            plans={plans}
+            handleMonthSelect={handleMonthSelect}
+            openMonthSelect={openMonthSelect}
+            handleEditPlan={handleEditPlan}
+            handleDeletePlan={handleDeletePlan}
+            handleComplitePlan={handleComplitePlan}
+            showModal={showModal}
+            updatedData={updatedData}
+            setShowModal={setShowModal}
+            handleUpdatePlan={handleUpdatePlan}
+            showMonthModal={showMonthModal}
+            setShowMonthModal={setShowMonthModal}
+          />
+        ) : (
+          <PlansMonthView
+            plans={plans}
+            handleMonthSelect={handleMonthSelect}
+            openMonthSelect={openMonthSelect}
+            handleEditPlan={handleEditPlan}
+            handleDeletePlan={handleDeletePlan}
+            handleComplitePlan={handleComplitePlan}
+            showModal={showModal}
+            updatedData={updatedData}
+            setShowModal={setShowModal}
+            handleUpdatePlan={handleUpdatePlan}
+            showMonthModal={showMonthModal}
+            setShowMonthModal={setShowMonthModal}
+          />
+        )
+      ) : (
+        <EmptyScreen />
       )}
-      {showMonthModal && (
-        <MonthSelectModal
-          setShowMonthModal={setShowMonthModal}
-          onMonthSelect={handleMonthSelect}
-        />
-      )}
-    </Box>
-  ) : (
-    <EmptyScreen />
+    </>
   );
 }

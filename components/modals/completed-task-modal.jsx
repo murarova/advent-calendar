@@ -13,7 +13,7 @@ import {
 } from "@gluestack-ui/themed";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { Svg1 } from "../assets/svg/decorating";
+import { Svg1 } from "../../assets/svg/decorating";
 
 export function CompletedTaskModal({ setShowModal }) {
   const { t } = useTranslation();

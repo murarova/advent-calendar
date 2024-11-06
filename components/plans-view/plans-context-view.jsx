@@ -60,27 +60,10 @@ export function PlansContextView({
                       return (
                         <>
                           <AccordionTitleText>
-                            <VStack>
-                              <Badge
-                                position="absolute"
-                                h={22}
-                                w={22}
-                                bg="$green500"
-                                borderRadius="$full"
-                                right={-28}
-                                bottom={8}
-                                zIndex={1}
-                                variant="solid"
-                                alignSelf="flex-end"
-                              >
-                                <BadgeText color="$white">
-                                  {plans[context].length}
-                                </BadgeText>
-                              </Badge>
-                              <Heading size="sm">
-                                {t(`context.${context}`)}
-                              </Heading>
-                            </VStack>
+                            <Heading size="sm">
+                              {t(`context.${context}`)}
+                            </Heading>
+                            <Text>{`  (${plans[context].length})`}</Text>
                           </AccordionTitleText>
                           {isExpanded ? (
                             <AccordionIcon as={ChevronUpIcon} ml="$3" />

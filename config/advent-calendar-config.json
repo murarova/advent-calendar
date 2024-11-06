@@ -21,6 +21,126 @@
       "en": {}
     }
   },
+  "04": {
+    "ua": {
+      "videoText": "Сьогодні четвер 21 грудня, до нового року лишається 10 днів, до Різдва всього лише три дні. Наближаємо свята сьогодні разом із U2.",
+      "videoId": "mmZBC92pgrE",
+      "moodTaskConfig": {
+        "title": "Cвятковий образ",
+        "text": "Святковий настрій напряму залежить від святкового образу. Пропоную вже зараз прикинути, у чому ви хочете зустрічати різдвяну ніч, а в чому новорічну. Який хочете лук? Який хочете мейк? \n\nІнколи буває таке, що збиратись на вечірку таааак лінь, а потім пару рухів: блискітки на щічки, піджак чи спідниця в паєтках, яку нема коли носити, окрім як сьогодні ввечорі, трохи волосся вклали й не помітили, як настрій з нікуди взяв і взявся)) Може в когось образ вже готовий?",
+        "taskOutputType": "text",
+        "category": "mood",
+        "grade": 50
+      },
+      "dayTaskConfig": {
+        "title": "Плани відносини",
+        "text": "База й основа, стартовий капітал без якого не можливі ніякі успіхи та досягнення, без нього неможливо заробити нові гроші, неможливо здобути любов, неможливо думати думки  – це наше тіло. Отже, задачка на сьогодні –  проаналізувати все, що ви зробили для здоров'я свого тіла у 2023 році. Згадайте масажі, планові походи до лікарів, спорт, психотерапію, дієти (якщо вони були для здоров’я), всі випадки, коли тіло до вас промовляло, а ви не відморозились, а подбали.",
+        "taskOutputType": "list",
+        "category": "plans",
+        "context": "relationship",
+        "grade": 50
+      }
+    },
+    "en": {
+      "videoText": "The Tuesday morning after Christmas can be rough. Three weekends behind and that's it, the year should end there. But no, we still have to work, we still have so much to do.\nI don't know about you, but it spoils my mood a little. \n\nThat's why I declare this day - Grinch Day!",
+      "videoId": "mmZBC92pgrE",
+      "moodTaskConfig": {
+        "title": "What Christmas mood it tastes like",
+        "text": "And let's taste the Christmas mood. How does it taste to you? What gastronomic associations do you have with Christmas, New Year and December in general? If it's about Christmas, then I have it in my corner, of course. because every Christmas my parents and I took her to the christening. And if the New Year is a herring under a fur coat. Sorry, that's my weakness. But maybe you can now give me more sophisticated gastronomic associations and I will try to change mine)",
+        "taskOutputType": "text",
+        "category": "mood",
+        "grade": 50
+      },
+      "dayTaskConfig": {
+        "title": "Summary of training/personal development",
+        "text": "Count all the time you spent studying in different genres: professional training and languages ​​are here, nail meditation training is also here, wine portrait painting workshops are also here, and a nutrition course is also here - everything, everything. what you chose to study, spend time and money on it.",
+        "category": "summary",
+        "context": "learning",
+        "taskOutputType": "text",
+        "grade": 50
+      }
+    }
+  },
+  "05": {
+    "ua": {
+      "videoText": "Сьогодні четвер 21 грудня, до нового року лишається 10 днів, до Різдва всього лише три дні. Наближаємо свята сьогодні разом із U2.",
+      "videoId": "mmZBC92pgrE",
+      "moodTaskConfig": {
+        "title": "Cвятковий образ",
+        "text": "Святковий настрій напряму залежить від святкового образу. Пропоную вже зараз прикинути, у чому ви хочете зустрічати різдвяну ніч, а в чому новорічну. Який хочете лук? Який хочете мейк? \n\nІнколи буває таке, що збиратись на вечірку таааак лінь, а потім пару рухів: блискітки на щічки, піджак чи спідниця в паєтках, яку нема коли носити, окрім як сьогодні ввечорі, трохи волосся вклали й не помітили, як настрій з нікуди взяв і взявся)) Може в когось образ вже готовий?",
+        "taskOutputType": "text",
+        "category": "mood",
+        "grade": 50
+      },
+      "dayTaskConfig": {
+        "title": "Плани навчання",
+        "text": "База й основа, стартовий капітал без якого не можливі ніякі успіхи та досягнення, без нього неможливо заробити нові гроші, неможливо здобути любов, неможливо думати думки  – це наше тіло. Отже, задачка на сьогодні –  проаналізувати все, що ви зробили для здоров'я свого тіла у 2023 році. Згадайте масажі, планові походи до лікарів, спорт, психотерапію, дієти (якщо вони були для здоров’я), всі випадки, коли тіло до вас промовляло, а ви не відморозились, а подбали.",
+        "taskOutputType": "list",
+        "category": "plans",
+        "context": "learning",
+        "grade": 50
+      }
+    },
+    "en": {
+      "videoText": "The Tuesday morning after Christmas can be rough. Three weekends behind and that's it, the year should end there. But no, we still have to work, we still have so much to do.\nI don't know about you, but it spoils my mood a little. \n\nThat's why I declare this day - Grinch Day!",
+      "videoId": "mmZBC92pgrE",
+      "moodTaskConfig": {
+        "title": "What Christmas mood it tastes like",
+        "text": "And let's taste the Christmas mood. How does it taste to you? What gastronomic associations do you have with Christmas, New Year and December in general? If it's about Christmas, then I have it in my corner, of course. because every Christmas my parents and I took her to the christening. And if the New Year is a herring under a fur coat. Sorry, that's my weakness. But maybe you can now give me more sophisticated gastronomic associations and I will try to change mine)",
+        "taskOutputType": "text",
+        "category": "mood",
+        "grade": 50
+      },
+      "dayTaskConfig": {
+        "title": "Summary of training/personal development",
+        "text": "Count all the time you spent studying in different genres: professional training and languages ​​are here, nail meditation training is also here, wine portrait painting workshops are also here, and a nutrition course is also here - everything, everything. what you chose to study, spend time and money on it.",
+        "category": "summary",
+        "context": "learning",
+        "taskOutputType": "text",
+        "grade": 50
+      }
+    }
+  },
+  "06": {
+    "ua": {
+      "videoText": "Сьогодні четвер 21 грудня, до нового року лишається 10 днів, до Різдва всього лише три дні. Наближаємо свята сьогодні разом із U2.",
+      "videoId": "mmZBC92pgrE",
+      "moodTaskConfig": {
+        "title": "Cвятковий образ",
+        "text": "Святковий настрій напряму залежить від святкового образу. Пропоную вже зараз прикинути, у чому ви хочете зустрічати різдвяну ніч, а в чому новорічну. Який хочете лук? Який хочете мейк? \n\nІнколи буває таке, що збиратись на вечірку таааак лінь, а потім пару рухів: блискітки на щічки, піджак чи спідниця в паєтках, яку нема коли носити, окрім як сьогодні ввечорі, трохи волосся вклали й не помітили, як настрій з нікуди взяв і взявся)) Може в когось образ вже готовий?",
+        "taskOutputType": "text",
+        "category": "mood",
+        "grade": 50
+      },
+      "dayTaskConfig": {
+        "title": "Плани робота",
+        "text": "База й основа, стартовий капітал без якого не можливі ніякі успіхи та досягнення, без нього неможливо заробити нові гроші, неможливо здобути любов, неможливо думати думки  – це наше тіло. Отже, задачка на сьогодні –  проаналізувати все, що ви зробили для здоров'я свого тіла у 2023 році. Згадайте масажі, планові походи до лікарів, спорт, психотерапію, дієти (якщо вони були для здоров’я), всі випадки, коли тіло до вас промовляло, а ви не відморозились, а подбали.",
+        "taskOutputType": "list",
+        "category": "plans",
+        "context": "work",
+        "grade": 50
+      }
+    },
+    "en": {
+      "videoText": "The Tuesday morning after Christmas can be rough. Three weekends behind and that's it, the year should end there. But no, we still have to work, we still have so much to do.\nI don't know about you, but it spoils my mood a little. \n\nThat's why I declare this day - Grinch Day!",
+      "videoId": "mmZBC92pgrE",
+      "moodTaskConfig": {
+        "title": "What Christmas mood it tastes like",
+        "text": "And let's taste the Christmas mood. How does it taste to you? What gastronomic associations do you have with Christmas, New Year and December in general? If it's about Christmas, then I have it in my corner, of course. because every Christmas my parents and I took her to the christening. And if the New Year is a herring under a fur coat. Sorry, that's my weakness. But maybe you can now give me more sophisticated gastronomic associations and I will try to change mine)",
+        "taskOutputType": "text",
+        "category": "mood",
+        "grade": 50
+      },
+      "dayTaskConfig": {
+        "title": "Summary of training/personal development",
+        "text": "Count all the time you spent studying in different genres: professional training and languages ​​are here, nail meditation training is also here, wine portrait painting workshops are also here, and a nutrition course is also here - everything, everything. what you chose to study, spend time and money on it.",
+        "category": "summary",
+        "context": "learning",
+        "taskOutputType": "text",
+        "grade": 50
+      }
+    }
+  },
   "07": {
     "ua": {
       "videoText": "Ранок вівторка після Різдва може бути важким. Три вихідних позаду і ніби все, рік має на цьому закінчитись. Але ні, ще треба працювати, ще стільки всього ми маємо встигнути.\nНе знаю як вам, але мені це трошечки псує настрій. \n\nТому оголошую цей день – Днем Грінча!",

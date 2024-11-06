@@ -134,7 +134,7 @@ export function AlbumScreen() {
             backgroundColor="$primary50"
           >
             <Button onPress={goBack} size="xl" variant="link">
-              <ButtonIcon color="$textDark600" as={ChevronLeftIcon} />
+              <ButtonIcon color="$warmGray800" as={ChevronLeftIcon} />
             </Button>
             <Center>
               <Text style={styles.title}>
@@ -146,7 +146,7 @@ export function AlbumScreen() {
               </Text>
             </Center>
             <Button onPress={goForward} size="xl" variant="link">
-              <ButtonIcon color="$textDark600" as={ChevronRightIcon} />
+              <ButtonIcon color="$warmGray800" as={ChevronRightIcon} />
             </Button>
           </Box>
         </View>

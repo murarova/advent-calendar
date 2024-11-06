@@ -9,6 +9,7 @@ export default {
     home: "Home",
     plans: "Plans",
     album: "Album",
+    dashboard: "Dashboard",
     empty: "There is nothing here at the moment",
     add: "Add",
     cancel: "Cancel",
@@ -20,11 +21,15 @@ export default {
     health: "Health",
     learning: "Learning",
     work: "Work",
+    relationship: "Relationship",
   },
   screens: {
     processText: "You have completed:",
     periodOverview: {
       title: "Main",
+    },
+    dashboardScreen: {
+      title: "Dashboard",
     },
     tasksOfTheDay: {
       dayTitle: "Task for today",

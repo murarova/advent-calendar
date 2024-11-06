@@ -81,25 +81,10 @@ export function PlansMonthView({
                       return (
                         <>
                           <AccordionTitleText>
-                            <VStack>
-                              <Badge
-                                position="absolute"
-                                h={22}
-                                w={22}
-                                bg="$green500"
-                                borderRadius="$full"
-                                right={-28}
-                                bottom={8}
-                                zIndex={1}
-                                variant="solid"
-                                alignSelf="flex-end"
-                              >
-                                <BadgeText color="$white">
-                                  {sortedPlans[month.value].length}
-                                </BadgeText>
-                              </Badge>
-                              <Heading size="sm">{month.long}</Heading>
-                            </VStack>
+                            <Heading size="sm">{month.long}</Heading>
+                            <Text>{`  (${
+                              sortedPlans[month.value].length
+                            })`}</Text>
                           </AccordionTitleText>
                           {isExpanded ? (
                             <AccordionIcon as={ChevronUpIcon} ml="$3" />

@@ -13,7 +13,9 @@ import { PlansScreen } from "./plans-screen";
 import Medal from "../assets/svg/medal";
 import Compas from "../assets/svg/compas";
 import Album from "../assets/svg/album";
+import Dashboard from "../assets/svg/dashboard";
 import { AlbumScreen } from "./album-screen";
+import { DashboardScreen } from "./dashboard-screen";
 
 const Tab = createBottomTabNavigator();
 
@@ -71,6 +73,17 @@ export const HomeScreen = () => {
           title: t("common.album"),
           tabBarIcon: ({ focused }) => (
             <Album color={focused ? "#fe434c" : "#999999"} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name={SCREENS.DASHBOARD}
+        component={DashboardScreen}
+        options={{
+          tabBarLabel: t("common.dashboard"),
+          title: t("screens.dashboardScreen.title"),
+          tabBarIcon: ({ focused }) => (
+            <Dashboard color={focused ? "#fe434c" : "#999999"} />
           ),
         }}
       />

@@ -83,7 +83,7 @@ export function PlansList({
                   {isPlanScreen ? (
                     <Checkbox
                       value={item?.text}
-                      defaultIsChecked={item?.done}
+                      defaultIsChecked={item?.isDone}
                       onChange={(value) => handlePlanDone(item, value)}
                       size="md"
                       aria-label={item?.text}
@@ -94,7 +94,7 @@ export function PlansList({
                       <CheckboxLabel flex={1}>
                         <Text
                           style={
-                            item?.done && {
+                            item?.isDone && {
                               textDecorationLine: "line-through",
                               textDecorationStyle: "solid",
                               opacity: 0.5

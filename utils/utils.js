@@ -11,3 +11,13 @@ export const enumerateDaysBetweenDates = function (startDate, endDate) {
 
   return dates;
 };
+
+export function getProgressColorByValue(value) {
+  if (value < 30) {
+    return "$progressRed";
+  } else if (value >= 30 && value < 70) {
+    return "$progressYellow";
+  } else {
+    return "$progressGreen";
+  }
+}

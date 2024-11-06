@@ -15,6 +15,7 @@ export const SCREENS = {
   HOME: "Home",
   PLANS: "Plans",
   ALBUM: "Album",
+  DASHBOARD: "Dashboard",
 };
 
 export const LANGUAGES = {

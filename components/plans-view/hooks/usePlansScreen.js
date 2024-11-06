@@ -74,9 +74,9 @@ export function usePlansScreen({ plans, setPlans }) {
     }
   }
 
-  async function handleComplitePlan(plan, done, context) {
+  async function handleComplitePlan(plan, isDone, context) {
     const updatedPlans = plans[context].map((item) =>
-      item.id === plan.id ? { ...plan, done } : item
+      item.id === plan.id ? { ...plan, isDone } : item
     );
     try {
       await saveTaskByCategory({

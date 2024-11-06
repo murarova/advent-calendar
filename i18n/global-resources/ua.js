@@ -10,6 +10,7 @@ export default {
     album: "Альбом",
     home: "Головна",
     add: "Додати",
+    dashboard: "Прогрес",
     empty: "Поки що тут нічого немає",
     cancel: "Відмінити",
     edit: "Редагувати",
@@ -18,14 +19,18 @@ export default {
   },
   context: {
     health: "Здоров'я",
-    learning: "Розвиток",
+    learning: "Навчання",
     work: "Робота",
+    relationship: "Стосунки",
   },
   screens: {
     emptyScreen: "На сьогодні завдань немає",
     processText: "Ти виконав:",
     periodOverview: {
       title: "Завдання",
+    },
+    dashboardScreen: {
+      title: "Твій прогрес",
     },
     tasksOfTheDay: {
       dayTitle: "Завдання дня",

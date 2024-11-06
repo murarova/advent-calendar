@@ -420,6 +420,9 @@ export const gluestackUIConfig = createConfig({
       backgroundDarkMuted: "#252526",
       white: "#FFFFFF",
       black: "#000000",
+      progressGreen: "#86CB3C",
+      progressYellow: "#FAC515",
+      progressRed: "#FF656C",
     },
     space: {
       px: "1px",

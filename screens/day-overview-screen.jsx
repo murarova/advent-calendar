@@ -20,6 +20,7 @@ import {
 } from "../services/services";
 import { Alert } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
+import { getProgressColorByValue } from "../utils/utils";
 
 function DayOverviewScreen({ route, navigation }) {
   const { t, i18n } = useTranslation();
@@ -106,7 +107,7 @@ function DayOverviewScreen({ route, navigation }) {
 
             <Center my="$2.5" mb="$2.5">
               <Progress value={total} size="sm">
-                <ProgressFilledTrack />
+                <ProgressFilledTrack bg={getProgressColorByValue(total)} />
               </Progress>
             </Center>
           </Box>

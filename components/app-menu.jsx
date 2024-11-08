@@ -10,8 +10,8 @@ import {
   ButtonIcon,
   Icon,
   Text,
-  SettingsIcon,
 } from "@gluestack-ui/themed";
+import { LogOut } from "lucide-react-native";
 import { useTranslation } from "react-i18next";
 import { LANGUAGES, SCREENS } from "../constants/constants";
 import { useNavigation } from "@react-navigation/native";
@@ -44,7 +44,8 @@ export function AppMenu() {
         );
       }}
     >
-      {Object.keys(LANGUAGES).map((lng) => (
+      // Switching languages will not be a part of v1
+      {/* {Object.keys(LANGUAGES).map((lng) => (
         <MenuItem
           key={LANGUAGES[lng].icon}
           onPress={() => handleLanguageChanged(lng)}
@@ -56,9 +57,9 @@ export function AppMenu() {
 
           <MenuItemLabel size="sm">{LANGUAGES[lng].nativeName}</MenuItemLabel>
         </MenuItem>
-      ))}
+      ))} */}
       <MenuItem key="Logout" onPress={handleLogout} textValue="Logout">
-        <Icon as={SettingsIcon} size="sm" mr="$2" />
+        <Icon as={LogOut} size="sm" mr="$2" />
         <Text>Logout</Text>
       </MenuItem>
     </Menu>

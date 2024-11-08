@@ -9,6 +9,7 @@ export function useImage() {
   async function saveUserImage() {
     if (!image) return;
     try {
+      console.log('image', image);
       setIsImageLoading(true);
       await saveImage(image);
       const uri = await getImageUrl(image.id);

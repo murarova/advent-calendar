@@ -90,13 +90,13 @@ export function AlbumScreen() {
     return (
       <View style={styles.item}>
         <ParallaxImage
-          source={{ uri: item.image.uri }}
+          source={{ uri: item?.image?.uri }}
           containerStyle={styles.imageContainer}
           style={styles.image}
           parallaxFactor={0.4}
           {...parallaxProps}
         />
-        <ScrollView style={styles.text} maxHeight="40%">
+        <ScrollView style={styles.text}>
           <Text>{item.text}</Text>
         </ScrollView>
       </View>
@@ -140,7 +140,7 @@ export function AlbumScreen() {
               <Text style={styles.title}>
                 {
                   months.find(
-                    (month) => month.value === photos[activeSlide].month
+                    (month) => month.value === photos[activeSlide]?.month
                   )?.long
                 }
               </Text>
@@ -158,11 +158,6 @@ export function AlbumScreen() {
 }
 
 const styles = StyleSheet.create({
-  pagination: {
-    display: "flex",
-    justifyContent: "flex-start",
-    width: screenWidth - 60,
-  },
   container: {
     flex: 1,
     paddingTop: 20,
@@ -170,6 +165,8 @@ const styles = StyleSheet.create({
   },
   text: {
     marginTop: 20,
+    marginBottom: 10,
+    maxHeight: "40%",
   },
   title: {
     verticalAlign: "middle",
@@ -181,7 +178,7 @@ const styles = StyleSheet.create({
     height: screenWidth - 60,
   },
   imageContainer: {
-    flex: 1,
+    flexGrow: 1,
     marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
     backgroundColor: "white",
     borderRadius: 8,

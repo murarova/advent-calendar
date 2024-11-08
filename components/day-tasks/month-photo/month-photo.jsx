@@ -58,7 +58,13 @@ export function MonthPhoto({ context, data, setData, removeGrade }) {
       setEdit(false);
       const id = data?.id ?? uuid.v4();
       try {
-        const newImage = await saveImage();
+        let newImage;
+        if (data?.image?.uri !== image?.uri) {
+          newImage = await saveImage();
+        } else {
+          newImage = data?.image;
+        }
+
         const updatedData = {
           id,
           text,

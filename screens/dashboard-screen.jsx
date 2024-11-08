@@ -17,8 +17,6 @@ import { config } from "../config/gluestack-ui.config";
 import { TASK_CONTEXT } from "../constants/constants";
 import { DashboardContextSection } from "../components/dashboard-context-section";
 
-const { width: screenWidth } = Dimensions.get("window");
-
 export function DashboardScreen() {
   const [contextData, setContextData] = useState(null);
   const [totalData, setTotalData] = useState(null);
@@ -64,8 +62,6 @@ export function DashboardScreen() {
     return contextStats;
   }
 
-  console.log("contextData", contextData);
-
   useLayoutEffect(() => {
     setIsLoading(true);
     async function getTasks() {
@@ -98,7 +94,11 @@ export function DashboardScreen() {
         <Box>
           <HStack justifyContent="space-around" mt="$16">
             <VStack justifyContent="center" alignItems="center">
-              <Text color={config.tokens.colors.warmGray900} fontWeight="bold">
+              <Text
+                size="xl"
+                color={config.tokens.colors.warmGray900}
+                fontWeight="bold"
+              >
                 {totalData.totalTasks}
               </Text>
               <Text color={config.tokens.colors.warmGray400}>Цілей</Text>
@@ -112,7 +112,11 @@ export function DashboardScreen() {
               valueSuffix={"%"}
             />
             <VStack justifyContent="center" alignItems="center">
-              <Text color={config.tokens.colors.warmGray900} fontWeight="bold">
+              <Text
+                size="xl"
+                color={config.tokens.colors.warmGray900}
+                fontWeight="bold"
+              >
                 {totalData.doneTasks}
               </Text>
               <Text color={config.tokens.colors.warmGray400}>Виконано</Text>
@@ -122,7 +126,7 @@ export function DashboardScreen() {
             {Object.values(TASK_CONTEXT).map((context) => {
               return (
                 contextData[context] && (
-                  <Box width="50%">
+                  <Box key={context} width="50%">
                     <DashboardContextSection
                       context={context}
                       percentage={contextData[context].donePercentage}

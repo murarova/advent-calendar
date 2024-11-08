@@ -19,7 +19,7 @@ function PeriodOverviewScreen({ navigation }) {
   }
 
   return (
-    <Box flex={1} justifyContent="center">
+    <Box flex={1} mt="$16">
       <Box>
         <Calendar
           pressHandler={pressHandler}

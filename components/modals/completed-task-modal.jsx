@@ -13,7 +13,7 @@ import {
 } from "@gluestack-ui/themed";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { Svg1 } from "../../assets/svg/decorating";
+import DeerSvg from "../../assets/svg/deer";
 
 export function CompletedTaskModal({ setShowModal }) {
   const { t } = useTranslation();
@@ -37,8 +37,8 @@ export function CompletedTaskModal({ setShowModal }) {
             <Center>
               <Text size="sm">{t("screens.completedTaskModal.text")}</Text>
             </Center>
-            <Center>
-              <Svg1 />
+            <Center mt="$10" mb="$5">
+              <DeerSvg />
             </Center>
           </ModalBody>
           <ModalFooter>

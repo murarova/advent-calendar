@@ -11,6 +11,7 @@ import { LoadingScreen } from "./screens/loading-screen";
 import { LoginScreen } from "./screens/login-screen";
 import { HomeScreen } from "./screens/home-screen";
 import { config } from "./config/gluestack-ui.config";
+import { IntroScreen } from "./screens/intro-screen";
 
 const MyTheme = {
   ...DefaultTheme,
@@ -33,6 +34,13 @@ export default function App() {
           <Stack.Screen
             name={SCREENS.LOADING}
             component={LoadingScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name={SCREENS.INTRO}
+            component={IntroScreen}
             options={{
               headerShown: false,
             }}

@@ -24,6 +24,40 @@ export default {
     relationship: "Стосунки",
   },
   screens: {
+    intro: {
+      loginBtn: "Створити акаунт",
+      signupBtn: "Увійти",
+    },
+    loginScreen: {
+      title: "Увійдіть у свій обліковий запис",
+      noAccount: "Не маєте облікового запису?",
+      signUpButton: "Зареєструватися",
+      email: "Електронна пошта",
+      emailPlaceholder: "Введіть вашу електронну пошту",
+      password: "Пароль",
+      passwordPlaceholder: "Введіть ваш пароль",
+      loginButton: "Увійти",
+      errorTitle: "Помилка входу",
+      errorMessage: "Перевірте свої дані та спробуйте ще раз.",
+      emptyFieldsMessage:
+        "Поля електронної пошти та пароля не можуть бути порожніми.",
+    },
+    registerScreen: {
+      title: "Реєстрація",
+      subtitle: "Вже маєте акаунт?",
+      loginBtn: "Увійдіть",
+      name: "Ім'я",
+      email: "Пошта",
+      password: "Пароль",
+      repeatPassword: "Повторіть пароль",
+      okBtn: "Створити акаунт",
+      invalidPassword:
+        "Пароль має складатись із щонайменше 8 символів і містити хоча б одну цифру та хоча б одну літеру",
+      validatePassword:
+        "Пароль має складатись із щонайменше 8 символів і містити хоча б одну цифру та хоча б одну літеру",
+      passwordMatchError: "Паролі не збігаються",
+      invalidEmail: "Будь ласка, введіть дійсну електронну адресу",
+    },
     emptyScreen: "На сьогодні завдань немає",
     processText: "Ти виконав:",
     periodOverview: {

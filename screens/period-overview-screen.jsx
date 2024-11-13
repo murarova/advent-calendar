@@ -6,7 +6,7 @@ import moment from "moment";
 import { Calendar } from "../components/calendar";
 
 function PeriodOverviewScreen({ navigation }) {
-  const currentDate = moment("2023-12-14");
+  const currentDate = moment();
 
   const days = useMemo(() => {
     return enumerateDaysBetweenDates(START_DAY, END_DAY);

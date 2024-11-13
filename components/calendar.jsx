@@ -53,7 +53,7 @@ export function Calendar({ pressHandler, currentDate, days }) {
   LocaleConfig.defaultLocale = locale;
 
   function isDayAvailableForUser(date) {
-    return moment(date).diff(currentDate, "days") <= OPEN_DAYS_FROM_TODAY;
+    return moment(date).diff(currentDate, "days") < OPEN_DAYS_FROM_TODAY;
   }
 
   function getMarkedDates() {
@@ -85,7 +85,10 @@ export function Calendar({ pressHandler, currentDate, days }) {
           },
         };
       }
-      if (moment(day).diff(currentDate, "days") === 0) {
+      if (
+        moment(day).diff(currentDate, "days", true) > -1 &&
+        moment(day).diff(currentDate, "days", true) <= 0
+      ) {
         markedDates[moment(day).format("YYYY-MM-DD")] = {
           customStyles: {
             container: {
@@ -133,7 +136,7 @@ export function Calendar({ pressHandler, currentDate, days }) {
           dayHeader: {
             color: "#292524",
             fontWeight: 500,
-            marginBottom: 15
+            marginBottom: 15,
           },
         },
         "stylesheet.day.basic": {

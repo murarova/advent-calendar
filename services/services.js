@@ -4,7 +4,11 @@ import storage from "@react-native-firebase/storage";
 import { TASK_CATEGORY } from "../constants/constants";
 
 export const createProfile = async (uid, name) => {
-  firebase.app().database(process.env.DB).ref(`/users/${uid}`).set({ name });
+  return await firebase
+    .app()
+    .database(process.env.EXPO_PUBLIC_DB)
+    .ref(`/users/${uid}`)
+    .set({ name });
 };
 
 export async function createUserWithEmailAndPassword(email, password) {
@@ -27,7 +31,7 @@ export async function saveTaskByCategory({ category, data, context }) {
   if (currentUser) {
     const response = await firebase
       .app()
-      .database(process.env.DB)
+      .database(process.env.EXPO_PUBLIC_DB)
       .ref(`/users/${currentUser.uid}/${category}/${context}`)
       .set(data);
 
@@ -35,13 +39,13 @@ export async function saveTaskByCategory({ category, data, context }) {
   }
 }
 
-export async function saveMoodTask({ category, data }) {
+export async function saveMoodTask({ category, data, day }) {
   const currentUser = getCurrentUser();
   if (currentUser) {
     const response = await firebase
       .app()
-      .database(process.env.DB)
-      .ref(`/users/${currentUser.uid}/${category}`)
+      .database(process.env.EXPO_PUBLIC_DB)
+      .ref(`/users/${currentUser.uid}/${category}/${day}`)
       .set(data);
 
     return response;
@@ -53,7 +57,7 @@ export async function getUserTasks() {
   if (currentUser) {
     const response = await firebase
       .app()
-      .database(process.env.DB)
+      .database(process.env.EXPO_PUBLIC_DB)
       .ref(`/users/${currentUser.uid}/tasks`)
       .once("value");
 
@@ -70,7 +74,7 @@ export async function getUserDayTasks(category, context) {
         : `/users/${currentUser.uid}/${category}/${context}`;
     const response = await firebase
       .app()
-      .database(process.env.DB)
+      .database(process.env.EXPO_PUBLIC_DB)
       .ref(ref)
       .once("value");
 
@@ -83,7 +87,7 @@ export async function getUserSummary() {
   if (currentUser) {
     const response = await firebase
       .app()
-      .database(process.env.DB)
+      .database(process.env.EXPO_PUBLIC_DB)
       .ref(`/users/${currentUser.uid}/summary`)
       .once("value");
 
@@ -96,7 +100,7 @@ export async function getUserPlans() {
   if (currentUser) {
     const response = await firebase
       .app()
-      .database(process.env.DB)
+      .database(process.env.EXPO_PUBLIC_DB)
       .ref(`/users/${currentUser.uid}/plans`)
       .once("value");
 
@@ -109,7 +113,7 @@ export async function getUserPhotos() {
   if (currentUser) {
     const response = await firebase
       .app()
-      .database(process.env.DB)
+      .database(process.env.EXPO_PUBLIC_DB)
       .ref(`/users/${currentUser.uid}/monthPhoto`)
       .once("value");
 
@@ -144,7 +148,7 @@ export async function removeTask({ category, context }) {
         : `/users/${currentUser.uid}/${category}/${context}`;
     const response = await firebase
       .app()
-      .database(process.env.DB)
+      .database(process.env.EXPO_PUBLIC_DB)
       .ref(ref)
       .remove();
 
@@ -157,7 +161,7 @@ export async function getComplited() {
   if (currentUser) {
     const response = await firebase
       .app()
-      .database(process.env.DB)
+      .database(process.env.EXPO_PUBLIC_DB)
       .ref(`/users/${currentUser.uid}/complited`)
       .once("value");
 
@@ -172,7 +176,7 @@ export async function setComplited({ day }) {
 
     const response = await firebase
       .app()
-      .database(process.env.DB)
+      .database(process.env.EXPO_PUBLIC_DB)
       .ref(`/users/${currentUser.uid}/complited`)
       .set([...complited, day]);
 
@@ -188,7 +192,7 @@ export async function removeComplited({ day }) {
       const newComplited = complited.filter((item) => item !== day);
       const response = await firebase
         .app()
-        .database(process.env.DB)
+        .database(process.env.EXPO_PUBLIC_DB)
         .ref(`/users/${currentUser.uid}/complited`)
         .set(newComplited);
 

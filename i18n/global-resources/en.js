@@ -24,6 +24,39 @@ export default {
     relationship: "Relationship",
   },
   screens: {
+    intro: {
+      loginBtn: "Login",
+      signupBtn: "Sign up",
+    },
+    loginScreen: {
+      title: "Login to your account",
+      noAccount: "Don't have an account?",
+      signUpButton: "Sign Up",
+      email: "Email",
+      emailPlaceholder: "Enter your email",
+      password: "Password",
+      passwordPlaceholder: "Enter your password",
+      loginButton: "Login",
+      errorTitle: "Login Failed",
+      errorMessage: "Please check your credentials and try again.",
+      emptyFieldsMessage: "Email and password fields cannot be empty.",
+    },
+    registerScreen: {
+      title: "Register",
+      subtitle: "Already have an account?",
+      loginBtn: "Login",
+      name: "Name",
+      email: "Email",
+      password: "Password",
+      repeatPassword: "Repeat the password",
+      okBtn: "Register",
+      invalidPassword:
+        "Password must be at least 8 characters long and contain at least one number and at least one letter",
+      validatePassword:
+        "Password must be at least 8 characters long and contain at least one number and at least one letter",
+      passwordMatchError: "Passwords do not match",
+      invalidEmail: "Please enter a valid email address",
+    },
     processText: "You have completed:",
     periodOverview: {
       title: "Main",

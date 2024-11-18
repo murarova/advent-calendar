@@ -71,8 +71,10 @@ export function AlbumScreen() {
     async function getTasks() {
       try {
         const data = await getUserPhotos();
-        const photos = mapDataToCarousel(data);
-        setPhotos(photos);
+        if (data) {
+          const photos = mapDataToCarousel(data);
+          setPhotos(photos);
+        }
       } catch (error) {
         Alert.alert("Oops", "Something wrong");
       } finally {

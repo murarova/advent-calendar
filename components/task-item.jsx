@@ -14,11 +14,7 @@ import {
 } from "@gluestack-ui/themed";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
-import {
-  TASK_OUTPUT_TYPE,
-  TASK_CONTEXT,
-  TASK_CATEGORY,
-} from "../constants/constants";
+import { TASK_OUTPUT_TYPE, TASK_CATEGORY } from "../constants/constants";
 
 import { getUserDayTasks } from "../services/services";
 import { Plans } from "./day-tasks/plans/plans";
@@ -27,7 +23,7 @@ import { MonthPhoto } from "./day-tasks/month-photo/month-photo";
 import { Alert } from "react-native";
 import { MoodTask } from "./day-tasks/mood/mood-task";
 
-export function TaskItem({ taskConfig, updateGrade, removeGrade }) {
+export function TaskItem({ taskConfig, updateGrade, removeGrade, day }) {
   const { t } = useTranslation();
   const [data, setData] = useState(null);
 
@@ -39,7 +35,9 @@ export function TaskItem({ taskConfig, updateGrade, removeGrade }) {
           taskConfig.context
         );
         if (data) {
-          setData(data);
+          taskConfig.category === TASK_CATEGORY.MOOD
+            ? setData(data[day])
+            : setData(data);
         }
       } catch (error) {
         Alert.alert("Oops", "Something wrong");
@@ -119,6 +117,7 @@ export function TaskItem({ taskConfig, updateGrade, removeGrade }) {
                   data={data}
                   setData={setData}
                   removeGrade={removeGrade}
+                  day={day}
                 />
               )}
             </Box>

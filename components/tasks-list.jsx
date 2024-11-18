@@ -9,6 +9,7 @@ export function TasksList({
   moodTaskConfig,
   updateGrade,
   removeGrade,
+  day,
 }) {
   return (
     <ScrollView>
@@ -25,6 +26,7 @@ export function TasksList({
         )}
         {moodTaskConfig && (
           <TaskItem
+            day={day}
             taskConfig={moodTaskConfig}
             updateGrade={updateGrade}
             removeGrade={removeGrade}

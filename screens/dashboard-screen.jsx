@@ -88,9 +88,15 @@ export function DashboardScreen() {
     return <Loader />;
   }
 
+  const isEmpty =
+    !totalData ||
+    (totalData.totalTasks === 0 &&
+      totalData.doneTasks === 0 &&
+      parseFloat(totalData.donePercentage) === 0);
+
   return (
     <>
-      {totalData ? (
+      {!isEmpty ? (
         <Box>
           <HStack justifyContent="space-around" mt="$16">
             <VStack justifyContent="center" alignItems="center">

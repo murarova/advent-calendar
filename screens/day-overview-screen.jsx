@@ -26,9 +26,9 @@ function DayOverviewScreen({ route, navigation }) {
   const { t, i18n } = useTranslation();
   const currentDay = route.params.currentDay;
   const day = moment(currentDay).format("DD");
-  const month = moment(currentDay)
-    .locale(LANGUAGES[i18n.resolvedLanguage].moment)
-    .format("MMMM");
+  // const month = moment(currentDay)
+  //   .locale(LANGUAGES[i18n.resolvedLanguage].moment)
+  //   .format("MMMM");
   const dayTasks = getDayTasks(day, i18n.resolvedLanguage);
   const [showComplitedModal, setShowComplitedModal] = useState(false);
   const [complitedTasks, setComplitedTasks] = useState(null);
@@ -43,9 +43,9 @@ function DayOverviewScreen({ route, navigation }) {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: `${day} of ${month}`,
+      title: moment(currentDay).format("DD.MM.YYYY"),
     });
-  }, [currentDay, navigation, month]);
+  }, [currentDay, navigation]);
 
   useEffect(() => {
     async function getComplitedTasks() {

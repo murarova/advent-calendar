@@ -1,16 +1,17 @@
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { GluestackUIProvider } from "@gluestack-ui/themed";
-import DayOverviewScreen from "./screens/day-overview-screen";
-import { SCREENS } from "./constants/constants";
-import "./i18n/i18n";
-import { useTranslation } from "react-i18next";
+import { createStackNavigator } from "@react-navigation/stack";
 import { AppMenu } from "./components/app-menu";
 import { RegisterScreen } from "./screens/register-screen";
 import { LoadingScreen } from "./screens/loading-screen";
 import { LoginScreen } from "./screens/login-screen";
 import { HomeScreen } from "./screens/home-screen";
+import { IntroScreen } from "./screens/intro-screen";
+import { GluestackUIProvider } from "@gluestack-ui/themed";
 import { config } from "./config/gluestack-ui.config";
+import { SCREENS } from "./constants/constants";
+import DayOverviewScreen from "./screens/day-overview-screen";
+import { useTranslation } from "react-i18next";
+import "./i18n/i18n";
 
 const MyTheme = {
   ...DefaultTheme,
@@ -22,7 +23,7 @@ const MyTheme = {
   },
 };
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 export default function App() {
   const { t } = useTranslation();
@@ -33,6 +34,13 @@ export default function App() {
           <Stack.Screen
             name={SCREENS.LOADING}
             component={LoadingScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name={SCREENS.INTRO}
+            component={IntroScreen}
             options={{
               headerShown: false,
             }}

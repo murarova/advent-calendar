@@ -23,6 +23,7 @@ export const HomeScreen = () => {
   const { t } = useTranslation();
   return (
     <Tab.Navigator
+      initialRouteName={SCREENS.PERIOD_OVERVIEW}
       screenOptions={{
         headerRight: AppMenu,
         headerRightContainerStyle: {

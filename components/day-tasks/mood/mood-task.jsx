@@ -18,7 +18,7 @@ import { ActionButtons, AnimatedView, ImagePicker, Loader } from "../../common";
 import { ImageBackground } from "@gluestack-ui/themed";
 import { useImage } from "../../../hooks/useImage";
 
-export function MoodTask({ data, setData, removeGrade }) {
+export function MoodTask({ data, setData, removeGrade, day }) {
   const { t } = useTranslation();
   const [edit, setEdit] = useState(false);
   const [text, setText] = useState("");
@@ -76,6 +76,7 @@ export function MoodTask({ data, setData, removeGrade }) {
         await saveMoodTask({
           category: TASK_CATEGORY.MOOD,
           data: updatedData,
+          day,
         });
 
         setData(updatedData);

@@ -50,6 +50,7 @@ export const LoginScreen = () => {
           t("screens.loginScreen.errorTitle"),
           t("screens.loginScreen.errorMessage")
         );
+        setIsLoading(false);
       }
     } else {
       Alert.alert(

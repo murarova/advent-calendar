@@ -82,7 +82,12 @@ export const RegisterScreen = () => {
           nav.replace(SCREENS.HOME);
         }
       } catch (e) {
-        Alert.alert("Oops", "Please check your form and try again");
+        if (e.code == "auth/email-already-in-use") {
+          Alert.alert("Oops", "Email already in use");
+        } else {
+          Alert.alert("Oops", "Please check your form and try again");
+        }
+        setIsLoading(false);
       }
     }
   };

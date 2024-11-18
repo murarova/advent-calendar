@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 
 export function Calendar({ pressHandler, currentDate, days }) {
   const { i18n } = useTranslation();
-  const locale = LANGUAGES[i18n.resolvedLanguage].moment === "uk" ? "uk" : "";
+  const locale = LANGUAGES[i18n.resolvedLanguage]?.moment === "uk" ? "uk" : "";
 
   LocaleConfig.locales["uk"] = {
     monthNames: [

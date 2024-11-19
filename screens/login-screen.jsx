@@ -41,7 +41,6 @@ export const LoginScreen = () => {
       try {
         setIsLoading(true);
         const user = await signInWithEmailAndPassword(email, password);
-        setIsLoading(false);
         if (user) {
           nav.replace(SCREENS.HOME);
         }
@@ -50,6 +49,7 @@ export const LoginScreen = () => {
           t("screens.loginScreen.errorTitle"),
           t("screens.loginScreen.errorMessage")
         );
+      } finally {
         setIsLoading(false);
       }
     } else {

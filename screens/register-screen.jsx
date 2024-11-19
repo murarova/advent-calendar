@@ -76,7 +76,6 @@ export const RegisterScreen = () => {
       try {
         setIsLoading(true);
         const user = await createUserWithEmailAndPassword(email, password);
-        setIsLoading(false);
         if (user) {
           await createProfile(user.uid, name);
           nav.replace(SCREENS.HOME);
@@ -87,6 +86,7 @@ export const RegisterScreen = () => {
         } else {
           Alert.alert("Oops", "Please check your form and try again");
         }
+      } finally {
         setIsLoading(false);
       }
     }

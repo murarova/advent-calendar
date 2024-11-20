@@ -186,6 +186,10 @@ export async function setComplited({ day }) {
   const currentUser = getCurrentUser();
   if (currentUser) {
     const complited = (await getComplited()) ?? [];
+    const isUniqueDay = !complited.find((item) => item === day);
+    if (!isUniqueDay) {
+      return;
+    }
 
     const response = await firebase
       .app()

@@ -26,6 +26,19 @@ export function getCurrentUser() {
   return auth().currentUser;
 }
 
+export async function getUserRole() {
+  const currentUser = getCurrentUser();
+  if (currentUser) {
+    const response = await firebase
+      .app()
+      .database(process.env.EXPO_PUBLIC_DB)
+      .ref(`/users/${currentUser.uid}/role`)
+      .once("value");
+
+    return response.val();
+  }
+}
+
 export async function saveTaskByCategory({ category, data, context }) {
   const currentUser = getCurrentUser();
   if (currentUser) {

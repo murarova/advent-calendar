@@ -5,10 +5,13 @@ import {
   LocaleConfig,
 } from "react-native-calendars";
 import { useTranslation } from "react-i18next";
+import { getUserRole } from "../services/services";
+import { useEffect, useState } from "react";
 
 export function Calendar({ pressHandler, currentDate, days }) {
   const { i18n } = useTranslation();
   const locale = LANGUAGES[i18n.resolvedLanguage]?.moment === "uk" ? "uk" : "";
+  const [isAdmin, setIsAdmin] = useState(null);
 
   LocaleConfig.locales["uk"] = {
     monthNames: [
@@ -51,6 +54,14 @@ export function Calendar({ pressHandler, currentDate, days }) {
     dayNamesShort: ["Нд", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
   };
   LocaleConfig.defaultLocale = locale;
+
+  useEffect(() => {
+    getUserRole().then((role) => {
+      if (role === "admin") {
+        setIsAdmin(true);
+      }
+    });
+  }, []);
 
   function isDayAvailableForUser(date) {
     return moment(date).diff(currentDate, "days") < OPEN_DAYS_FROM_TODAY;
@@ -107,6 +118,10 @@ export function Calendar({ pressHandler, currentDate, days }) {
     return markedDates;
   }
 
+  const maxDate = isAdmin
+    ? moment(currentDate).endOf("month").format("YYYY-MM-DD")
+    : currentDate.format("YYYY-MM-DD");
+
   return (
     <NativeCalendar
       current={currentDate.format("YYYY-MM-DD")}
@@ -117,7 +132,8 @@ export function Calendar({ pressHandler, currentDate, days }) {
         pressHandler(day);
       }}
       hideArrows
-      maxDate={currentDate.format("YYYY-MM-DD")}
+      minDate={moment(days[0]).format("YYYY-MM-DD")}
+      maxDate={maxDate}
       markingType={"custom"}
       markedDates={getMarkedDates()}
       theme={{

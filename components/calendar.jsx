@@ -8,7 +8,8 @@ import { useTranslation } from "react-i18next";
 import { getUserRole } from "../services/services";
 import { useEffect, useState } from "react";
 
-export function Calendar({ pressHandler, currentDate, days }) {
+export function Calendar({ pressHandler, currentDate2, days }) {
+  const currentDate = moment("2024-12-14");
   const { i18n } = useTranslation();
   const locale = LANGUAGES[i18n.resolvedLanguage]?.moment === "uk" ? "uk" : "";
   const [isAdmin, setIsAdmin] = useState(null);

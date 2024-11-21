@@ -1,7 +1,9 @@
 import moment from "moment";
 
-export const START_DAY = moment().startOf("month").format("YYYY-MM-DD");
-export const END_DAY = moment().endOf("month").format("YYYY-MM-DD");
+export const START_DAY = moment("2024-12-14")
+  .startOf("month")
+  .format("YYYY-MM-DD");
+export const END_DAY = moment("2024-12-14").endOf("month").format("YYYY-MM-DD");
 
 export const OPEN_DAYS_FROM_TODAY = 0;
 

@@ -143,18 +143,6 @@ export function DashboardScreen() {
                   )
                 );
               })}
-              {Object.values(TASK_CONTEXT).map((context) => {
-                return (
-                  contextData[context] && (
-                    <Box key={context} width="50%">
-                      <DashboardContextSection
-                        context={context}
-                        percentage={contextData[context].donePercentage}
-                      />
-                    </Box>
-                  )
-                );
-              })}
             </Box>
           </ScrollView>
         </Box>

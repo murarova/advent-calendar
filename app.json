@@ -1,21 +1,20 @@
 {
   "expo": {
-    "name": "advent-calendar",
-    "slug": "advent-calendar",
+    "name": "Jingle Plan",
+    "slug": "jingle-plan",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splashscreen.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true,
+      "icon": "./assets/icon.png",
+      "supportsTablet": false,
       "bundleIdentifier": "com.murarova.adventCalendar",
       "googleServicesFile": "./GoogleService-Info.plist"
     },
@@ -25,9 +24,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": [
-        "android.permission.RECORD_AUDIO"
-      ],
+      "permissions": ["android.permission.RECORD_AUDIO"],
       "package": "com.murarova.adventCalendar"
     },
     "web": {

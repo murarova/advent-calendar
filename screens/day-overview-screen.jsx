@@ -92,6 +92,8 @@ function DayOverviewScreen({ route, navigation }) {
       ...prevValue,
       [category]: 0,
     }));
+    const updatedComplited = complitedTasks.filter((item) => item !== day);
+    setComplitedTasks(updatedComplited);
     removeComplited({ day });
   }
 

@@ -26,8 +26,7 @@
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="com.murarova.adventCalendar"/>
-        <data android:scheme="exp+app4"/>
-        <data android:scheme="exp+advent-calendar"/>
+        <data android:scheme="exp+jingle-plan"/>
       </intent-filter>
     </activity>
     <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" android:exported="false"/>

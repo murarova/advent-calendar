@@ -1,4 +1,7 @@
 {
+  "private": true,
+  "name": "jingle-plan",
+  "version": "1.0.0",
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
@@ -56,8 +59,5 @@
   },
   "devDependencies": {
     "@babel/core": "^7.19.3"
-  },
-  "private": true,
-  "name": "app4",
-  "version": "1.0.0"
+  }
 }

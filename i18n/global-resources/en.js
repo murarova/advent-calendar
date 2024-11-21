@@ -27,6 +27,12 @@ export default {
     intro: {
       loginBtn: "Login",
       signupBtn: "Sign up",
+      firstScreenText: "Your Christmas planner Jingle plan welcomes you.",
+      secondScreenText:
+        "Consider it - it's an advent calendar with interesting tasks about your year. \nIt only takes 15 minutes a day.",
+      thirdScreenText:
+        "In a month you will have the results of 2024 ready, plans for 2025. And all this with a festive mood.",
+      fourthScreenText: "Plan yourself a great year with Jingle Plan",
     },
     loginScreen: {
       title: "Login to your account",

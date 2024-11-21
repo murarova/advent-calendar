@@ -32,6 +32,11 @@ export default {
     intro: {
       loginBtn: "Створити акаунт",
       signupBtn: "Увійти",
+      firstScreenText: "Привіт! \nЦе твій різдвяний планер \nJingle plan.",
+      secondScreenText: "Всього лише 15 хв на день.",
+      thirdScreenText:
+        "І за місяць у тебе готові \nпідсумки 2024 та плани 2025.",
+      fourthScreenText: "Заплануй собі класний рік \nразом із Jingle Plan.",
     },
     loginScreen: {
       title: "Увійдіть у свій обліковий запис",

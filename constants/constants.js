@@ -42,7 +42,6 @@ export const TASK_CONTEXT = {
   MONEY: "money",
   SUPPORTS: "supports",
   GLOBAL_GOAL: "globalGoal",
-  MONEY_GOAL: "moneyGoal",
   SUPPORT_WORD: "supportWord",
 };
 

@@ -123,6 +123,19 @@ export async function getUserPlans() {
   }
 }
 
+export async function getUserGlobalGoal() {
+  const currentUser = getCurrentUser();
+  if (currentUser) {
+    const response = await firebase
+      .app()
+      .database(process.env.EXPO_PUBLIC_DB)
+      .ref(`${baseUrl}/${currentUser.uid}/goals/globalGoal`)
+      .once("value");
+
+    return response.val();
+  }
+}
+
 export async function getUserPhotos() {
   const currentUser = getCurrentUser();
   if (currentUser) {

@@ -11,7 +11,11 @@ import { useEffect, useState } from "react";
 import { TASK_CATEGORY, TASK_OUTPUT_TYPE } from "../../../constants/constants";
 import isEmpty from "lodash/isEmpty";
 
-import { removeTask, saveMoodTask } from "../../../services/services";
+import {
+  deleteImage,
+  removeTask,
+  saveMoodTask,
+} from "../../../services/services";
 import { Alert } from "react-native";
 import uuid from "react-native-uuid";
 import { ActionButtons, AnimatedView, ImagePicker, Loader } from "../../common";
@@ -44,6 +48,9 @@ export function MoodTask({ data, setData, removeGrade, day, taskOutputType }) {
         category: TASK_CATEGORY.MOOD,
         context: null,
       });
+      if (image) {
+        await deleteImage(image);
+      }
       await removeGrade({ category: TASK_CATEGORY.MOOD });
     } catch (error) {
       Alert.alert("Oops", "Something wrong");

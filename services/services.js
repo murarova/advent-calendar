@@ -1,14 +1,16 @@
 import { firebase } from "@react-native-firebase/database";
 import auth from "@react-native-firebase/auth";
 import storage from "@react-native-firebase/storage";
-import { TASK_CATEGORY } from "../constants/constants";
+import { TASK_CATEGORY, YEAR } from "../constants/constants";
+
+const baseUrl = `/${YEAR}/users`;
 
 export const createProfile = async (uid, name) => {
   return await firebase
     .app()
     .database(process.env.EXPO_PUBLIC_DB)
-    .ref(`/users/${uid}`)
-    .set({ name });
+    .ref(`${baseUrl}/${uid}`)
+    .set({ userProfile: { name } });
 };
 
 export async function createUserWithEmailAndPassword(email, password) {
@@ -32,7 +34,7 @@ export async function getUserRole() {
     const response = await firebase
       .app()
       .database(process.env.EXPO_PUBLIC_DB)
-      .ref(`/users/${currentUser.uid}/role`)
+      .ref(`${baseUrl}/${currentUser.uid}/userProfile/role`)
       .once("value");
 
     return response.val();
@@ -45,7 +47,7 @@ export async function saveTaskByCategory({ category, data, context }) {
     const response = await firebase
       .app()
       .database(process.env.EXPO_PUBLIC_DB)
-      .ref(`/users/${currentUser.uid}/${category}/${context}`)
+      .ref(`${baseUrl}/${currentUser.uid}/${category}/${context}`)
       .set(data);
 
     return response;
@@ -58,7 +60,7 @@ export async function saveMoodTask({ category, data, day }) {
     const response = await firebase
       .app()
       .database(process.env.EXPO_PUBLIC_DB)
-      .ref(`/users/${currentUser.uid}/${category}/${day}`)
+      .ref(`${baseUrl}/${currentUser.uid}/${category}/${day}`)
       .set(data);
 
     return response;
@@ -71,7 +73,7 @@ export async function getUserTasks() {
     const response = await firebase
       .app()
       .database(process.env.EXPO_PUBLIC_DB)
-      .ref(`/users/${currentUser.uid}/tasks`)
+      .ref(`${baseUrl}/${currentUser.uid}/tasks`)
       .once("value");
 
     return response.val();
@@ -83,8 +85,8 @@ export async function getUserDayTasks(category, context) {
   if (currentUser) {
     const ref =
       category === TASK_CATEGORY.MOOD
-        ? `/users/${currentUser.uid}/${category}`
-        : `/users/${currentUser.uid}/${category}/${context}`;
+        ? `${baseUrl}/${currentUser.uid}/${category}`
+        : `${baseUrl}/${currentUser.uid}/${category}/${context}`;
     const response = await firebase
       .app()
       .database(process.env.EXPO_PUBLIC_DB)
@@ -101,7 +103,7 @@ export async function getUserSummary() {
     const response = await firebase
       .app()
       .database(process.env.EXPO_PUBLIC_DB)
-      .ref(`/users/${currentUser.uid}/summary`)
+      .ref(`${baseUrl}/${currentUser.uid}/summary`)
       .once("value");
 
     return response.val();
@@ -114,7 +116,7 @@ export async function getUserPlans() {
     const response = await firebase
       .app()
       .database(process.env.EXPO_PUBLIC_DB)
-      .ref(`/users/${currentUser.uid}/plans`)
+      .ref(`${baseUrl}/${currentUser.uid}/plans`)
       .once("value");
 
     return response.val();
@@ -127,7 +129,7 @@ export async function getUserPhotos() {
     const response = await firebase
       .app()
       .database(process.env.EXPO_PUBLIC_DB)
-      .ref(`/users/${currentUser.uid}/monthPhoto`)
+      .ref(`${baseUrl}/${currentUser.uid}/monthPhoto`)
       .once("value");
 
     return response.val();
@@ -139,6 +141,14 @@ export async function saveImage(image) {
   if (currentUser) {
     const reference = storage().ref(`/images/${currentUser.uid}/${image.id}`);
     await reference.putFile(image.uri);
+  }
+}
+
+export async function deleteImage(image) {
+  const currentUser = getCurrentUser();
+  if (currentUser) {
+    const reference = storage().ref(`/images/${currentUser.uid}/${image.id}`);
+    await reference.delete();
   }
 }
 
@@ -157,8 +167,8 @@ export async function removeTask({ category, context }) {
   if (currentUser) {
     const ref =
       category === TASK_CATEGORY.MOOD
-        ? `/users/${currentUser.uid}/${category}`
-        : `/users/${currentUser.uid}/${category}/${context}`;
+        ? `${baseUrl}/${currentUser.uid}/${category}`
+        : `${baseUrl}/${currentUser.uid}/${category}/${context}`;
     const response = await firebase
       .app()
       .database(process.env.EXPO_PUBLIC_DB)
@@ -175,7 +185,7 @@ export async function getComplited() {
     const response = await firebase
       .app()
       .database(process.env.EXPO_PUBLIC_DB)
-      .ref(`/users/${currentUser.uid}/complited`)
+      .ref(`${baseUrl}/${currentUser.uid}/complited`)
       .once("value");
 
     return response.val();
@@ -194,7 +204,7 @@ export async function setComplited({ day }) {
     const response = await firebase
       .app()
       .database(process.env.EXPO_PUBLIC_DB)
-      .ref(`/users/${currentUser.uid}/complited`)
+      .ref(`${baseUrl}/${currentUser.uid}/complited`)
       .set([...complited, day]);
 
     return response;
@@ -210,7 +220,7 @@ export async function removeComplited({ day }) {
       const response = await firebase
         .app()
         .database(process.env.EXPO_PUBLIC_DB)
-        .ref(`/users/${currentUser.uid}/complited`)
+        .ref(`${baseUrl}/${currentUser.uid}/complited`)
         .set(newComplited);
 
       return response;

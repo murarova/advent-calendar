@@ -8,8 +8,7 @@ import { useTranslation } from "react-i18next";
 import { getUserRole } from "../services/services";
 import { useEffect, useState } from "react";
 
-export function Calendar({ pressHandler, currentDate2, days }) {
-  const currentDate = moment("2024-12-14");
+export function Calendar({ pressHandler, currentDate, days }) {
   const { i18n } = useTranslation();
   const locale = LANGUAGES[i18n.resolvedLanguage]?.moment === "uk" ? "uk" : "";
   const [isAdmin, setIsAdmin] = useState(null);
@@ -119,13 +118,14 @@ export function Calendar({ pressHandler, currentDate2, days }) {
     return markedDates;
   }
 
+  const minDate = moment(days[0]).format("YYYY-MM-DD");
   const maxDate = isAdmin
-    ? moment(currentDate).endOf("month").format("YYYY-MM-DD")
+    ? moment("2024-12-31").format("YYYY-MM-DD")
     : currentDate.format("YYYY-MM-DD");
 
   return (
     <NativeCalendar
-      current={currentDate.format("YYYY-MM-DD")}
+      current={minDate}
       firstDay={1}
       key={locale}
       hideExtraDays
@@ -133,7 +133,7 @@ export function Calendar({ pressHandler, currentDate2, days }) {
         pressHandler(day);
       }}
       hideArrows
-      minDate={moment(days[0]).format("YYYY-MM-DD")}
+      minDate={minDate}
       maxDate={maxDate}
       markingType={"custom"}
       markedDates={getMarkedDates()}

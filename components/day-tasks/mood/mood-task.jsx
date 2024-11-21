@@ -8,17 +8,21 @@ import {
 } from "@gluestack-ui/themed";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
-import { TASK_CATEGORY } from "../../../constants/constants";
+import { TASK_CATEGORY, TASK_OUTPUT_TYPE } from "../../../constants/constants";
 import isEmpty from "lodash/isEmpty";
 
-import { removeTask, saveMoodTask } from "../../../services/services";
+import {
+  deleteImage,
+  removeTask,
+  saveMoodTask,
+} from "../../../services/services";
 import { Alert } from "react-native";
 import uuid from "react-native-uuid";
 import { ActionButtons, AnimatedView, ImagePicker, Loader } from "../../common";
 import { ImageBackground } from "@gluestack-ui/themed";
 import { useImage } from "../../../hooks/useImage";
 
-export function MoodTask({ data, setData, removeGrade, day }) {
+export function MoodTask({ data, setData, removeGrade, day, taskOutputType }) {
   const { t } = useTranslation();
   const [edit, setEdit] = useState(false);
   const [text, setText] = useState("");
@@ -44,6 +48,9 @@ export function MoodTask({ data, setData, removeGrade, day }) {
         category: TASK_CATEGORY.MOOD,
         context: null,
       });
+      if (image) {
+        await deleteImage(image);
+      }
       await removeGrade({ category: TASK_CATEGORY.MOOD });
     } catch (error) {
       Alert.alert("Oops", "Something wrong");
@@ -92,23 +99,37 @@ export function MoodTask({ data, setData, removeGrade, day }) {
     <Box>
       {edit ? (
         <>
-          <Textarea width="100%" mb="$4">
-            <TextareaInput
-              onChangeText={setText}
-              defaultValue={text}
-              placeholder={t("screens.tasksOfTheDay.textareaPlaceholder")}
+          {(taskOutputType === TASK_OUTPUT_TYPE.TEXT ||
+            taskOutputType === TASK_OUTPUT_TYPE.TEXT_PHOTO) && (
+            <>
+              <Textarea width="100%" mb="$4">
+                <TextareaInput
+                  onChangeText={setText}
+                  defaultValue={text}
+                  placeholder={t("screens.tasksOfTheDay.textareaPlaceholder")}
+                />
+              </Textarea>
+            </>
+          )}
+
+          {(taskOutputType === TASK_OUTPUT_TYPE.IMAGE ||
+            taskOutputType === TASK_OUTPUT_TYPE.TEXT_PHOTO) && (
+            <ImagePicker
+              setIsImageLoading={setIsLoading}
+              isImageLoading={isLoading}
+              edit={edit}
+              setImage={setImage}
+              image={image}
             />
-          </Textarea>
-          <ImagePicker
-            setIsImageLoading={setIsLoading}
-            isImageLoading={isLoading}
-            edit={edit}
-            setImage={setImage}
-            image={image}
-          />
-          <Button onPress={onTaskSubmit} mt="$2" borderRadius="$lg">
-            <ButtonText>{t("screens.tasksOfTheDay.submitBtnText")}</ButtonText>
-          </Button>
+          )}
+
+          {taskOutputType && (
+            <Button onPress={onTaskSubmit} mt="$2" borderRadius="$lg">
+              <ButtonText>
+                {t("screens.tasksOfTheDay.submitBtnText")}
+              </ButtonText>
+            </Button>
+          )}
         </>
       ) : (
         <Box>

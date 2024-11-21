@@ -10,7 +10,11 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { TASK_CATEGORY } from "../../../constants/constants";
 import isEmpty from "lodash/isEmpty";
-import { removeTask, saveTaskByCategory } from "../../../services/services";
+import {
+  deleteImage,
+  removeTask,
+  saveTaskByCategory,
+} from "../../../services/services";
 import { Alert } from "react-native";
 import uuid from "react-native-uuid";
 import { ActionButtons, AnimatedView, ImagePicker, Loader } from "../../common";
@@ -43,6 +47,7 @@ export function MonthPhoto({ context, data, setData, removeGrade }) {
         category: TASK_CATEGORY.MONTH_PHOTO,
         context,
       });
+      await deleteImage(image);
       await removeGrade({ category: TASK_CATEGORY.MONTH_PHOTO });
     } catch (error) {
       Alert.alert("Oops", "Something wrong");

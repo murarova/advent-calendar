@@ -20,8 +20,13 @@ export default {
   context: {
     health: "Здоров'я",
     learning: "Навчання",
-    work: "Робота",
+    work: "Професійна реалізація",
     relationship: "Стосунки",
+    relax: "Відпочинок",
+    art: "Творчість",
+    money: "Прибуток",
+    supports: "Опори",
+    globalGoal: "Амбитна мета",
   },
   screens: {
     intro: {

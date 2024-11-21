@@ -41,6 +41,7 @@ export function AlbumScreen() {
       "october",
       "november",
       "december",
+      "year",
     ];
     for (const [month, data] of Object.entries(inputDict)) {
       outputList.push({
@@ -143,7 +144,7 @@ export function AlbumScreen() {
                 {
                   months.find(
                     (month) => month.value === photos[activeSlide]?.month
-                  )?.long
+                  )?.long || "Рік"
                 }
               </Text>
             </Center>

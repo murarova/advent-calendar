@@ -22,6 +22,7 @@ import { Summary } from "./day-tasks/summary/summary";
 import { MonthPhoto } from "./day-tasks/month-photo/month-photo";
 import { Alert } from "react-native";
 import { MoodTask } from "./day-tasks/mood/mood-task";
+import { Goals } from "./day-tasks/goals/goals";
 
 export function TaskItem({ taskConfig, updateGrade, removeGrade, day }) {
   const { t } = useTranslation();
@@ -104,20 +105,30 @@ export function TaskItem({ taskConfig, updateGrade, removeGrade, day }) {
                     removeGrade={removeGrade}
                   />
                 )}
-              {taskConfig.taskOutputType === TASK_OUTPUT_TYPE.IMAGE && (
-                <MonthPhoto
-                  data={data}
-                  setData={setData}
-                  context={taskConfig.context}
-                  removeGrade={removeGrade}
-                />
-              )}
+              {taskConfig.taskOutputType === TASK_OUTPUT_TYPE.IMAGE &&
+                taskConfig.category !== TASK_CATEGORY.MOOD && (
+                  <MonthPhoto
+                    data={data}
+                    setData={setData}
+                    context={taskConfig.context}
+                    removeGrade={removeGrade}
+                  />
+                )}
               {taskConfig.category === TASK_CATEGORY.MOOD && (
                 <MoodTask
                   data={data}
+                  taskOutputType={taskConfig.taskOutputType}
                   setData={setData}
                   removeGrade={removeGrade}
                   day={day}
+                />
+              )}
+              {taskConfig.category === TASK_CATEGORY.GOALS && (
+                <Goals
+                  data={data}
+                  context={taskConfig.context}
+                  setData={setData}
+                  removeGrade={removeGrade}
                 />
               )}
             </Box>

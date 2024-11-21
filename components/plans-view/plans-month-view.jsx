@@ -14,6 +14,7 @@ import {
   VStack,
   Badge,
   BadgeText,
+  ScrollView,
 } from "@gluestack-ui/themed";
 import { useTranslation } from "react-i18next";
 import {
@@ -58,79 +59,81 @@ export function PlansMonthView({
   const sortedPlans = groupByMonthWithContext(plans);
 
   return (
-    <Box p="$2" flex={1}>
-      <Accordion
-        key={plans}
-        size="md"
-        my="$2"
-        type="multiple"
-        borderRadius="$lg"
-      >
-        {months.map((month, index) => {
-          return (
-            sortedPlans[month.value] && (
-              <AccordionItem
-                key={month.value}
-                value={month.value}
-                borderRadius="$lg"
-                mb="$5"
-              >
-                <AccordionHeader>
-                  <AccordionTrigger>
-                    {({ isExpanded }) => {
-                      return (
-                        <>
-                          <AccordionTitleText>
-                            <Heading size="sm">{month.long}</Heading>
-                            <Text>{`  (${
-                              sortedPlans[month.value].length
-                            })`}</Text>
-                          </AccordionTitleText>
-                          {isExpanded ? (
-                            <AccordionIcon as={ChevronUpIcon} ml="$3" />
-                          ) : (
-                            <AccordionIcon as={ChevronDownIcon} ml="$3" />
-                          )}
-                        </>
-                      );
-                    }}
-                  </AccordionTrigger>
-                </AccordionHeader>
-                <AccordionContent>
-                  <Box>
-                    <PlansList
-                      isPlanScreen
-                      view={plansViewOptions.month}
-                      showSelectMonth
-                      plans={sortedPlans[month.value]}
-                      onEdit={(item) => handleEditPlan(item, item.context)}
-                      onDelete={(item) =>
-                        handleDeletePlan(item.id, item.context)
-                      }
-                      handleComplitePlan={(item, value) =>
-                        handleComplitePlan(item, value, item.context)
-                      }
-                    />
-                  </Box>
-                </AccordionContent>
-              </AccordionItem>
-            )
-          );
-        })}
-      </Accordion>
-      {showModal && (
-        <AddPlanModal
-          data={updatedData}
-          setShowModal={setShowModal}
-          handleUpdatePlan={handleUpdatePlan}
-        />
-      )}
-      {showMonthModal && (
-        <MonthSelectModal
-          setShowMonthModal={setShowMonthModal}
-          onMonthSelect={handleMonthSelect}
-        />
-      )}
-    </Box>
+    <ScrollView>
+      <Box p="$2" flex={1}>
+        <Accordion
+          key={plans}
+          size="md"
+          my="$2"
+          type="multiple"
+          borderRadius="$lg"
+        >
+          {months.map((month, index) => {
+            return (
+              sortedPlans[month.value] && (
+                <AccordionItem
+                  key={month.value}
+                  value={month.value}
+                  borderRadius="$lg"
+                  mb="$5"
+                >
+                  <AccordionHeader>
+                    <AccordionTrigger>
+                      {({ isExpanded }) => {
+                        return (
+                          <>
+                            <AccordionTitleText>
+                              <Heading size="sm">{month.long}</Heading>
+                              <Text>{`  (${
+                                sortedPlans[month.value].length
+                              })`}</Text>
+                            </AccordionTitleText>
+                            {isExpanded ? (
+                              <AccordionIcon as={ChevronUpIcon} ml="$3" />
+                            ) : (
+                              <AccordionIcon as={ChevronDownIcon} ml="$3" />
+                            )}
+                          </>
+                        );
+                      }}
+                    </AccordionTrigger>
+                  </AccordionHeader>
+                  <AccordionContent>
+                    <Box>
+                      <PlansList
+                        isPlanScreen
+                        view={plansViewOptions.month}
+                        showSelectMonth
+                        plans={sortedPlans[month.value]}
+                        onEdit={(item) => handleEditPlan(item, item.context)}
+                        onDelete={(item) =>
+                          handleDeletePlan(item.id, item.context)
+                        }
+                        handleComplitePlan={(item, value) =>
+                          handleComplitePlan(item, value, item.context)
+                        }
+                      />
+                    </Box>
+                  </AccordionContent>
+                </AccordionItem>
+              )
+            );
+          })}
+        </Accordion>
+        {showModal && (
+          <AddPlanModal
+            data={updatedData}
+            setShowModal={setShowModal}
+            handleUpdatePlan={handleUpdatePlan}
+          />
+        )}
+        {showMonthModal && (
+          <MonthSelectModal
+            setShowMonthModal={setShowMonthModal}
+            onMonthSelect={handleMonthSelect}
+          />
+        )}
+      </Box>
+    </ScrollView>
   );
 }

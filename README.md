@@ -1,12 +1,12 @@
-# Advent Calendar App
+# Jingle Plan App
 
 ## Project Description
 
-The **Advent Calendar App** is designed to help individuals reflect on and finalize the last year in various aspects of their lives, including health, work, pleasure, self-development, education, and more. Starting from December 1st to December 31st, users will receive daily tasks that cover both essential aspects and mood-boosting activities. Additionally, a specially chosen music track for each day aims to enhance the Christmas spirit.
+The **Jingle Plan App** is designed to help individuals reflect on and finalize the last year in various aspects of their lives, including health, work, pleasure, self-development, education, and more. Starting from December 1st to December 31st, users will receive daily tasks that cover both essential aspects and mood-boosting activities. Additionally, a specially chosen music track for each day aims to enhance the Christmas spirit.
 
 ## Technologies Used
 
-- **React Native:** The Advent Calendar App is developed using the React Native framework.
+- **React Native:** The Jingle Plan App is developed using the React Native framework.
 
 ## Features
 
@@ -17,7 +17,7 @@ The **Advent Calendar App** is designed to help individuals reflect on and final
 
 ## Getting Started
 
-To get started with the Advent Calendar App, follow these steps:
+To get started with the Jingle Plan App, follow these steps:
 
 1. **Clone the Repository:**
    ```bash
@@ -48,4 +48,4 @@ This project is licensed under the [MIT License](LICENSE.md).
 
 ---
 
-**Note:** The Advent Calendar App is a work in progress. Feedback and contributions are welcome!
+**Note:** The Jingle Plan App is a work in progress. Feedback and contributions are welcome!

@@ -42,7 +42,7 @@ export function SummaryScreen() {
     context: "",
   });
   const [text, setText] = useState("");
-  console.log("summary[edit.context].text", summary?.[edit.context]?.text);
+
   useEffect(() => {
     if (summary && edit.context) {
       setText(summary[edit.context].text);

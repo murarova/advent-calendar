@@ -1,5 +1,5 @@
 import { useState, useLayoutEffect } from "react";
-import { getUserPlans } from "../services/services";
+import { getUserGlobalGoal, getUserPlans } from "../services/services";
 import { EmptyScreen } from "../components/empty-screen";
 import { Loader } from "../components/common";
 import { useIsFocused } from "@react-navigation/native";
@@ -7,12 +7,13 @@ import { Alert } from "react-native";
 import { PlansContextView } from "../components/plans-view/plans-context-view";
 import { usePlansScreen } from "../components/plans-view/hooks/usePlansScreen";
 import SwitchSelector from "react-native-switch-selector";
-import { Box } from "@gluestack-ui/themed";
+import { Box, Center, Heading, Text } from "@gluestack-ui/themed";
 import { PlansMonthView } from "../components/plans-view/plans-month-view";
 import { plansViewOptions } from "../constants/constants";
 
 export function PlansScreen() {
   const [plans, setPlans] = useState(null);
+  const [globalGoal, setGlobalGoal] = useState(null);
   const [view, setView] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const isFocused = useIsFocused();
@@ -22,6 +23,8 @@ export function PlansScreen() {
     async function getTasks() {
       try {
         const plans = await getUserPlans();
+        const goal = await getUserGlobalGoal();
+        setGlobalGoal(goal);
         setPlans(plans);
         setView(plansViewOptions.context);
       } catch (error) {
@@ -77,6 +80,15 @@ export function PlansScreen() {
           accessibilityLabel="gender-switch-selector"
         />
       </Box>
+      <Center pt="$5" pb="$5">
+        <Text pb="$5">Моя глобальна мета 2025:</Text>
+        {globalGoal && (
+          <Heading textAlign="center" size="sm">
+            {globalGoal.text}
+          </Heading>
+        )}
+      </Center>
+
       {plans ? (
         view === plansViewOptions.context ? (
           <PlansContextView

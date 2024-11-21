@@ -32,12 +32,11 @@ export default {
     intro: {
       loginBtn: "Створити акаунт",
       signupBtn: "Увійти",
-      firstScreenText: "Тебе вітає твій різдвяний планер Jingle plan.",
-      secondScreenText:
-        "Вважай — це адвент календар із цікавими завданнями про твій рік. \nПотрібно всього лише 15 хв на день.",
+      firstScreenText: "Привіт! \nЦе твій різдвяний планер \nJingle plan.",
+      secondScreenText: "Всього лише 15 хв на день.",
       thirdScreenText:
-        "За місяць у тебе будуть готові підсумки 2024, плани 2025. І все це зі святковим настроєм.",
-      fourthScreenText: "Заплануй собі класний рік разом із Jingle Plan.",
+        "І за місяць у тебе готові \nпідсумки 2024 та плани 2025.",
+      fourthScreenText: "Заплануй собі класний рік \nразом із Jingle Plan.",
     },
     loginScreen: {
       title: "Увійдіть у свій обліковий запис",

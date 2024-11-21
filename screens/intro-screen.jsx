@@ -1,12 +1,11 @@
 import {
   Box,
-  Text,
   Heading,
   Center,
   Button,
   ButtonText,
 } from "@gluestack-ui/themed";
-import { SnowAngel, Decorating, Grandma, Dog } from "../assets/svg";
+import { SnowAngel, Decorating, Dog, SkiingSantaSvg } from "../assets/svg";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 import { useRef, useState } from "react";
 import { Dimensions } from "react-native";
@@ -23,32 +22,30 @@ export function IntroScreen() {
   const [activeSlide, setActiveSlide] = useState(0);
   const data = [
     {
-      title: "Jingle plan",
-      subtitle: "Наповни своє життя цілями",
+      title: t("screens.intro.firstScreenText"),
       image: <Decorating />,
     },
     {
-      title: "Виконуй щоденні завдання",
-      subtitle: "Lorem ipsum dolor sit amet consectetur.",
+      title: t("screens.intro.secondScreenText"),
       image: <SnowAngel />,
     },
     {
-      title: "Jingle plan 3",
-      subtitle: "Наповни своє життя цілями",
-      image: <Grandma />,
+      title: t("screens.intro.thirdScreenText"),
+      image: <SkiingSantaSvg />,
     },
     {
-      title: "Jingle plan 4",
-      subtitle: "Наповни своє життя цілями",
+      title: t("screens.intro.fourthScreenText"),
       image: <Dog />,
     },
   ];
+
   function renderItem({ item }) {
     return (
       <Box alignItems="center">
         <Center mb="$10">{item.image}</Center>
-        <Heading mb="$5">{item.title}</Heading>
-        <Text>{item.subtitle}</Text>
+        <Heading verticalAlign="middle" pt="$10" textAlign="center" mb="$5">
+          {item.title}
+        </Heading>
       </Box>
     );
   }

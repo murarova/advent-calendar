@@ -11,7 +11,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "icon": "./assets/icon.png",
       "supportsTablet": false,
@@ -24,7 +26,9 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": ["android.permission.RECORD_AUDIO"],
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
       "package": "com.murarova.adventCalendar"
     },
     "web": {
@@ -50,7 +54,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "4646186c-d90c-42d6-94be-b4501e421d73"
+        "projectId": "1d31307a-c023-4cc8-8430-048d3f9e5f07"
       }
     }
   }

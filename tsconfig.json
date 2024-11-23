@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "jsx": "react-jsx"
+  },
+  "extends": "expo/tsconfig.base",
+  "exclude": ["node_modules", "android", "ios"]
+}

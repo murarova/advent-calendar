@@ -10,134 +10,63 @@ import {
   ChevronDownIcon,
   Box,
   Text,
-  Textarea,
-  TextareaInput,
-  Button,
-  ButtonText,
   Heading,
-  HStack,
-  ButtonIcon,
 } from "@gluestack-ui/themed";
-import { ImagePicker } from "./common";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
-import {
-  TASK_OUTPUT_TYPE,
-  TASK_CONTEXT,
-  TASK_CATEGORY,
-} from "../constants/constants";
-import isEmpty from "lodash/isEmpty";
-import { EditIcon, Trash2 } from "lucide-react-native";
-import { AddPlanModal } from "./add-plan-modal";
-import { ListItems } from "./list-items";
-import {
-  getUserDayTasks,
-  saveTaskByType,
-  saveUserTask,
-} from "../services/services";
+import { TASK_OUTPUT_TYPE, TASK_CATEGORY } from "../constants/constants";
+
+import { getUserDayTasks } from "../services/services";
+import { Plans } from "./day-tasks/plans/plans";
+import { Summary } from "./day-tasks/summary/summary";
+import { MonthPhoto } from "./day-tasks/month-photo/month-photo";
 import { Alert } from "react-native";
-import uuid from "react-native-uuid";
+import { MoodTask } from "./day-tasks/mood/mood-task";
+import { Goals } from "./day-tasks/goals/goals";
 
-export function TaskItem({ taskConfig, onTaskDataUpdate, day }) {
+export function TaskItem({ taskConfig, updateGrade, removeGrade, day }) {
   const { t } = useTranslation();
-  const [text, setText] = useState("");
-  const [plans, setPlans] = useState([]);
-  const [images, setImages] = useState([]);
-  const [edit, setEdit] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  const [task, setTask] = useState(null);
-
-  const type =
-    taskConfig.category === TASK_CATEGORY.MOOD
-      ? TASK_CATEGORY.MOOD
-      : TASK_CATEGORY.DAY;
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     async function getDayData() {
-      const task = await getUserDayTasks(day);
-      if (task) {
-        setTask(task);
+      try {
+        const data = await getUserDayTasks(
+          taskConfig.category,
+          taskConfig.context
+        );
+        if (data) {
+          taskConfig.category === TASK_CATEGORY.MOOD
+            ? setData(data[day])
+            : setData(data);
+        }
+      } catch (error) {
+        Alert.alert("Oops", "Something wrong");
       }
     }
     getDayData();
   }, []);
 
   useEffect(() => {
-    if (task) {
-      if (!isEmpty(task?.day?.plans)) {
-        setPlans(task?.day?.plans);
-      }
-      setText(task?.text);
-      setEdit(false);
-    }
-  }, [task]);
-
-  function onTaskSubmit() {
-    if (taskConfig.taskOutputType === TASK_OUTPUT_TYPE.TEXT && text.trim()) {
-      onTaskDataUpdate({
-        text,
-        taskOutputType: taskConfig.taskOutputType,
-        type,
+    if (data) {
+      updateGrade({
         category: taskConfig.category,
-        context: taskConfig.context,
+        grade: taskConfig.grade,
       });
-      setEdit(false);
     }
-    if (
-      taskConfig.taskOutputType === TASK_OUTPUT_TYPE.IMAGE &&
-      !isEmpty(images)
-    ) {
-      onTaskDataUpdate({
-        images,
-        taskOutputType: taskConfig.taskOutputType,
-        type,
-        category: taskConfig.category,
-        context: taskConfig.context,
-      });
-      setEdit(false);
-    }
-  }
-
-  async function handleAddPlan(text) {
-    const id = uuid.v4();
-    try {
-      const updatedPlans = [
-        ...plans,
-        {
-          id,
-          text,
-        },
-      ];
-
-      await saveTaskByType({
-        category: taskConfig.category,
-        task: updatedPlans,
-        context: taskConfig.context,
-      });
-      await saveUserTask({
-        type,
-        task: updatedPlans,
-        day,
-        category: taskConfig.category,
-      });
-
-      setPlans(updatedPlans);
-    } catch (error) {
-      Alert.alert("Oops", "Something wrong");
-    }
-  }
+  }, [data]);
 
   return (
     <>
-      <Accordion size="md" my="$2" variant="filled" type="single">
-        <AccordionItem value="a">
+      <Accordion size="md" my="$2" type="multiple" borderRadius="$lg">
+        <AccordionItem value="a" borderRadius="$lg">
           <AccordionHeader>
             <AccordionTrigger>
               {({ isExpanded }) => {
                 return (
                   <>
                     <AccordionTitleText>
-                      {taskConfig.category === TASK_CONTEXT.MOOD
+                      {taskConfig.category === TASK_CATEGORY.MOOD
                         ? t("screens.tasksOfTheDay.moodTitle")
                         : t("screens.tasksOfTheDay.dayTitle")}
                     </AccordionTitleText>
@@ -159,85 +88,53 @@ export function TaskItem({ taskConfig, onTaskDataUpdate, day }) {
               <Text>{taskConfig.text}</Text>
             </Box>
             <Box pt="$4">
-              {taskConfig.taskOutputType === TASK_OUTPUT_TYPE.IMAGE && (
-                <Box>
-                  <ImagePicker
-                    edit={edit}
-                    images={images}
-                    setImages={setImages}
-                  />
-                  {!isEmpty(images) && edit && (
-                    <Button onPress={onTaskSubmit}>
-                      <ButtonText>
-                        {t("screens.tasksOfTheDay.submitBtnText")}
-                      </ButtonText>
-                    </Button>
-                  )}
-                </Box>
-              )}
               {taskConfig.taskOutputType === TASK_OUTPUT_TYPE.LIST && (
-                <Box>
-                  <Box alignItems="center">
-                    <Button onPress={() => setShowModal(true)}>
-                      <ButtonText>
-                        {t("screens.tasksOfTheDay.addPlanItem")}
-                      </ButtonText>
-                    </Button>
-                  </Box>
-                  {!isEmpty(plans) && <ListItems plans={plans} />}
-                </Box>
+                <Plans
+                  context={taskConfig.context}
+                  data={data}
+                  setData={setData}
+                  removeGrade={removeGrade}
+                />
               )}
               {taskConfig.taskOutputType === TASK_OUTPUT_TYPE.TEXT &&
-                (edit ? (
-                  <Box>
-                    <Textarea width="100%">
-                      <TextareaInput
-                        onChangeText={setText}
-                        value={text}
-                        placeholder={t(
-                          "screens.tasksOfTheDay.textareaPlaceholder"
-                        )}
-                      />
-                    </Textarea>
-                    <Button onPress={onTaskSubmit} mt="$2">
-                      <ButtonText>
-                        {t("screens.tasksOfTheDay.submitBtnText")}
-                      </ButtonText>
-                    </Button>
-                  </Box>
-                ) : (
-                  <Box>
-                    <Heading size="sm" pb="$2">
-                      {t("screens.tasksOfTheDay.taskResult")}
-                    </Heading>
-                    <Text>{text}</Text>
-                    <HStack
-                      space="md"
-                      height={60}
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="flex-end"
-                    >
-                      <Button borderRadius="$full" size="lg">
-                        <ButtonIcon as={EditIcon} />
-                      </Button>
-
-                      <Button borderRadius="$full" size="lg">
-                        <ButtonIcon as={Trash2} />
-                      </Button>
-                    </HStack>
-                  </Box>
-                ))}
+                taskConfig.category === TASK_CATEGORY.SUMMARY && (
+                  <Summary
+                    context={taskConfig.context}
+                    data={data}
+                    setData={setData}
+                    removeGrade={removeGrade}
+                  />
+                )}
+              {taskConfig.taskOutputType === TASK_OUTPUT_TYPE.IMAGE &&
+                taskConfig.category !== TASK_CATEGORY.MOOD && (
+                  <MonthPhoto
+                    data={data}
+                    setData={setData}
+                    context={taskConfig.context}
+                    removeGrade={removeGrade}
+                  />
+                )}
+              {taskConfig.category === TASK_CATEGORY.MOOD && (
+                <MoodTask
+                  data={data}
+                  taskOutputType={taskConfig.taskOutputType}
+                  setData={setData}
+                  removeGrade={removeGrade}
+                  day={day}
+                />
+              )}
+              {taskConfig.category === TASK_CATEGORY.GOALS && (
+                <Goals
+                  data={data}
+                  context={taskConfig.context}
+                  setData={setData}
+                  removeGrade={removeGrade}
+                />
+              )}
             </Box>
           </AccordionContent>
         </AccordionItem>
       </Accordion>
-      {showModal && (
-        <AddPlanModal
-          setShowModal={setShowModal}
-          handleAddPlan={handleAddPlan}
-        />
-      )}
     </>
   );
 }

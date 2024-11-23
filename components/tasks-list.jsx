@@ -7,7 +7,8 @@ export function TasksList({
   videoId,
   dayTaskConfig,
   moodTaskConfig,
-  onTaskDataUpdate,
+  updateGrade,
+  removeGrade,
   day,
 }) {
   return (
@@ -18,16 +19,17 @@ export function TasksList({
 
         {dayTaskConfig && (
           <TaskItem
-            day={day}
             taskConfig={dayTaskConfig}
-            onTaskDataUpdate={onTaskDataUpdate}
+            updateGrade={updateGrade}
+            removeGrade={removeGrade}
           />
         )}
         {moodTaskConfig && (
           <TaskItem
             day={day}
             taskConfig={moodTaskConfig}
-            onTaskDataUpdate={onTaskDataUpdate}
+            updateGrade={updateGrade}
+            removeGrade={removeGrade}
           />
         )}
       </Box>

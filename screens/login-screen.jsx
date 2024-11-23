@@ -12,74 +12,104 @@ import {
   Text,
   VStack,
   Button,
+  InputSlot,
 } from "@gluestack-ui/themed";
 import { Alert, Keyboard } from "react-native";
 import { SCREENS } from "../constants/constants";
 import { signInWithEmailAndPassword } from "../services/services";
+import { useTranslation } from "react-i18next";
+import { EyeIcon, EyeOffIcon } from "lucide-react-native";
+import { InputIcon } from "@gluestack-ui/themed";
+import { Loader } from "../components/common";
 
 export const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
+  const { t } = useTranslation();
   const nav = useNavigation();
 
   const goToRegistration = () => {
     nav.push(SCREENS.REGISTER);
   };
+  const handleState = () => setShowPassword((prevState) => !prevState);
 
   const goToMainFlow = async () => {
     if (email && password) {
       try {
+        setIsLoading(true);
         const user = await signInWithEmailAndPassword(email, password);
         if (user) {
           nav.replace(SCREENS.HOME);
         }
       } catch (e) {
-        Alert.alert("Oops", "Please check your form and try again");
+        Alert.alert(
+          t("screens.loginScreen.errorTitle"),
+          t("screens.loginScreen.errorMessage")
+        );
+      } finally {
+        setIsLoading(false);
       }
+    } else {
+      Alert.alert(
+        t("screens.loginScreen.errorTitle"),
+        t("screens.loginScreen.emptyFieldsMessage")
+      );
     }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <Pressable onPress={Keyboard.dismiss}>
       <SafeAreaView>
         <Box p={20} pt={40}>
           <Box pb={10}>
-            <Heading>Login to your account</Heading>
+            <Heading>{t("screens.loginScreen.title")}</Heading>
           </Box>
-          <Box flexDirection="row" alignItems="center" mb={30}>
-            <Text mr={10}>Don't have an account?</Text>
+          <Box flexDirection="column" alignItems="flex-start" mt={20} mb={30}>
+            <Text mr={10}>{t("screens.loginScreen.noAccount")}</Text>
             <Button
               size="md"
               variant="link"
               action="primary"
               onPress={goToRegistration}
             >
-              <ButtonText>Sign Up</ButtonText>
+              <ButtonText>{t("screens.loginScreen.signUpButton")}</ButtonText>
             </Button>
           </Box>
           <Box>
             <VStack space="sm" mb={30}>
-              <Text>Email</Text>
+              <Text>{t("screens.loginScreen.email")}</Text>
               <Input>
                 <InputField
                   value={email}
                   onChangeText={setEmail}
                   autoCapitalize="none"
                   inputMode="email"
-                  placeholder="Email"
+                  placeholder={t("screens.loginScreen.emailPlaceholder")}
                 />
               </Input>
             </VStack>
             <VStack space="sm" mb={30}>
-              <Text>Password</Text>
+              <Text>{t("screens.loginScreen.password")}</Text>
               <Input>
                 <InputField
                   value={password}
                   onChangeText={setPassword}
-                  type="password"
-                  placeholder="Password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder={t("screens.loginScreen.passwordPlaceholder")}
                 />
+                <InputSlot pr="$3" onPress={handleState}>
+                  <InputIcon
+                    as={showPassword ? EyeIcon : EyeOffIcon}
+                    color="$darkBlue500"
+                  />
+                </InputSlot>
               </Input>
             </VStack>
           </Box>
@@ -88,9 +118,10 @@ export const LoginScreen = () => {
             size="md"
             variant="primary"
             action="primary"
+            isDisabled={!email || !password}
             onPress={goToMainFlow}
           >
-            <ButtonText>Login</ButtonText>
+            <ButtonText>{t("screens.loginScreen.loginButton")}</ButtonText>
           </Button>
         </Box>
       </SafeAreaView>

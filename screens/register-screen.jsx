@@ -14,6 +14,8 @@ import {
   Button,
   InputSlot,
   InputIcon,
+  Link,
+  LinkText,
 } from "@gluestack-ui/themed";
 import { Alert, Keyboard } from "react-native";
 import { SCREENS } from "../constants/constants";
@@ -109,9 +111,9 @@ export const RegisterScreen = () => {
   }
 
   return (
-    <Pressable onPress={Keyboard.dismiss}>
+    <Pressable flex={1} onPress={Keyboard.dismiss}>
       <SafeAreaView>
-        <Box p={20} pt={40}>
+        <Box p={10}>
           <Box pb={10}>
             <Heading>{t("screens.registerScreen.title")}</Heading>
           </Box>
@@ -211,6 +213,23 @@ export const RegisterScreen = () => {
           >
             <ButtonText>{t("screens.registerScreen.okBtn")}</ButtonText>
           </Button>
+          <Box justifyContent="center" alignItems="center">
+            <Text>Натаскаючи “Створити акаунт”</Text>
+            <Text>ви погоджуєтесь з</Text>
+            <Link
+              isExternal
+              href="https://www.privacypolicies.com/live/6604a845-1674-4d58-86c6-ebbe21b1ab6e"
+            >
+              <LinkText>умовами використання</LinkText>
+            </Link>
+            <Text>та</Text>
+            <Link
+              isExternal
+              href="https://www.privacypolicies.com/live/52ce9c15-b98b-4b6b-83d6-c014af9d475b"
+            >
+              <LinkText>політикою конфіденційності</LinkText>
+            </Link>
+          </Box>
         </Box>
       </SafeAreaView>
     </Pressable>

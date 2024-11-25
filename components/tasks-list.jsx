@@ -13,7 +13,7 @@ export function TasksList({
 }) {
   return (
     <ScrollView>
-      <Box pb={60}>
+      <Box pb={30}>
         {videoText && <Text pb="$4">{videoText}</Text>}
         {videoId && <YoutubePlayer videoId={videoId} />}
 

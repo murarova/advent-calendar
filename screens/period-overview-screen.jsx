@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { enumerateDaysBetweenDates } from "../utils/utils";
 import { END_DAY, SCREENS, START_DAY } from "../constants/constants";
-import { Box } from "@gluestack-ui/themed";
+import { Box, SafeAreaView } from "@gluestack-ui/themed";
 import moment from "moment";
 import { Calendar } from "../components/calendar";
 
@@ -19,15 +19,15 @@ function PeriodOverviewScreen({ navigation }) {
   }
 
   return (
-    <Box flex={1} mt="$16">
-      <Box>
+    <SafeAreaView flex={1}>
+      <Box mt={10}>
         <Calendar
           pressHandler={pressHandler}
           currentDate={currentDate}
           days={days}
         />
       </Box>
-    </Box>
+    </SafeAreaView>
   );
 }
 

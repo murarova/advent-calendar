@@ -13,6 +13,7 @@ import {
   VStack,
   Button,
   InputSlot,
+  Center,
 } from "@gluestack-ui/themed";
 import { Alert, Keyboard } from "react-native";
 import { SCREENS } from "../constants/constants";
@@ -65,9 +66,9 @@ export const LoginScreen = () => {
   }
 
   return (
-    <Pressable onPress={Keyboard.dismiss}>
+    <Pressable flex={1} onPress={Keyboard.dismiss}>
       <SafeAreaView>
-        <Box p={20} pt={40}>
+        <Box p={10} pt={30} row-direction="column" justifyContent="center">
           <Box pb={10}>
             <Heading>{t("screens.loginScreen.title")}</Heading>
           </Box>

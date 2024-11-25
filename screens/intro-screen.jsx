@@ -1,10 +1,4 @@
-import {
-  Box,
-  Heading,
-  Center,
-  Button,
-  ButtonText,
-} from "@gluestack-ui/themed";
+import { Box, Heading, Center, Button, ButtonText } from "@gluestack-ui/themed";
 import { SnowAngel, Decorating, Dog, SkiingSantaSvg } from "../assets/svg";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 import { useRef, useState } from "react";
@@ -42,8 +36,8 @@ export function IntroScreen() {
   function renderItem({ item }) {
     return (
       <Box alignItems="center">
-        <Center mb="$10">{item.image}</Center>
-        <Heading verticalAlign="middle" pt="$10" textAlign="center" mb="$5">
+        <Center mb="$5">{item.image}</Center>
+        <Heading verticalAlign="middle" textAlign="center">
           {item.title}
         </Heading>
       </Box>
@@ -51,7 +45,7 @@ export function IntroScreen() {
   }
   return (
     <Box flex={1} justifyContent="center">
-      <Box pt="$10">
+      <Box>
         <Carousel
           ref={carouselRef}
           sliderWidth={screenWidth}
@@ -62,7 +56,7 @@ export function IntroScreen() {
           firstItem={activeSlide}
           renderItem={renderItem}
         />
-        <Box mt="$6">
+        <Box>
           <Pagination
             dotsLength={data.length}
             activeDotIndex={activeSlide}
@@ -78,7 +72,7 @@ export function IntroScreen() {
           />
         </Box>
       </Box>
-      <Box mt="$3" width={screenWidth - 60} alignSelf="center">
+      <Box width={screenWidth - 60} alignSelf="center">
         <Button onPress={() => nav.replace(SCREENS.REGISTER)} mt="$2">
           <ButtonText>{t("screens.intro.loginBtn")}</ButtonText>
         </Button>

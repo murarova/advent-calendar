@@ -214,20 +214,21 @@ export const RegisterScreen = () => {
             <ButtonText>{t("screens.registerScreen.okBtn")}</ButtonText>
           </Button>
           <Box justifyContent="center" alignItems="center">
-            <Text>Натаскаючи “Створити акаунт”</Text>
-            <Text>ви погоджуєтесь з</Text>
+            <Text size="sm">
+              Натаскаючи “Створити акаунт” ви погоджуєтесь з
+            </Text>
             <Link
               isExternal
               href="https://www.privacypolicies.com/live/6604a845-1674-4d58-86c6-ebbe21b1ab6e"
             >
-              <LinkText>умовами використання</LinkText>
+              <LinkText size="sm">умовами використання</LinkText>
             </Link>
-            <Text>та</Text>
+            <Text size="sm">та</Text>
             <Link
               isExternal
               href="https://www.privacypolicies.com/live/52ce9c15-b98b-4b6b-83d6-c014af9d475b"
             >
-              <LinkText>політикою конфіденційності</LinkText>
+              <LinkText size="sm">політикою конфіденційності</LinkText>
             </Link>
           </Box>
         </Box>

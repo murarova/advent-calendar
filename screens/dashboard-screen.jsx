@@ -4,14 +4,7 @@ import { EmptyScreen } from "../components/empty-screen";
 import { Loader } from "../components/common";
 import { useIsFocused } from "@react-navigation/native";
 import { Alert, Dimensions } from "react-native";
-import {
-  Box,
-  Center,
-  FlatList,
-  HStack,
-  Text,
-  VStack,
-} from "@gluestack-ui/themed";
+import { Box, SafeAreaView, HStack, Text, VStack } from "@gluestack-ui/themed";
 import CircularProgress from "react-native-circular-progress-indicator";
 import { config } from "../config/gluestack-ui.config";
 import { TASK_CONTEXT } from "../constants/constants";
@@ -98,8 +91,8 @@ export function DashboardScreen() {
   return (
     <>
       {!isEmpty ? (
-        <Box flex={1}>
-          <HStack justifyContent="space-around" mt="$16" pb="$4">
+        <SafeAreaView flex={1}>
+          <HStack justifyContent="space-around" mt={20} pb="$4">
             <VStack justifyContent="center" alignItems="center">
               <Text
                 size="xl"
@@ -130,7 +123,7 @@ export function DashboardScreen() {
             </VStack>
           </HStack>
           <ScrollView>
-            <Box mt="$10" flexWrap="wrap" flexDirection="row">
+            <Box mt={20} flexWrap="wrap" flexDirection="row">
               {Object.values(TASK_CONTEXT).map((context) => {
                 return (
                   contextData[context] && (
@@ -145,7 +138,7 @@ export function DashboardScreen() {
               })}
             </Box>
           </ScrollView>
-        </Box>
+        </SafeAreaView>
       ) : (
         <EmptyScreen />
       )}

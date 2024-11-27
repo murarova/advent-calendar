@@ -14,6 +14,8 @@ import {
   Button,
   InputSlot,
   InputIcon,
+  Link,
+  LinkText,
 } from "@gluestack-ui/themed";
 import { Alert, Keyboard } from "react-native";
 import { SCREENS } from "../constants/constants";
@@ -24,6 +26,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { EyeIcon, EyeOffIcon } from "lucide-react-native";
 import { Loader } from "../components/common";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export const RegisterScreen = () => {
   const [name, setName] = useState("");
@@ -109,110 +112,130 @@ export const RegisterScreen = () => {
   }
 
   return (
-    <Pressable onPress={Keyboard.dismiss}>
-      <SafeAreaView>
-        <Box p={20} pt={40}>
-          <Box pb={10}>
-            <Heading>{t("screens.registerScreen.title")}</Heading>
-          </Box>
-          <Box flexDirection="row" alignItems="center" mb={30}>
-            <Text mr={10}>{t("screens.registerScreen.subtitle")}</Text>
-            <Button
-              size="md"
-              variant="link"
-              action="primary"
-              onPress={() => nav.push(SCREENS.LOGIN)}
-            >
-              <ButtonText>{t("screens.registerScreen.loginBtn")}</ButtonText>
-            </Button>
-          </Box>
-          <Box>
-            <VStack space="sm" mb={20}>
-              <Text>{t("screens.registerScreen.name")}</Text>
-              <Input>
-                <InputField
-                  value={name}
-                  onChangeText={setName}
-                  inputMode="text"
-                  placeholder={t("screens.registerScreen.name")}
-                />
-              </Input>
-            </VStack>
-            <VStack space="sm" mb={20}>
-              <Text>{t("screens.registerScreen.email")}</Text>
-              <Input>
-                <InputField
-                  value={email}
-                  onChangeText={(value) => {
-                    setEmail(value);
-                    validateEmail(value);
-                  }}
-                  autoCapitalize="none"
-                  inputMode="text"
-                  placeholder={t("screens.registerScreen.email")}
-                />
-              </Input>
-              {emailError ? (
-                <Text size="sm" color="$red500">
-                  {emailError}
-                </Text>
-              ) : null}
-            </VStack>
-            <VStack space="sm" mb={10}>
-              <Text>{t("screens.registerScreen.password")}</Text>
-              <Input>
-                <InputField
-                  value={password}
-                  type={showPassword ? "text" : "password"}
-                  onChangeText={handlePasswordChange}
-                  placeholder={t("screens.registerScreen.password")}
-                />
-                <InputSlot pr="$3" onPress={handleState}>
-                  <InputIcon
-                    as={showPassword ? EyeIcon : EyeOffIcon}
-                    color="$darkBlue500"
+    <Pressable flex={1} onPress={Keyboard.dismiss}>
+      <KeyboardAwareScrollView>
+        <SafeAreaView>
+          <Box p={10}>
+            <Box pb={10}>
+              <Heading>{t("screens.registerScreen.title")}</Heading>
+            </Box>
+            <Box flexDirection="row" alignItems="center" mb={30}>
+              <Text mr={10}>{t("screens.registerScreen.subtitle")}</Text>
+              <Button
+                size="md"
+                variant="link"
+                action="primary"
+                onPress={() => nav.push(SCREENS.LOGIN)}
+              >
+                <ButtonText>{t("screens.registerScreen.loginBtn")}</ButtonText>
+              </Button>
+            </Box>
+            <Box>
+              <VStack space="sm" mb={20}>
+                <Text>{t("screens.registerScreen.name")}</Text>
+                <Input>
+                  <InputField
+                    value={name}
+                    onChangeText={setName}
+                    inputMode="text"
+                    placeholder={t("screens.registerScreen.name")}
                   />
-                </InputSlot>
-              </Input>
-              {passwordError ? (
-                <Text size="sm" color="$red500">
-                  {passwordError}
-                </Text>
-              ) : null}
-            </VStack>
-            <VStack space="sm" mb={30}>
-              <Text>{t("screens.registerScreen.repeatPassword")}</Text>
-              <Input>
-                <InputField
-                  value={repeatPassword}
-                  type={showPassword ? "text" : "password"}
-                  onChangeText={handleRepeatPasswordChange}
-                  placeholder={t("screens.registerScreen.repeatPassword")}
-                />
-              </Input>
-              {passwordMatchError ? (
-                <Text size="sm" color="$red500">
-                  {passwordMatchError}
-                </Text>
-              ) : null}
-            </VStack>
+                </Input>
+              </VStack>
+              <VStack space="sm" mb={20}>
+                <Text>{t("screens.registerScreen.email")}</Text>
+                <Input>
+                  <InputField
+                    value={email}
+                    onChangeText={(value) => {
+                      setEmail(value);
+                      validateEmail(value);
+                    }}
+                    autoCapitalize="none"
+                    inputMode="text"
+                    placeholder={t("screens.registerScreen.email")}
+                  />
+                </Input>
+                {emailError ? (
+                  <Text size="sm" color="$red500">
+                    {emailError}
+                  </Text>
+                ) : null}
+              </VStack>
+              <VStack space="sm" mb={10}>
+                <Text>{t("screens.registerScreen.password")}</Text>
+                <Input>
+                  <InputField
+                    value={password}
+                    type={showPassword ? "text" : "password"}
+                    onChangeText={handlePasswordChange}
+                    placeholder={t("screens.registerScreen.password")}
+                  />
+                  <InputSlot pr="$3" onPress={handleState}>
+                    <InputIcon
+                      as={showPassword ? EyeIcon : EyeOffIcon}
+                      color="$darkBlue500"
+                    />
+                  </InputSlot>
+                </Input>
+                {passwordError ? (
+                  <Text size="sm" color="$red500">
+                    {passwordError}
+                  </Text>
+                ) : null}
+              </VStack>
+              <VStack space="sm" mb={30}>
+                <Text>{t("screens.registerScreen.repeatPassword")}</Text>
+                <Input>
+                  <InputField
+                    value={repeatPassword}
+                    type={showPassword ? "text" : "password"}
+                    onChangeText={handleRepeatPasswordChange}
+                    placeholder={t("screens.registerScreen.repeatPassword")}
+                  />
+                </Input>
+                {passwordMatchError ? (
+                  <Text size="sm" color="$red500">
+                    {passwordMatchError}
+                  </Text>
+                ) : null}
+              </VStack>
+            </Box>
+            <Button
+              mb={30}
+              size="md"
+              onPress={handleRegister}
+              isDisabled={
+                !email ||
+                !password ||
+                !!emailError ||
+                !!passwordError ||
+                !!passwordMatchError
+              }
+            >
+              <ButtonText>{t("screens.registerScreen.okBtn")}</ButtonText>
+            </Button>
+            <Box justifyContent="center" alignItems="center">
+              <Text size="sm">
+                Натаскаючи “Створити акаунт” ви погоджуєтесь з
+              </Text>
+              <Link
+                isExternal
+                href="https://www.privacypolicies.com/live/6604a845-1674-4d58-86c6-ebbe21b1ab6e"
+              >
+                <LinkText size="sm">умовами використання</LinkText>
+              </Link>
+              <Text size="sm">та</Text>
+              <Link
+                isExternal
+                href="https://www.privacypolicies.com/live/52ce9c15-b98b-4b6b-83d6-c014af9d475b"
+              >
+                <LinkText size="sm">політикою конфіденційності</LinkText>
+              </Link>
+            </Box>
           </Box>
-          <Button
-            mb={30}
-            size="md"
-            onPress={handleRegister}
-            isDisabled={
-              !email ||
-              !password ||
-              !!emailError ||
-              !!passwordError ||
-              !!passwordMatchError
-            }
-          >
-            <ButtonText>{t("screens.registerScreen.okBtn")}</ButtonText>
-          </Button>
-        </Box>
-      </SafeAreaView>
+        </SafeAreaView>
+      </KeyboardAwareScrollView>
     </Pressable>
   );
 };

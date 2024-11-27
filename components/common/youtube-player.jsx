@@ -1,5 +1,4 @@
-import React, { useState, useCallback } from "react";
-import { Alert } from "react-native";
+import { useState, useCallback } from "react";
 import YoutubeIframe from "react-native-youtube-iframe";
 import { Box } from "@gluestack-ui/themed";
 import { AnimatedView } from "./animated-view";

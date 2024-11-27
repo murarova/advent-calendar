@@ -17,35 +17,69 @@ The **Jingle Plan App** is designed to help individuals reflect on and finalize 
 
 ## Getting Started
 
-To get started with the Jingle Plan App, follow these steps:
+Follow these steps to set up and run the project:
 
-1. **Clone the Repository:**
+### Prerequisites
+
+Make sure you have the following installed on your system:
+- [Node.js](https://nodejs.org/) (recommended version: 16 or above)
+- [Expo CLI](https://docs.expo.dev/get-started/installation/)
+- A package manager (e.g., npm or yarn)
+- [Android Studio](https://developer.android.com/studio) for Android development (if targeting Android)
+- Xcode (on macOS) for iOS development (if targeting iOS)
+
+### Installation
+
+1. Clone the repository:
    ```bash
    git clone https://github.com/murarova/advent-calendar.git
    cd advent-calendar
    ```
 
-2. **Install Dependencies::**
+2. Install dependencies:
    ```bash
-   npm install   # or yarn install
+   npm install
    ```
 
-
-3. **Run the App::**
+3. Apply patches (if any):
    ```bash
-   npm start   # or yarn start
+   npm run postinstall
    ```
 
-4. **Access the App in development mode::**
-Make sure you have the necessary Android emulator or Xcode installed on your machine. Open the Android Emulator or/and iOS Simulator.
-   * Android: Press **a** from the command line.
-   * iOS: Press **i** from the command line.
+### Available Scripts
 
+The following scripts are available for development and testing:
+
+- **Start the development server**:
+  ```bash
+  npm start
+  ```
+  This command will start the Expo development server and provide a QR code for testing on your device.
+
+- **Run on Android**:
+  ```bash
+  npm run android
+  ```
+  This will build and run the app on an Android emulator or connected device.
+
+- **Run on iOS**:
+  ```bash
+  npm run ios
+  ```
+  This will build and run the app on an iOS simulator (macOS only).
+
+- **Run on Web**:
+  ```bash
+  npm run web
+  ```
+  This will start the Expo development server in web mode and open the app in your default browser.
+
+### Additional Notes
+
+- Ensure you have the necessary environment set up for the platform you are targeting (e.g., Android Studio for Android, Xcode for iOS).
+- For detailed Expo documentation, refer to the [official Expo Docs](https://docs.expo.dev/).
 
 ## License
 
 This project is licensed under the [MIT License](LICENSE.md).
 
----
-
-**Note:** The Jingle Plan App is a work in progress. Feedback and contributions are welcome!

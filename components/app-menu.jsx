@@ -11,14 +11,16 @@ import {
   Icon,
   Text,
 } from "@gluestack-ui/themed";
-import { LogOut } from "lucide-react-native";
+import { LogOut, Trash2 } from "lucide-react-native";
 import { useTranslation } from "react-i18next";
 import { LANGUAGES, SCREENS } from "../constants/constants";
 import { useNavigation } from "@react-navigation/native";
 import auth from "@react-native-firebase/auth";
+import { Alert } from "react-native";
+import { deleteCurrentUser } from "../services/services";
 
 export function AppMenu() {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const nav = useNavigation();
 
   function handleLanguageChanged(lng) {
@@ -31,6 +33,26 @@ export function AppMenu() {
       .then(() => {
         nav.replace(SCREENS.LOADING);
       });
+  }
+
+  function handleDeleteAccount() {
+    Alert.alert(
+      "Увага!",
+      "Усі ваші дані буде безповоротно видалено.\n\nВаш обліковий запис буде повністю видалено без можливості відновлення.",
+      [
+        {
+          text: t("common.cancel"),
+          style: "cancel",
+        },
+        {
+          text: t("common.delete"),
+          onPress: async () => {
+            await deleteCurrentUser();
+            nav.replace(SCREENS.LOADING);
+          },
+        },
+      ]
+    );
   }
 
   return (
@@ -61,7 +83,11 @@ export function AppMenu() {
       ))} */}
         <MenuItem key="Logout" onPress={handleLogout} textValue="Logout">
           <Icon as={LogOut} size="sm" mr="$2" />
-          <Text>Logout</Text>
+          <Text>{t("common.logout")}</Text>
+        </MenuItem>
+        <MenuItem key="Delete" onPress={handleDeleteAccount} textValue="Delete">
+          <Icon as={Trash2} size="sm" mr="$2" />
+          <Text>{t("common.deleteAccount")}</Text>
         </MenuItem>
       </Menu>
     </Box>

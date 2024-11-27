@@ -16,6 +16,8 @@ export default {
     edit: "Редагувати",
     delete: "Видалити",
     selectMonth: "Обрати місяць",
+    logout: "Вийти",
+    deleteAccount: "Видалити акаунт",
   },
   context: {
     health: "Здоров'я",

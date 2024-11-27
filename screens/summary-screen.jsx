@@ -16,6 +16,7 @@ import {
   Button,
   Heading,
   ButtonText,
+  ScrollView,
 } from "@gluestack-ui/themed";
 import { useTranslation } from "react-i18next";
 import {
@@ -31,6 +32,7 @@ import { useRating } from "../hooks/useRating";
 import { useIsFocused } from "@react-navigation/native";
 import { Alert } from "react-native";
 import isEmpty from "lodash/isEmpty";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export function SummaryScreen() {
   const { t } = useTranslation();
@@ -119,100 +121,104 @@ export function SummaryScreen() {
 
   return summary ? (
     <Box p="$2" flex={1}>
-      <Accordion
-        key={summary}
-        size="md"
-        my="$2"
-        type="multiple"
-        borderRadius="$lg"
-      >
-        {Object.values(TASK_CONTEXT).map((context) => {
-          return (
-            summary[context] && (
-              <AccordionItem
-                key={context}
-                value={context}
-                borderRadius="$lg"
-                mb="$5"
-              >
-                <AccordionHeader>
-                  <AccordionTrigger>
-                    {({ isExpanded }) => {
-                      return (
-                        <>
-                          <AccordionTitleText>
-                            <Box
-                              display="flex"
-                              flexDirection="row"
-                              alignItems="center"
-                            >
-                              <Box mr="$2">
-                                <Heading size="sm">
-                                  {t(`context.${context}`)}
-                                </Heading>
-                              </Box>
-                              <Box display="flex" alignItems="center">
-                                <Text>
-                                  {getRating(summary[context].rate)?.icon}
-                                </Text>
-                              </Box>
-                            </Box>
-                          </AccordionTitleText>
-                          {isExpanded ? (
-                            <AccordionIcon as={ChevronUpIcon} ml="$3" />
-                          ) : (
-                            <AccordionIcon as={ChevronDownIcon} ml="$3" />
-                          )}
-                        </>
-                      );
-                    }}
-                  </AccordionTrigger>
-                </AccordionHeader>
-                <AccordionContent>
-                  <Box>
-                    {edit.context === context ? (
-                      <>
-                        <Textarea width="100%">
-                          <TextareaInput
-                            onChangeText={setText}
-                            defaultValue={summary[context].text}
-                            placeholder={t(
-                              "screens.tasksOfTheDay.textareaPlaceholder"
-                            )}
-                          />
-                        </Textarea>
-                        <Button
-                          onPress={() =>
-                            onTaskSubmit(context, summary[context])
-                          }
-                          mt="$2"
-                          borderRadius="$lg"
-                        >
-                          <ButtonText>
-                            {t("screens.tasksOfTheDay.submitBtnText")}
-                          </ButtonText>
-                        </Button>
-                      </>
-                    ) : (
+      <KeyboardAwareScrollView extraScrollHeight={100}>
+        <ScrollView>
+          <Accordion
+            key={summary}
+            size="md"
+            my="$2"
+            type="multiple"
+            borderRadius="$lg"
+          >
+            {Object.values(TASK_CONTEXT).map((context) => {
+              return (
+                summary[context] && (
+                  <AccordionItem
+                    key={context}
+                    value={context}
+                    borderRadius="$lg"
+                    mb="$5"
+                  >
+                    <AccordionHeader>
+                      <AccordionTrigger>
+                        {({ isExpanded }) => {
+                          return (
+                            <>
+                              <AccordionTitleText>
+                                <Box
+                                  display="flex"
+                                  flexDirection="row"
+                                  alignItems="center"
+                                >
+                                  <Box mr="$2">
+                                    <Heading size="sm">
+                                      {t(`context.${context}`)}
+                                    </Heading>
+                                  </Box>
+                                  <Box display="flex" alignItems="center">
+                                    <Text>
+                                      {getRating(summary[context].rate)?.icon}
+                                    </Text>
+                                  </Box>
+                                </Box>
+                              </AccordionTitleText>
+                              {isExpanded ? (
+                                <AccordionIcon as={ChevronUpIcon} ml="$3" />
+                              ) : (
+                                <AccordionIcon as={ChevronDownIcon} ml="$3" />
+                              )}
+                            </>
+                          );
+                        }}
+                      </AccordionTrigger>
+                    </AccordionHeader>
+                    <AccordionContent>
                       <Box>
-                        <Box mb="$2">
-                          <Text>
-                            {summary[context].text || t("common.empty")}
-                          </Text>
-                        </Box>
-                        <ActionButtons
-                          onEdit={() => setEdit({ context })}
-                          onDelete={() => handleTaskRemove(context)}
-                        />
+                        {edit.context === context ? (
+                          <>
+                            <Textarea width="100%">
+                              <TextareaInput
+                                onChangeText={setText}
+                                defaultValue={summary[context].text}
+                                placeholder={t(
+                                  "screens.tasksOfTheDay.textareaPlaceholder"
+                                )}
+                              />
+                            </Textarea>
+                            <Button
+                              onPress={() =>
+                                onTaskSubmit(context, summary[context])
+                              }
+                              mt="$2"
+                              borderRadius="$lg"
+                            >
+                              <ButtonText>
+                                {t("screens.tasksOfTheDay.submitBtnText")}
+                              </ButtonText>
+                            </Button>
+                          </>
+                        ) : (
+                          <Box>
+                            <Box mb="$2">
+                              <Text>
+                                {summary[context].text || t("common.empty")}
+                              </Text>
+                            </Box>
+                            <ActionButtons
+                              onEdit={() => setEdit({ context })}
+                              onDelete={() => handleTaskRemove(context)}
+                            />
+                          </Box>
+                        )}
                       </Box>
-                    )}
-                  </Box>
-                </AccordionContent>
-              </AccordionItem>
-            )
-          );
-        })}
-      </Accordion>
+                    </AccordionContent>
+                  </AccordionItem>
+                )
+              );
+            })}
+          </Accordion>
+        </ScrollView>
+      </KeyboardAwareScrollView>
     </Box>
   ) : (
     <EmptyScreen />

@@ -20,5 +20,5 @@ web-build/
 firebase-key.json
 .env
 
-/android
-/ios
+android/
+ios/

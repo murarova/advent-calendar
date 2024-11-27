@@ -28,6 +28,18 @@ export function getCurrentUser() {
   return auth().currentUser;
 }
 
+export async function deleteCurrentUser() {
+  const currentUser = getCurrentUser();
+  if (currentUser) {
+    await firebase
+      .app()
+      .database(process.env.EXPO_PUBLIC_DB)
+      .ref(`${baseUrl}/${currentUser.uid}`)
+      .remove();
+  }
+  await currentUser.delete();
+}
+
 export async function getUserRole() {
   const currentUser = getCurrentUser();
   if (currentUser) {

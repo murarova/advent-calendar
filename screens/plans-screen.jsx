@@ -60,67 +60,72 @@ export function PlansScreen() {
 
   return (
     <>
-      <Box mt="$4" ml="$2" mr="$2">
-        <SwitchSelector
-          initial={0}
-          onPress={setView}
-          textColor="#000" //'#7a44cf'
-          selectedColor="#000"
-          buttonColor="#fff"
-          borderColor="#EBEBEB"
-          backgroundColor="#EBEBEB"
-          hasPadding
-          height={32}
-          borderRadius={7}
-          options={[
-            { label: "По сферах", value: plansViewOptions.context },
-            { label: "По місяцях", value: plansViewOptions.month },
-          ]}
-          testID="gender-switch-selector"
-          accessibilityLabel="gender-switch-selector"
-        />
-      </Box>
-      <Center pt="$5" pb="$5">
-        <Text pb="$5">Моя глобальна мета 2025:</Text>
-        {globalGoal && (
-          <Heading textAlign="center" size="sm">
-            {globalGoal.text}
-          </Heading>
-        )}
-      </Center>
+      {plans || globalGoal ? (
+        <>
+          {plans && (
+            <Box mt="$4" ml="$2" mr="$2">
+              <SwitchSelector
+                initial={0}
+                onPress={setView}
+                textColor="#000"
+                selectedColor="#000"
+                buttonColor="#fff"
+                borderColor="#EBEBEB"
+                backgroundColor="#EBEBEB"
+                hasPadding
+                height={32}
+                borderRadius={7}
+                options={[
+                  { label: "По сферах", value: plansViewOptions.context },
+                  { label: "По місяцях", value: plansViewOptions.month },
+                ]}
+                testID="gender-switch-selector"
+                accessibilityLabel="gender-switch-selector"
+              />
+            </Box>
+          )}
 
-      {plans ? (
-        view === plansViewOptions.context ? (
-          <PlansContextView
-            plans={plans}
-            handleMonthSelect={handleMonthSelect}
-            openMonthSelect={openMonthSelect}
-            handleEditPlan={handleEditPlan}
-            handleDeletePlan={handleDeletePlan}
-            handleComplitePlan={handleComplitePlan}
-            showModal={showModal}
-            updatedData={updatedData}
-            setShowModal={setShowModal}
-            handleUpdatePlan={handleUpdatePlan}
-            showMonthModal={showMonthModal}
-            setShowMonthModal={setShowMonthModal}
-          />
-        ) : (
-          <PlansMonthView
-            plans={plans}
-            handleMonthSelect={handleMonthSelect}
-            openMonthSelect={openMonthSelect}
-            handleEditPlan={handleEditPlan}
-            handleDeletePlan={handleDeletePlan}
-            handleComplitePlan={handleComplitePlan}
-            showModal={showModal}
-            updatedData={updatedData}
-            setShowModal={setShowModal}
-            handleUpdatePlan={handleUpdatePlan}
-            showMonthModal={showMonthModal}
-            setShowMonthModal={setShowMonthModal}
-          />
-        )
+          {globalGoal && (
+            <Center pt="$5" pb="$5">
+              <Text pb="$5">Моя глобальна мета 2025:</Text>
+              <Heading textAlign="center" size="sm">
+                {globalGoal.text}
+              </Heading>
+            </Center>
+          )}
+
+          {plans && view === plansViewOptions.context ? (
+            <PlansContextView
+              plans={plans}
+              handleMonthSelect={handleMonthSelect}
+              openMonthSelect={openMonthSelect}
+              handleEditPlan={handleEditPlan}
+              handleDeletePlan={handleDeletePlan}
+              handleComplitePlan={handleComplitePlan}
+              showModal={showModal}
+              updatedData={updatedData}
+              setShowModal={setShowModal}
+              handleUpdatePlan={handleUpdatePlan}
+              showMonthModal={showMonthModal}
+              setShowMonthModal={setShowMonthModal}
+            />
+          ) : (
+            <PlansMonthView
+              plans={plans}
+              handleMonthSelect={handleMonthSelect}
+              openMonthSelect={openMonthSelect}
+              handleEditPlan={handleEditPlan}
+              handleDeletePlan={handleDeletePlan}
+              handleComplitePlan={handleComplitePlan}
+              showModal={showModal}
+              updatedData={updatedData}
+              setShowModal={setShowModal}
+              handleUpdatePlan={handleUpdatePlan}
+              showMonthModal={showMonthModal}
+              setShowMonthModal={setShowMonthModal}
+            />
+          )}
+        </>
       ) : (
         <EmptyScreen />
       )}

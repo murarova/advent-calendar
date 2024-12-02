@@ -60,6 +60,7 @@ export function ImagePicker({
               <ImageBackground
                 style={{ flex: 1, justifyContent: "center" }}
                 source={{ uri: image.uri }}
+                resizeMode="contain"
                 onLoadStart={() => setIsImageLoading(true)}
                 onLoadEnd={() => setIsImageLoading(false)}
               />

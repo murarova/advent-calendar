@@ -33,12 +33,11 @@ export function TaskItem({ taskConfig, updateGrade, removeGrade, day }) {
       try {
         const data = await getUserDayTasks(
           taskConfig.category,
-          taskConfig.context
+          taskConfig.context,
+          day
         );
         if (data) {
-          taskConfig.category === TASK_CATEGORY.MOOD
-            ? setData(data[day])
-            : setData(data);
+          setData(data);
         }
       } catch (error) {
         Alert.alert("Oops", "Something wrong");

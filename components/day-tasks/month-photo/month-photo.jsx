@@ -46,6 +46,7 @@ export function MonthPhoto({ context, data, setData, removeGrade }) {
       await removeTask({
         category: TASK_CATEGORY.MONTH_PHOTO,
         context,
+        day: null,
       });
       await deleteImage(image);
       await removeGrade({ category: TASK_CATEGORY.MONTH_PHOTO });
@@ -134,6 +135,7 @@ export function MonthPhoto({ context, data, setData, removeGrade }) {
                   <ImageBackground
                     style={{ flex: 1, justifyContent: "center" }}
                     src={image?.uri}
+                    resizeMode="contain"
                   />
                 </Box>
               </AnimatedView>

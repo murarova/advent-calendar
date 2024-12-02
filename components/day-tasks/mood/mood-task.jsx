@@ -47,6 +47,7 @@ export function MoodTask({ data, setData, removeGrade, day, taskOutputType }) {
       await removeTask({
         category: TASK_CATEGORY.MOOD,
         context: null,
+        day,
       });
       if (image) {
         await deleteImage(image);

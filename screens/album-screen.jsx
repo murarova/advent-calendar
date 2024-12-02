@@ -96,6 +96,7 @@ export function AlbumScreen() {
           source={{ uri: item?.image?.uri }}
           containerStyle={styles.imageContainer}
           style={styles.image}
+          dimensions={{ height: Math.floor(item?.image?.height / 10) }}
           parallaxFactor={0.4}
           {...parallaxProps}
         />
@@ -141,11 +142,9 @@ export function AlbumScreen() {
             </Button>
             <Center>
               <Text style={styles.title}>
-                {
-                  months.find(
-                    (month) => month.value === photos[activeSlide]?.month
-                  )?.long || "Рік"
-                }
+                {months.find(
+                  (month) => month.value === photos[activeSlide]?.month
+                )?.long || "Рік"}
               </Text>
             </Center>
             <Button onPress={goForward} size="xl" variant="link">
@@ -169,7 +168,7 @@ const styles = StyleSheet.create({
   text: {
     marginTop: 20,
     marginBottom: 10,
-    maxHeight: "40%",
+    maxHeight: "30%",
   },
   title: {
     verticalAlign: "middle",
@@ -188,6 +187,6 @@ const styles = StyleSheet.create({
   },
   image: {
     ...StyleSheet.absoluteFillObject,
-    resizeMode: "cover",
+    resizeMode: "contain",
   },
 });

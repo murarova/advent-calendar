@@ -92,12 +92,12 @@ export async function getUserTasks() {
   }
 }
 
-export async function getUserDayTasks(category, context) {
+export async function getUserDayTasks(category, context, day) {
   const currentUser = getCurrentUser();
   if (currentUser) {
     const ref =
       category === TASK_CATEGORY.MOOD
-        ? `${baseUrl}/${currentUser.uid}/${category}`
+        ? `${baseUrl}/${currentUser.uid}/${category}/${day}`
         : `${baseUrl}/${currentUser.uid}/${category}/${context}`;
     const response = await firebase
       .app()
@@ -187,12 +187,12 @@ export async function getImageUrl(id) {
   }
 }
 
-export async function removeTask({ category, context }) {
+export async function removeTask({ category, context, day }) {
   const currentUser = getCurrentUser();
   if (currentUser) {
     const ref =
       category === TASK_CATEGORY.MOOD
-        ? `${baseUrl}/${currentUser.uid}/${category}`
+        ? `${baseUrl}/${currentUser.uid}/${category}/${day}`
         : `${baseUrl}/${currentUser.uid}/${category}/${context}`;
     const response = await firebase
       .app()

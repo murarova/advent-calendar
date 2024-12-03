@@ -82,7 +82,7 @@ export default {
       dayTitle: "Завдання дня",
       moodTitle: "Завдання для настрою",
       textareaPlaceholder: "Напишить щось тут",
-      submitBtnText: "Готово",
+      submitBtnText: "Зберегти",
       editBtnText: "Редагувати",
       taskResult: "Відповідь",
       addPlanItem: "Додати пункт плану",

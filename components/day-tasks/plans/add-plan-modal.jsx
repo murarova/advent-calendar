@@ -4,11 +4,9 @@ import {
   ModalBody,
   ModalFooter,
   Text,
-  VStack,
   Textarea,
   TextareaInput,
   ButtonText,
-  Center,
   Modal,
   ModalBackdrop,
   ModalContent,
@@ -23,7 +21,6 @@ export function AddPlanModal({
   data,
   handleUpdatePlan,
 }) {
-
   const { t } = useTranslation();
   const [text, setText] = useState(data?.text ?? "");
 
@@ -43,6 +40,7 @@ export function AddPlanModal({
       onClose={() => {
         setShowModal(false);
       }}
+      avoidKeyboard={true}
     >
       <ModalBackdrop />
       <ModalContent width="90%">

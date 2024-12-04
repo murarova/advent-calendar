@@ -13,11 +13,14 @@ import {
   ChevronRightIcon,
   ButtonIcon,
   ChevronLeftIcon,
+  SafeAreaView,
 } from "@gluestack-ui/themed";
 import Carousel, { ParallaxImage } from "react-native-snap-carousel";
 import { months } from "../constants/constants";
+import { Image } from "@gluestack-ui/themed";
 
-const { width: screenWidth } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
+const screenWidth = width - 60;
 
 export function AlbumScreen() {
   const [photos, setPhotos] = useState(null);
@@ -89,21 +92,45 @@ export function AlbumScreen() {
     }
   }, [isFocused]);
 
-  const renderItem = ({ item }, parallaxProps) => {
+  const renderItem = ({ item }) => {
     return (
-      <View style={styles.item}>
-        <ParallaxImage
-          source={{ uri: item?.image?.uri }}
-          containerStyle={styles.imageContainer}
-          style={styles.image}
-          dimensions={{ height: Math.floor(item?.image?.height / 10) }}
-          parallaxFactor={0.4}
-          {...parallaxProps}
-        />
-        <ScrollView style={styles.text}>
-          <Text>{item.text}</Text>
-        </ScrollView>
-      </View>
+      <Box
+        flex={1}
+        width={screenWidth}
+      >
+        <Box
+          flexGrow={1}
+          backgroundColor="$white"
+          p={10}
+          borderTopRightRadius={8}
+          borderTopLeftRadius={8}
+          borderBottomRightRadius={item.text ? 0 : 8}
+          borderBottomLeftRadius={item.text ? 0 : 8}
+        >
+          <Image
+            source={{ uri: item?.image?.uri }}
+            style={{
+              flex: 1,
+              width: undefined,
+              height: undefined,
+              resizeMode: "contain",
+            }}
+            alt="user photo"
+          />
+        </Box>
+        {item.text && (
+          <ScrollView
+            flexBasis="30%"
+            p={10}
+            flexGrow={0}
+            backgroundColor="$white"
+            borderBottomRightRadius={8}
+            borderBottomLeftRadius={8}
+          >
+            <Text>{item.text}</Text>
+          </ScrollView>
+        )}
+      </Box>
     );
   };
 
@@ -112,15 +139,14 @@ export function AlbumScreen() {
   }
 
   return (
-    <>
+    <SafeAreaView flex={1} backgroundColor="$backgroundLight50">
       {photos ? (
-        <View style={styles.container}>
+        <Box flex={1} pt={20} alignItems="center">
           <Carousel
             ref={carouselRef}
-            sliderWidth={screenWidth}
-            sliderHeight={screenWidth}
+            sliderWidth={width}
             onSnapToItem={setActiveSlide}
-            itemWidth={screenWidth - 60}
+            itemWidth={screenWidth}
             hasParallaxImages
             data={photos}
             firstItem={activeSlide}
@@ -130,18 +156,18 @@ export function AlbumScreen() {
             display="flex"
             flexDirection="row"
             justifyContent="space-between"
-            width={screenWidth - 60}
+            width={screenWidth}
             borderRadius="$full"
             mt="$2"
             mb="$5"
             px="$5"
-            backgroundColor="$primary50"
+            backgroundColor="$white"
           >
             <Button onPress={goBack} size="xl" variant="link">
               <ButtonIcon color="$warmGray800" as={ChevronLeftIcon} />
             </Button>
             <Center>
-              <Text style={styles.title}>
+              <Text verticalAlign="middle" fontWeight={600}>
                 {months.find(
                   (month) => month.value === photos[activeSlide]?.month
                 )?.long || "Рік"}
@@ -151,36 +177,17 @@ export function AlbumScreen() {
               <ButtonIcon color="$warmGray800" as={ChevronRightIcon} />
             </Button>
           </Box>
-        </View>
+        </Box>
       ) : (
         <EmptyScreen />
       )}
-    </>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 20,
-    alignItems: "center",
-  },
-  text: {
-    marginTop: 20,
-    marginBottom: 10,
-    maxHeight: "30%",
-  },
-  title: {
-    verticalAlign: "middle",
-    fontWeight: "600",
-  },
-  item: {
-    flex: 1,
-    width: screenWidth - 60,
-    height: screenWidth - 60,
-  },
   imageContainer: {
-    flexGrow: 1,
+    flexGrow: 0,
     marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
     backgroundColor: "white",
     borderRadius: 8,

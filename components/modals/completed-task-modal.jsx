@@ -31,12 +31,13 @@ export function CompletedTaskModal({ setShowModal }) {
         <ModalBackdrop />
         <ModalContent>
           <ModalHeader justifyContent="center">
-            <Heading size="md">{t("screens.completedTaskModal.title")}</Heading>
+            <Center>
+              <Heading size="md">
+                {t("screens.completedTaskModal.title")}
+              </Heading>
+            </Center>
           </ModalHeader>
           <ModalBody>
-            <Center>
-              <Text size="sm">{t("screens.completedTaskModal.text")}</Text>
-            </Center>
             <Center mt="$10" mb="$5">
               <DeerSvg />
             </Center>

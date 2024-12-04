@@ -65,9 +65,11 @@ export function TaskItem({ taskConfig, updateGrade, removeGrade, day }) {
                 return (
                   <>
                     <AccordionTitleText>
-                      {taskConfig.category === TASK_CATEGORY.MOOD
-                        ? t("screens.tasksOfTheDay.moodTitle")
-                        : t("screens.tasksOfTheDay.dayTitle")}
+                      <Heading size="md">
+                        {taskConfig.category === TASK_CATEGORY.MOOD
+                          ? t("screens.tasksOfTheDay.moodTitle")
+                          : t("screens.tasksOfTheDay.dayTitle")}
+                      </Heading>
                     </AccordionTitleText>
                     {isExpanded ? (
                       <AccordionIcon as={ChevronUpIcon} ml="$3" />

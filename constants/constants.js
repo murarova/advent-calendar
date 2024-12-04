@@ -53,7 +53,7 @@ export const TASK_CATEGORY = {
   GOALS: "goals",
 };
 
-export const MAX_PLANS_AMOUNT = 10;
+export const MAX_PLANS_AMOUNT = 12;
 
 export const months = [
   { short: "Січ", long: "Січень", value: "january" },

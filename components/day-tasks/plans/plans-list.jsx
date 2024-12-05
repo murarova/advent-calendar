@@ -44,134 +44,128 @@ export function PlansList({
   }
 
   return (
-    <ScrollView maxHeight="$80" w="$80">
-      <VStack width="100%" flex={1} space="sm">
-        {title && <Heading size="sm">{title}</Heading>}
-        {plans.map((item, index, array) => {
-          const month = months.find(
-            (month) => month.value === item.month
-          )?.long;
-          return (
-            <Fragment key={item.id}>
-              {view === plansViewOptions.context && month && (
-                <HStack>
-                  <Badge
-                    size="sm"
-                    variant="outline"
-                    borderRadius="$lg"
-                    action="gray"
-                  >
-                    <BadgeText>{month}</BadgeText>
-                    <BadgeIcon as={CalendarDays} ml="$2" />
-                  </Badge>
-                </HStack>
-              )}
-              {view === plansViewOptions.month && (
-                <HStack>
-                  <Badge
-                    size="sm"
-                    variant="outline"
-                    borderRadius="$lg"
-                    action="gray"
-                  >
-                    <BadgeText>{item.context}</BadgeText>
-                  </Badge>
-                </HStack>
-              )}
-              <HStack justifyContent="space-between" alignItems="center">
-                <Box flex={1}>
-                  {isPlanScreen ? (
-                    <Checkbox
-                      value={item?.text}
-                      defaultIsChecked={item?.isDone}
-                      onChange={(value) => handlePlanDone(item, value)}
-                      size="md"
-                      aria-label={item?.text}
-                    >
-                      <CheckboxIndicator mr="$2">
-                        <CheckboxIcon color="$white" as={CheckIcon} />
-                      </CheckboxIndicator>
-                      <CheckboxLabel flex={1}>
-                        <Text
-                          style={
-                            item?.isDone && {
-                              textDecorationLine: "line-through",
-                              textDecorationStyle: "solid",
-                              opacity: 0.5
-                            }
-                          }
-                        >
-                          {item?.text}
-                        </Text>
-                      </CheckboxLabel>
-                    </Checkbox>
-                  ) : (
-                    <Text>{item?.text}</Text>
-                  )}
-                </Box>
-                <Menu
-                  placement="top"
-                  paddingVertical={0}
-                  backgroundColor="$backgroundLight200"
-                  trigger={({ ...triggerProps }) => {
-                    return (
-                      <Box>
-                        <Button variant="link" {...triggerProps}>
-                          <ButtonIcon color="$black" as={Ellipsis} />
-                        </Button>
-                      </Box>
-                    );
-                  }}
+    <VStack width="100%" flex={1} space="sm">
+      {title && <Heading size="sm">{title}</Heading>}
+      {plans.map((item, index, array) => {
+        const month = months.find((month) => month.value === item.month)?.long;
+        return (
+          <Fragment key={item.id}>
+            {view === plansViewOptions.context && month && (
+              <HStack>
+                <Badge
+                  size="sm"
+                  variant="outline"
+                  borderRadius="$lg"
+                  action="gray"
                 >
-                  <MenuItem
-                    key="edit"
-                    textValue="edit"
-                    display="flex"
-                    backgroundColor="#fff"
-                    justifyContent="space-between"
-                    mb="$px"
-                    onPress={() => onEdit(item)}
+                  <BadgeText>{month}</BadgeText>
+                  <BadgeIcon as={CalendarDays} ml="$2" />
+                </Badge>
+              </HStack>
+            )}
+            {view === plansViewOptions.month && (
+              <HStack>
+                <Badge
+                  size="sm"
+                  variant="outline"
+                  borderRadius="$lg"
+                  action="gray"
+                >
+                  <BadgeText>{item.context}</BadgeText>
+                </Badge>
+              </HStack>
+            )}
+            <HStack justifyContent="space-between" alignItems="center">
+              <Box flex={1}>
+                {isPlanScreen ? (
+                  <Checkbox
+                    value={item?.text}
+                    defaultIsChecked={item?.isDone}
+                    onChange={(value) => handlePlanDone(item, value)}
+                    size="md"
+                    aria-label={item?.text}
                   >
-                    <MenuItemLabel size="sm">{t("common.edit")}</MenuItemLabel>
-                    <Icon as={EditIcon} size="sm" ml="$2" />
-                  </MenuItem>
+                    <CheckboxIndicator mr="$2">
+                      <CheckboxIcon color="$white" as={CheckIcon} />
+                    </CheckboxIndicator>
+                    <CheckboxLabel flex={1}>
+                      <Text
+                        style={
+                          item?.isDone && {
+                            textDecorationLine: "line-through",
+                            textDecorationStyle: "solid",
+                            opacity: 0.5,
+                          }
+                        }
+                      >
+                        {item?.text}
+                      </Text>
+                    </CheckboxLabel>
+                  </Checkbox>
+                ) : (
+                  <Text>{item?.text}</Text>
+                )}
+              </Box>
+              <Menu
+                placement="top"
+                paddingVertical={0}
+                backgroundColor="$backgroundLight200"
+                trigger={({ ...triggerProps }) => {
+                  return (
+                    <Box>
+                      <Button variant="link" {...triggerProps}>
+                        <ButtonIcon color="$black" as={Ellipsis} />
+                      </Button>
+                    </Box>
+                  );
+                }}
+              >
+                <MenuItem
+                  key="edit"
+                  textValue="edit"
+                  display="flex"
+                  backgroundColor="#fff"
+                  justifyContent="space-between"
+                  mb="$px"
+                  onPress={() => onEdit(item)}
+                >
+                  <MenuItemLabel size="sm">{t("common.edit")}</MenuItemLabel>
+                  <Icon as={EditIcon} size="sm" ml="$2" />
+                </MenuItem>
 
+                <MenuItem
+                  key="delete"
+                  mb="$px"
+                  textValue="delete"
+                  backgroundColor="#fff"
+                  display="flex"
+                  justifyContent="space-between"
+                  onPress={() => onDelete(item)}
+                >
+                  <MenuItemLabel size="sm">{t("common.delete")}</MenuItemLabel>
+                  <Icon as={Trash2} size="sm" ml="$2" />
+                </MenuItem>
+                {showSelectMonth && (
                   <MenuItem
-                    key="delete"
-                    mb="$px"
-                    textValue="delete"
+                    key="selectMonth"
+                    textValue="selectMonth"
                     backgroundColor="#fff"
                     display="flex"
                     justifyContent="space-between"
-                    onPress={() => onDelete(item)}
+                    onPress={() => onMonthSelect(item)}
                   >
                     <MenuItemLabel size="sm">
-                      {t("common.delete")}
+                      {t("common.selectMonth")}
                     </MenuItemLabel>
-                    <Icon as={Trash2} size="sm" ml="$2" />
+                    <Icon as={CalendarDays} size="sm" ml="$2" />
                   </MenuItem>
-                  {showSelectMonth && (
-                    <MenuItem
-                      key="selectMonth"
-                      textValue="selectMonth"
-                      backgroundColor="#fff"
-                      display="flex"
-                      justifyContent="space-between"
-                      onPress={() => onMonthSelect(item)}
-                    >
-                      <MenuItemLabel size="sm">
-                        {t("common.selectMonth")}
-                      </MenuItemLabel>
-                      <Icon as={CalendarDays} size="sm" ml="$2" />
-                    </MenuItem>
-                  )}
-                </Menu>
-              </HStack>
-              {index !== array.length - 1 && <Divider />}
-            </Fragment>
-          );
-        })}
-      </VStack>
-    </ScrollView>
+                )}
+              </Menu>
+            </HStack>
+            {index !== array.length - 1 && <Divider />}
+          </Fragment>
+        );
+      })}
+    </VStack>
   );
 }

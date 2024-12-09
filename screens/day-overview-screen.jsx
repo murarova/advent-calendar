@@ -1,6 +1,5 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import { TasksList } from "../components/tasks-list";
-import { getDayTasks } from "../config/day-tasks-config";
 import {
   Box,
   Text,
@@ -11,25 +10,43 @@ import {
 } from "@gluestack-ui/themed";
 import { useTranslation } from "react-i18next";
 import moment from "moment";
-import { LANGUAGES, TASK_CATEGORY } from "../constants/constants";
+import { LANGUAGES, TASK_CATEGORY, YEAR } from "../constants/constants";
 import { CompletedTaskModal } from "../components/modals/completed-task-modal";
 import {
   getComplited,
+  getConfiguration,
   removeComplited,
   setComplited,
 } from "../services/services";
 import { Alert } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import { getProgressColorByValue } from "../utils/utils";
+import { Loader } from "../components/common";
 
 function DayOverviewScreen({ route, navigation }) {
   const { t, i18n } = useTranslation();
+  const [dayTasks, setDayTasks] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const currentDay = route.params.currentDay;
   const day = moment(currentDay).format("DD");
   // const month = moment(currentDay)
   //   .locale(LANGUAGES[i18n.resolvedLanguage].moment)
   //   .format("MMMM");
-  const dayTasks = getDayTasks(day, i18n.resolvedLanguage);
+
+  useEffect(() => {
+    setIsLoading(true);
+    getConfiguration(YEAR, day, i18n.resolvedLanguage)
+      .then((config) => {
+        setDayTasks(config);
+      })
+      .catch(() => {
+        setIsLoading(false);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
+  // const dayTasks = getDayTasks(day, i18n.resolvedLanguage);
   const [showComplitedModal, setShowComplitedModal] = useState(false);
   const [complitedTasks, setComplitedTasks] = useState(null);
   const [grade, setGrade] = useState({
@@ -95,6 +112,10 @@ function DayOverviewScreen({ route, navigation }) {
     const updatedComplited = complitedTasks.filter((item) => item !== day);
     setComplitedTasks(updatedComplited);
     removeComplited({ day });
+  }
+
+  if (isLoading) {
+    return <Loader />;
   }
 
   return (

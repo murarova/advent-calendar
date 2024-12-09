@@ -53,6 +53,16 @@ export async function getUserRole() {
   }
 }
 
+export async function getConfiguration(year, day, language) {
+  const response = await firebase
+    .app()
+    .database(process.env.EXPO_PUBLIC_DB)
+    .ref(`/configuration/${year}/${day}/${language}`)
+    .once("value");
+
+  return response.val();
+}
+
 export async function saveTaskByCategory({ category, data, context }) {
   const currentUser = getCurrentUser();
   if (currentUser) {

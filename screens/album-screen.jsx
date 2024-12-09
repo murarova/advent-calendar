@@ -94,10 +94,7 @@ export function AlbumScreen() {
 
   const renderItem = ({ item }) => {
     return (
-      <Box
-        flex={1}
-        width={screenWidth}
-      >
+      <Box flex={1} width={screenWidth}>
         <Box
           flexGrow={1}
           backgroundColor="$white"
@@ -127,7 +124,7 @@ export function AlbumScreen() {
             borderBottomRightRadius={8}
             borderBottomLeftRadius={8}
           >
-            <Text>{item.text}</Text>
+            <Text pb="$4">{item.text}</Text>
           </ScrollView>
         )}
       </Box>

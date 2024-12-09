@@ -18,6 +18,7 @@ export default {
     selectMonth: "Обрати місяць",
     logout: "Вийти",
     deleteAccount: "Видалити акаунт",
+    yourAnswer: "Твоя відповідь",
   },
   context: {
     health: "Здоров'я",
@@ -88,7 +89,7 @@ export default {
       addPlanItem: "Додати пункт плану",
     },
     plansScreen: {
-      maxPlansError: "Ви не можете додати більше ніж 10 пунктів",
+      maxPlansError: "Ви не можете додати більше ніж {{limit}} пунктів",
       title: "Мої плани",
     },
     plansModal: {

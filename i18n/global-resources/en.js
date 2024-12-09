@@ -80,7 +80,7 @@ export default {
       addPlanItem: "Add plan item",
     },
     plansScreen: {
-      maxPlansError: "You cannot add more than 10 points",
+      maxPlansError: "You cannot add more than {{limit}} points",
       title: "My plans",
     },
     plansModal: {

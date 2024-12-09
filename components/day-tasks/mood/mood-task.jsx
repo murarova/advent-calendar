@@ -21,6 +21,7 @@ import uuid from "react-native-uuid";
 import { ActionButtons, AnimatedView, ImagePicker, Loader } from "../../common";
 import { ImageBackground } from "@gluestack-ui/themed";
 import { useImage } from "../../../hooks/useImage";
+import { Heading } from "@gluestack-ui/themed";
 
 export function MoodTask({ data, setData, removeGrade, day, taskOutputType }) {
   const { t } = useTranslation();
@@ -135,9 +136,14 @@ export function MoodTask({ data, setData, removeGrade, day, taskOutputType }) {
       ) : (
         <Box>
           {data?.text && (
-            <Box mb="$2">
-              <Text>{data?.text}</Text>
-            </Box>
+            <>
+              <Heading mb="$2" size="sm">
+                {t("common.yourAnswer")}
+              </Heading>
+              <Box mb="$2">
+                <Text>{data?.text}</Text>
+              </Box>
+            </>
           )}
           {image && (
             <Box flex={1}>

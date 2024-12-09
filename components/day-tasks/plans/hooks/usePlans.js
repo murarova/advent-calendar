@@ -82,7 +82,9 @@ export function usePlans({ data, context, setData, removeGrade }) {
 
   function handleAddPlanBtn() {
     if (data?.length === MAX_PLANS_AMOUNT) {
-      Alert.alert(t("screens.plansScreen.maxPlansError"));
+      Alert.alert(
+        t("screens.plansScreen.maxPlansError", { limit: MAX_PLANS_AMOUNT })
+      );
       return;
     }
     setShowModal(true);

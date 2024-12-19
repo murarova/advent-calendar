@@ -90,6 +90,7 @@ export default {
     plansScreen: {
       maxPlansError: "Ви не можете додати більше ніж 10 пунктів",
       title: "Мої плани",
+      everyMonthLabel: "Кожного місяця",
     },
     plansModal: {
       addPlanTitle: "Додайте пункт плану",
@@ -110,5 +111,6 @@ export default {
   },
   monthSelect: {
     title: "Оберіть місяць",
+    everyMonth: "Робити кожного місяця",
   },
 };

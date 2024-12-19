@@ -43,17 +43,23 @@ export function PlansList({
     handleComplitePlan(item, value);
   }
 
+  function getMonthBadge(item) {
+    if (item.month === "every") {
+      return t('screens.plansScreen.everyMonthLabel');
+    } else {
+      return months.find((month) => month.value === item.month)?.long;
+    }
+  }
+
   return (
     <ScrollView maxHeight="$80" w="$80">
       <VStack width="100%" flex={1} space="sm">
         {title && <Heading size="sm">{title}</Heading>}
         {plans.map((item, index, array) => {
-          const month = months.find(
-            (month) => month.value === item.month
-          )?.long;
+          const label = getMonthBadge(item);
           return (
             <Fragment key={item.id}>
-              {view === plansViewOptions.context && month && (
+              {view === plansViewOptions.context && label && (
                 <HStack>
                   <Badge
                     size="sm"
@@ -61,7 +67,7 @@ export function PlansList({
                     borderRadius="$lg"
                     action="gray"
                   >
-                    <BadgeText>{month}</BadgeText>
+                    <BadgeText>{label}</BadgeText>
                     <BadgeIcon as={CalendarDays} ml="$2" />
                   </Badge>
                 </HStack>
@@ -97,7 +103,7 @@ export function PlansList({
                             item?.isDone && {
                               textDecorationLine: "line-through",
                               textDecorationStyle: "solid",
-                              opacity: 0.5
+                              opacity: 0.5,
                             }
                           }
                         >

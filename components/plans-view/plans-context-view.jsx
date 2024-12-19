@@ -87,7 +87,7 @@ export function PlansContextView({
                         onMonthSelect={(item) => openMonthSelect(item, context)}
                         onEdit={(item) => handleEditPlan(item, context)}
                         onDelete={(item) =>
-                          handleDeletePlan(item.id, item.context)
+                          handleDeletePlan(item.id, context)
                         }
                         handleComplitePlan={(item, value) =>
                           handleComplitePlan(item, value, context)

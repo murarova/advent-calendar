@@ -8,7 +8,6 @@ import {
   ModalContent,
   ModalHeader,
 } from "@gluestack-ui/themed";
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FlatList } from "react-native";
 import { months } from "../../constants/constants";
@@ -56,6 +55,15 @@ export function MonthSelectModal({ onMonthSelect, setShowMonthModal }) {
               </Button>
             )}
           />
+          <Button
+            variant="link"
+            marginBottom="$3"
+            onPress={() => onMonthSelect("every")}
+          >
+            <ButtonText fontWeight="400" color="$black">
+              {t("monthSelect.everyMonth")}
+            </ButtonText>
+          </Button>
         </Box>
       </ModalContent>
     </Modal>

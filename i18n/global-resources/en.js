@@ -82,6 +82,7 @@ export default {
     plansScreen: {
       maxPlansError: "You cannot add more than 10 points",
       title: "My plans",
+      everyMonthLabel: "Every month",
     },
     plansModal: {
       addPlanTitle: "Add plan item",
@@ -102,5 +103,6 @@ export default {
   },
   monthSelect: {
     title: "Pick the month",
+    everyMonth: "Do each month",
   },
 };

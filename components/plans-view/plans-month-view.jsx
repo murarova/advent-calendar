@@ -11,24 +11,17 @@ import {
   ChevronUpIcon,
   ChevronDownIcon,
   Heading,
-  VStack,
-  Badge,
-  BadgeText,
   ScrollView,
 } from "@gluestack-ui/themed";
-import { useTranslation } from "react-i18next";
-import {
-  TASK_CONTEXT,
-  months,
-  plansViewOptions,
-} from "../../constants/constants";
+import { months, plansViewOptions } from "../../constants/constants";
 import { PlansList } from "../day-tasks/plans/plans-list";
 import { AddPlanModal } from "../day-tasks/plans/add-plan-modal";
 import { MonthSelectModal } from "../modals/month-select-modal";
+import { EmptyScreen } from "../empty-screen";
+import isEmpty from "lodash/isEmpty";
 
 export function PlansMonthView({
   plans,
-  openMonthSelect,
   handleEditPlan,
   handleDeletePlan,
   handleComplitePlan,
@@ -40,23 +33,54 @@ export function PlansMonthView({
   setShowMonthModal,
   handleMonthSelect,
 }) {
-  const { t } = useTranslation();
   function groupByMonthWithContext(plans) {
     const result = {};
+    const allMonths = [
+      "january",
+      "february",
+      "march",
+      "april",
+      "may",
+      "june",
+      "july",
+      "august",
+      "september",
+      "october",
+      "november",
+      "december",
+    ];
+
     for (const context in plans) {
       plans[context].forEach((item) => {
         const month = item.month;
         const itemWithContext = { ...item, context: context };
-        if (!result[month]) {
-          result[month] = [];
+
+        if (month === "every") {
+          // Add the plan to every month from January to December
+          allMonths.forEach((monthName) => {
+            if (!result[monthName]) {
+              result[monthName] = [];
+            }
+            result[monthName].push(itemWithContext);
+          });
+        } else {
+          // Normal case for specific month
+          if (!result[month]) {
+            result[month] = [];
+          }
+          result[month].push(itemWithContext);
         }
-        result[month].push(itemWithContext);
       });
     }
+
     return result;
   }
 
   const sortedPlans = groupByMonthWithContext(plans);
+
+  if (isEmpty(sortedPlans)) {
+    return <EmptyScreen />;
+  }
 
   return (
     <ScrollView>

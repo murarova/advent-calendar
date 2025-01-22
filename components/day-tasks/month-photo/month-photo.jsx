@@ -21,7 +21,13 @@ import { ActionButtons, AnimatedView, ImagePicker, Loader } from "../../common";
 import { ImageBackground } from "@gluestack-ui/themed";
 import { useImage } from "../../../hooks/useImage";
 
-export function MonthPhoto({ context, data, setData, removeGrade }) {
+export function MonthPhoto({
+  context,
+  data,
+  setData,
+  handleAddProgress,
+  handleRemoveProgress,
+}) {
   const { t } = useTranslation();
   const [edit, setEdit] = useState(false);
   const [text, setText] = useState("");
@@ -48,13 +54,13 @@ export function MonthPhoto({ context, data, setData, removeGrade }) {
         context,
       });
       await deleteImage(image);
-      await removeGrade({ category: TASK_CATEGORY.MONTH_PHOTO });
     } catch (error) {
       Alert.alert("Oops", "Something wrong");
     } finally {
       setData(null);
       setText("");
       setImage(null);
+      handleRemoveProgress();
     }
   }
 
@@ -83,6 +89,8 @@ export function MonthPhoto({ context, data, setData, removeGrade }) {
         setData(updatedData);
       } catch (error) {
         Alert.alert("Oops", "Something wrong");
+      } finally {
+        handleAddProgress();
       }
     } else {
       Alert.alert("Помилка", "Будь ласка додайте фото");

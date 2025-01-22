@@ -12,6 +12,7 @@ import { SCREENS } from "./constants/constants";
 import DayOverviewScreen from "./screens/day-overview-screen";
 import { useTranslation } from "react-i18next";
 import "./i18n/i18n";
+import { DaysProvider } from "./providers/day-config-provider";
 
 const MyTheme = {
   ...DefaultTheme,
@@ -30,51 +31,53 @@ export default function App() {
   return (
     <GluestackUIProvider config={config}>
       <NavigationContainer theme={MyTheme}>
-        <Stack.Navigator>
-          <Stack.Screen
-            name={SCREENS.LOADING}
-            component={LoadingScreen}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name={SCREENS.INTRO}
-            component={IntroScreen}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name={SCREENS.LOGIN}
-            component={LoginScreen}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name={SCREENS.REGISTER}
-            component={RegisterScreen}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name={SCREENS.HOME}
-            component={HomeScreen}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name={SCREENS.DAY_OVERVIEW}
-            component={DayOverviewScreen}
-            options={{
-              headerBackTitle: t("common.back"),
-              headerRight: AppMenu,
-            }}
-          />
-        </Stack.Navigator>
+        <DaysProvider>
+          <Stack.Navigator>
+            <Stack.Screen
+              name={SCREENS.LOADING}
+              component={LoadingScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name={SCREENS.INTRO}
+              component={IntroScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name={SCREENS.LOGIN}
+              component={LoginScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name={SCREENS.REGISTER}
+              component={RegisterScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name={SCREENS.HOME}
+              component={HomeScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name={SCREENS.DAY_OVERVIEW}
+              component={DayOverviewScreen}
+              options={{
+                headerBackTitle: t("common.back"),
+                headerRight: AppMenu,
+              }}
+            />
+          </Stack.Navigator>
+        </DaysProvider>
       </NavigationContainer>
     </GluestackUIProvider>
   );

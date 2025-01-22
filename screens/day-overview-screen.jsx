@@ -1,6 +1,5 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState, useCallback, useEffect } from "react";
 import { TasksList } from "../components/tasks-list";
-import { getDayTasks } from "../config/day-tasks-config";
 import {
   Box,
   Text,
@@ -11,91 +10,35 @@ import {
 } from "@gluestack-ui/themed";
 import { useTranslation } from "react-i18next";
 import moment from "moment";
-import { LANGUAGES, TASK_CATEGORY } from "../constants/constants";
 import { CompletedTaskModal } from "../components/modals/completed-task-modal";
 import {
-  getComplited,
-  removeComplited,
-  setComplited,
-} from "../services/services";
-import { Alert } from "react-native";
-import { useIsFocused } from "@react-navigation/native";
-import { getProgressColorByValue } from "../utils/utils";
+  calculateTotalProgress,
+  getProgressColorByValue,
+} from "../utils/utils";
+import { useDaysConfiguration } from "../providers/day-config-provider";
+import usePrevious from "../hooks/usePrevious";
 
 function DayOverviewScreen({ route, navigation }) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+  const { getDayConfig } = useDaysConfiguration();
+
   const currentDay = route.params.currentDay;
-  const day = moment(currentDay).format("DD");
-  // const month = moment(currentDay)
-  //   .locale(LANGUAGES[i18n.resolvedLanguage].moment)
-  //   .format("MMMM");
-  const dayTasks = getDayTasks(day, i18n.resolvedLanguage);
+  const dayTasks = getDayConfig(currentDay);
+  const total = calculateTotalProgress(dayTasks.progress);
+  const previousProgress = usePrevious(total);
   const [showComplitedModal, setShowComplitedModal] = useState(false);
-  const [complitedTasks, setComplitedTasks] = useState(null);
-  const [grade, setGrade] = useState({
-    [TASK_CATEGORY.MOOD]: 0,
-    [TASK_CATEGORY.SUMMARY]: 0,
-    [TASK_CATEGORY.MONTH_PHOTO]: 0,
-    [TASK_CATEGORY.PLANS]: 0,
-  });
-  const isFocused = useIsFocused();
-  const total = getTotalGrade();
+
+  useEffect(() => {
+    if (previousProgress < 100 && total === 100) {
+      setShowComplitedModal(true);
+    }
+  }, [total]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
       title: moment(currentDay).format("DD.MM.YYYY"),
     });
   }, [currentDay, navigation]);
-
-  useEffect(() => {
-    async function getComplitedTasks() {
-      try {
-        const data = await getComplited();
-        setComplitedTasks(data ?? []);
-      } catch (error) {
-        Alert.alert("Oops", "Something wrong");
-      }
-    }
-    if (isFocused) {
-      getComplitedTasks();
-    }
-  }, [isFocused]);
-
-  useEffect(() => {
-    if (Number(total) === 100 && complitedTasks) {
-      const alreadyComplited = complitedTasks.find(
-        (item) => Number(item) === Number(day)
-      );
-      if (!alreadyComplited) {
-        setComplited({ day });
-        setShowComplitedModal(true);
-      }
-    }
-  }, [total, complitedTasks]);
-
-  function getTotalGrade() {
-    return Object.values(grade).reduce(
-      (taskGrade, total) => taskGrade + total,
-      0
-    );
-  }
-
-  function updateGrade({ category, grade }) {
-    setGrade((prevValue) => ({
-      ...prevValue,
-      [category]: grade,
-    }));
-  }
-
-  async function removeGrade({ category }) {
-    setGrade((prevValue) => ({
-      ...prevValue,
-      [category]: 0,
-    }));
-    const updatedComplited = complitedTasks.filter((item) => item !== day);
-    setComplitedTasks(updatedComplited);
-    removeComplited({ day });
-  }
 
   return (
     <Box p="$2" flex={1}>
@@ -113,12 +56,7 @@ function DayOverviewScreen({ route, navigation }) {
               </Progress>
             </Center>
           </Box>
-          <TasksList
-            {...dayTasks}
-            day={day}
-            updateGrade={updateGrade}
-            removeGrade={removeGrade}
-          />
+          <TasksList {...dayTasks.config} currentDay={currentDay} />
         </>
       ) : (
         <Center flex={1}>

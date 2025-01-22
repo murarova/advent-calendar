@@ -16,7 +16,13 @@ import isEmpty from "lodash/isEmpty";
 import { HappySlider } from "./happy-slider";
 import { ActionButtons } from "../../common";
 
-export function Summary({ context, data, setData, removeGrade }) {
+export function Summary({
+  context,
+  data,
+  setData,
+  handleAddProgress,
+  handleRemoveProgress,
+}) {
   const { t } = useTranslation();
   const [text, setText] = useState("");
   const [rate, setRate] = useState(50);
@@ -58,6 +64,7 @@ export function Summary({ context, data, setData, removeGrade }) {
       Alert.alert("Oops", "Something wrong");
     } finally {
       setData(updatedSummary);
+      handleAddProgress();
       setEdit(false);
     }
   }
@@ -68,13 +75,13 @@ export function Summary({ context, data, setData, removeGrade }) {
         category: TASK_CATEGORY.SUMMARY,
         context,
       });
-      await removeGrade({ category: TASK_CATEGORY.SUMMARY });
     } catch (error) {
       Alert.alert("Oops", "Something wrong");
     } finally {
       setData(null);
       setText("");
       setRate(50);
+      handleRemoveProgress();
     }
   }
 

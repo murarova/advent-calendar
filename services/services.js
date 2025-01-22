@@ -66,6 +66,16 @@ export async function saveTaskByCategory({ category, data, context }) {
   }
 }
 
+export async function getConfiguration() {
+  const response = await firebase
+    .app()
+    .database(process.env.EXPO_PUBLIC_DB)
+    .ref("2024/configuration")
+    .once("value");
+
+  return response.val();
+}
+
 export async function saveMoodTask({ category, data, day }) {
   const currentUser = getCurrentUser();
   if (currentUser) {
@@ -99,6 +109,20 @@ export async function getUserDayTasks(category, context) {
       category === TASK_CATEGORY.MOOD
         ? `${baseUrl}/${currentUser.uid}/${category}`
         : `${baseUrl}/${currentUser.uid}/${category}/${context}`;
+    const response = await firebase
+      .app()
+      .database(process.env.EXPO_PUBLIC_DB)
+      .ref(ref)
+      .once("value");
+
+    return response.val();
+  }
+}
+
+export async function getUserData() {
+  const currentUser = getCurrentUser();
+  if (currentUser) {
+    const ref = `${baseUrl}/${currentUser.uid}`;
     const response = await firebase
       .app()
       .database(process.env.EXPO_PUBLIC_DB)

@@ -5,7 +5,13 @@ import { AddPlanModal } from "./add-plan-modal";
 import { PlansList } from "./plans-list";
 import { usePlans } from "./hooks/usePlans";
 
-export function Plans({ context, data, setData, removeGrade }) {
+export function Plans({
+  context,
+  data,
+  setData,
+  handleAddProgress,
+  handleRemoveProgress,
+}) {
   const { t } = useTranslation();
 
   const {
@@ -17,7 +23,13 @@ export function Plans({ context, data, setData, removeGrade }) {
     handleEditPlan,
     handleDeletePlan,
     handleAddPlanBtn,
-  } = usePlans({ data, context, setData, removeGrade });
+  } = usePlans({
+    data,
+    context,
+    setData,
+    handleAddProgress,
+    handleRemoveProgress,
+  });
 
   return (
     <Box>

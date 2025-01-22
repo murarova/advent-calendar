@@ -106,7 +106,7 @@ export function DashboardScreen() {
             <CircularProgress
               value={totalData.donePercentage}
               progressValueColor={config.tokens.colors.warmGray800}
-              activeStrokeColor={config.tokens.colors.progressGreen}
+              activeStrokeColor={config.tokens.colors.green400}
               inActiveStrokeColor={config.tokens.colors.warmGray400}
               inActiveStrokeOpacity={0.2}
               valueSuffix={"%"}

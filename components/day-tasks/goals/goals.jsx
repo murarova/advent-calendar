@@ -15,7 +15,13 @@ import { Alert } from "react-native";
 import isEmpty from "lodash/isEmpty";
 import { ActionButtons } from "../../common";
 
-export function Goals({ context, data, setData, removeGrade }) {
+export function Goals({
+  context,
+  data,
+  setData,
+  handleAddProgress,
+  handleRemoveProgress,
+}) {
   const { t } = useTranslation();
   const [text, setText] = useState("");
   const [edit, setEdit] = useState(false);
@@ -53,6 +59,7 @@ export function Goals({ context, data, setData, removeGrade }) {
     } finally {
       setData(updatedGoal);
       setEdit(false);
+      handleAddProgress();
     }
   }
 
@@ -68,6 +75,7 @@ export function Goals({ context, data, setData, removeGrade }) {
     } finally {
       setData(null);
       setText("");
+      handleRemoveProgress();
     }
   }
 

@@ -9,7 +9,13 @@ import { saveTaskByCategory } from "../../../../services/services";
 import { Alert } from "react-native";
 import uuid from "react-native-uuid";
 
-export function usePlans({ data, context, setData, removeGrade }) {
+export function usePlans({
+  data,
+  context,
+  setData,
+  handleAddProgress,
+  handleRemoveProgress,
+}) {
   const { t } = useTranslation();
   const [updatedData, setUpdatedData] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -34,6 +40,7 @@ export function usePlans({ data, context, setData, removeGrade }) {
       Alert.alert("Oops", "Something wrong");
     } finally {
       setData(updatedPlans);
+      handleAddProgress();
     }
   }
 
@@ -63,7 +70,7 @@ export function usePlans({ data, context, setData, removeGrade }) {
   async function handleDeletePlan(planItem) {
     const updatedPlans = data.filter((item) => item.id !== planItem.id);
     if (isEmpty(updatedPlans)) {
-      await removeGrade({ category: TASK_CATEGORY.PLANS });
+      handleRemoveProgress();
     }
 
     try {

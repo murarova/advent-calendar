@@ -1,4 +1,4 @@
-import { OPEN_DAYS_FROM_TODAY, LANGUAGES } from "../constants/constants";
+import { LANGUAGES } from "../constants/constants";
 import moment from "moment";
 import {
   Calendar as NativeCalendar,
@@ -7,8 +7,15 @@ import {
 import { useTranslation } from "react-i18next";
 import { getUserRole } from "../services/services";
 import { useEffect, useState } from "react";
+import { Pressable } from "@gluestack-ui/themed";
+import { config } from "../config/gluestack-ui.config";
+import CircularProgress from "react-native-circular-progress-indicator";
+import { calculateTotalProgress } from "../utils/utils";
+import { useDaysConfiguration } from "../providers/day-config-provider";
 
-export function Calendar({ pressHandler, currentDate, days }) {
+export function Calendar({ pressHandler }) {
+  // const currentDate = moment();
+  const currentDate = moment("2024-12-14");
   const { i18n } = useTranslation();
   const locale = LANGUAGES[i18n.resolvedLanguage]?.moment === "uk" ? "uk" : "";
   const [isAdmin, setIsAdmin] = useState(null);
@@ -55,6 +62,8 @@ export function Calendar({ pressHandler, currentDate, days }) {
   };
   LocaleConfig.defaultLocale = locale;
 
+  const { daysConfig, getDayConfig } = useDaysConfiguration();
+
   useEffect(() => {
     getUserRole().then((role) => {
       if (role === "admin") {
@@ -63,62 +72,7 @@ export function Calendar({ pressHandler, currentDate, days }) {
     });
   }, []);
 
-  function isDayAvailableForUser(date) {
-    return moment(date).diff(currentDate, "days") < OPEN_DAYS_FROM_TODAY;
-  }
-
-  function getMarkedDates() {
-    let markedDates = {};
-    days.map((day) => {
-      if (isDayAvailableForUser(day)) {
-        markedDates[moment(day).format("YYYY-MM-DD")] = {
-          customStyles: {
-            container: {
-              backgroundColor: "#FFE0E1",
-              borderRadius: 22,
-              justifyContent: "center",
-            },
-            text: {
-              color: "#262626",
-            },
-          },
-        };
-      } else {
-        markedDates[moment(day).format("YYYY-MM-DD")] = {
-          customStyles: {
-            container: {
-              borderRadius: 22,
-              justifyContent: "center",
-            },
-            text: {
-              color: "#262626",
-            },
-          },
-        };
-      }
-      if (
-        moment(day).diff(currentDate, "days", true) > -1 &&
-        moment(day).diff(currentDate, "days", true) <= 0
-      ) {
-        markedDates[moment(day).format("YYYY-MM-DD")] = {
-          customStyles: {
-            container: {
-              backgroundColor: "#fe434c",
-              borderRadius: 22,
-              justifyContent: "center",
-            },
-            text: {
-              color: "#fff",
-              fontWeight: "bold",
-            },
-          },
-        };
-      }
-    });
-    return markedDates;
-  }
-
-  const minDate = moment(days[0]).format("YYYY-MM-DD");
+  const minDate = moment(daysConfig[0].day).format("YYYY-MM-DD");
   const maxDate = isAdmin
     ? moment("2024-12-31").format("YYYY-MM-DD")
     : currentDate.format("YYYY-MM-DD");
@@ -129,14 +83,56 @@ export function Calendar({ pressHandler, currentDate, days }) {
       firstDay={1}
       key={locale}
       hideExtraDays
-      onDayPress={(day) => {
-        pressHandler(day);
+      dayComponent={({ date, state }) => {
+        const dayConfig = getDayConfig(date.dateString);
+        const progress = calculateTotalProgress(dayConfig.progress);
+        return (
+          <Pressable
+            onPress={() => {
+              if (state === "disabled") {
+                return;
+              }
+              pressHandler(date);
+            }}
+          >
+            {({ pressed }) => (
+              <CircularProgress
+                value={progress}
+                activeStrokeColor={
+                  pressed
+                    ? config.tokens.colors.green500
+                    : config.tokens.colors.green400
+                }
+                inActiveStrokeColor={config.tokens.colors.warmGray400}
+                inActiveStrokeOpacity={0.2}
+                circleBackgroundColor={
+                  pressed
+                    ? config.tokens.colors.backgroundLight100
+                    : "transparent"
+                }
+                showProgressValue={false}
+                title={date?.day.toString()}
+                activeStrokeWidth={state === "disabled" ? 0 : 5}
+                inActiveStrokeWidth={state === "disabled" ? 0 : 5}
+                titleStyle={{
+                  fontSize: 16,
+                  fontWeight: state === "today" ? 700 : 500,
+                  color:
+                    state === "today"
+                      ? config.tokens.colors.primary500
+                      : state === "disabled"
+                      ? config.tokens.colors.warmGray400
+                      : "#292524",
+                }}
+                radius={25}
+              />
+            )}
+          </Pressable>
+        );
       }}
       hideArrows
       minDate={minDate}
       maxDate={maxDate}
-      markingType={"custom"}
-      markedDates={getMarkedDates()}
       theme={{
         textDayHeaderFontWeight: "600",
         "stylesheet.calendar.main": {
@@ -154,13 +150,6 @@ export function Calendar({ pressHandler, currentDate, days }) {
             color: "#292524",
             fontWeight: 500,
             marginBottom: 15,
-          },
-        },
-        "stylesheet.day.basic": {
-          base: {
-            width: 44,
-            height: 44,
-            alignItems: "center",
           },
         },
       }}

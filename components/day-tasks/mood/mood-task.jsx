@@ -22,7 +22,14 @@ import { ActionButtons, AnimatedView, ImagePicker, Loader } from "../../common";
 import { ImageBackground } from "@gluestack-ui/themed";
 import { useImage } from "../../../hooks/useImage";
 
-export function MoodTask({ data, setData, removeGrade, day, taskOutputType }) {
+export function MoodTask({
+  data,
+  setData,
+  day,
+  taskOutputType,
+  handleAddProgress,
+  handleRemoveProgress,
+}) {
   const { t } = useTranslation();
   const [edit, setEdit] = useState(false);
   const [text, setText] = useState("");
@@ -51,13 +58,13 @@ export function MoodTask({ data, setData, removeGrade, day, taskOutputType }) {
       if (image) {
         await deleteImage(image);
       }
-      await removeGrade({ category: TASK_CATEGORY.MOOD });
     } catch (error) {
-      Alert.alert("Oops", "Something wrong");
+      Alert.alert("Oops", "Something wrong with task deletion");
     } finally {
       setData(null);
       setText("");
       setImage(null);
+      handleRemoveProgress();
     }
   }
 
@@ -89,6 +96,8 @@ export function MoodTask({ data, setData, removeGrade, day, taskOutputType }) {
         setData(updatedData);
       } catch (error) {
         Alert.alert("Oops", "Something wrong");
+      } finally {
+        handleAddProgress();
       }
     } else {
       Alert.alert("Помилка", "Будь ласка додайте фото");

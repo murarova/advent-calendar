@@ -1,16 +1,12 @@
-import { useMemo } from "react";
-import { enumerateDaysBetweenDates } from "../utils/utils";
-import { END_DAY, SCREENS, START_DAY } from "../constants/constants";
+import { SCREENS } from "../constants/constants";
 import { Box, SafeAreaView } from "@gluestack-ui/themed";
-import moment from "moment";
 import { Calendar } from "../components/calendar";
+import { Loader } from "../components/common";
+
+import { useDaysConfiguration } from "../providers/day-config-provider";
 
 function PeriodOverviewScreen({ navigation }) {
-  const currentDate = moment();
-
-  const days = useMemo(() => {
-    return enumerateDaysBetweenDates(START_DAY, END_DAY);
-  }, [START_DAY, END_DAY]);
+  const { isLoading } = useDaysConfiguration();
 
   function pressHandler({ dateString }) {
     navigation.navigate(SCREENS.DAY_OVERVIEW, {
@@ -18,14 +14,14 @@ function PeriodOverviewScreen({ navigation }) {
     });
   }
 
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <SafeAreaView flex={1}>
       <Box mt={10}>
-        <Calendar
-          pressHandler={pressHandler}
-          currentDate={currentDate}
-          days={days}
-        />
+        <Calendar pressHandler={pressHandler} />
       </Box>
     </SafeAreaView>
   );

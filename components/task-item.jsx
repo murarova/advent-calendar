@@ -15,7 +15,6 @@ import {
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { TASK_OUTPUT_TYPE, TASK_CATEGORY } from "../constants/constants";
-
 import { getUserDayTasks } from "../services/services";
 import { Plans } from "./day-tasks/plans/plans";
 import { Summary } from "./day-tasks/summary/summary";
@@ -23,10 +22,32 @@ import { MonthPhoto } from "./day-tasks/month-photo/month-photo";
 import { Alert } from "react-native";
 import { MoodTask } from "./day-tasks/mood/mood-task";
 import { Goals } from "./day-tasks/goals/goals";
+import { useDaysConfiguration } from "../providers/day-config-provider";
+import moment from "moment";
 
-export function TaskItem({ taskConfig, updateGrade, removeGrade, day }) {
+export function TaskItem({ taskConfig, currentDay }) {
   const { t } = useTranslation();
   const [data, setData] = useState(null);
+  const { updateDayProgress } = useDaysConfiguration();
+  const day = moment(currentDay).format("DD");
+  const progressKey =
+    taskConfig.category === TASK_CATEGORY.MOOD
+      ? "moodTaskGrade"
+      : "dayTaskGrade";
+
+  function handleAddProgress() {
+    updateDayProgress({
+      day: currentDay,
+      [progressKey]: taskConfig.grade,
+    });
+  }
+
+  function handleRemoveProgress() {
+    updateDayProgress({
+      day: currentDay,
+      [progressKey]: 0,
+    });
+  }
 
   useEffect(() => {
     async function getDayData() {
@@ -46,15 +67,6 @@ export function TaskItem({ taskConfig, updateGrade, removeGrade, day }) {
     }
     getDayData();
   }, []);
-
-  useEffect(() => {
-    if (data) {
-      updateGrade({
-        category: taskConfig.category,
-        grade: taskConfig.grade,
-      });
-    }
-  }, [data]);
 
   return (
     <>
@@ -93,7 +105,8 @@ export function TaskItem({ taskConfig, updateGrade, removeGrade, day }) {
                   context={taskConfig.context}
                   data={data}
                   setData={setData}
-                  removeGrade={removeGrade}
+                  handleAddProgress={handleAddProgress}
+                  handleRemoveProgress={handleRemoveProgress}
                 />
               )}
               {taskConfig.taskOutputType === TASK_OUTPUT_TYPE.TEXT &&
@@ -102,7 +115,8 @@ export function TaskItem({ taskConfig, updateGrade, removeGrade, day }) {
                     context={taskConfig.context}
                     data={data}
                     setData={setData}
-                    removeGrade={removeGrade}
+                    handleAddProgress={handleAddProgress}
+                    handleRemoveProgress={handleRemoveProgress}
                   />
                 )}
               {taskConfig.taskOutputType === TASK_OUTPUT_TYPE.IMAGE &&
@@ -111,7 +125,8 @@ export function TaskItem({ taskConfig, updateGrade, removeGrade, day }) {
                     data={data}
                     setData={setData}
                     context={taskConfig.context}
-                    removeGrade={removeGrade}
+                    handleAddProgress={handleAddProgress}
+                    handleRemoveProgress={handleRemoveProgress}
                   />
                 )}
               {taskConfig.category === TASK_CATEGORY.MOOD && (
@@ -119,8 +134,9 @@ export function TaskItem({ taskConfig, updateGrade, removeGrade, day }) {
                   data={data}
                   taskOutputType={taskConfig.taskOutputType}
                   setData={setData}
-                  removeGrade={removeGrade}
                   day={day}
+                  handleAddProgress={handleAddProgress}
+                  handleRemoveProgress={handleRemoveProgress}
                 />
               )}
               {taskConfig.category === TASK_CATEGORY.GOALS && (
@@ -128,7 +144,8 @@ export function TaskItem({ taskConfig, updateGrade, removeGrade, day }) {
                   data={data}
                   context={taskConfig.context}
                   setData={setData}
-                  removeGrade={removeGrade}
+                  handleAddProgress={handleAddProgress}
+                  handleRemoveProgress={handleRemoveProgress}
                 />
               )}
             </Box>

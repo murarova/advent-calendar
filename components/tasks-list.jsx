@@ -8,9 +8,7 @@ export function TasksList({
   videoId,
   dayTaskConfig,
   moodTaskConfig,
-  updateGrade,
-  removeGrade,
-  day,
+  currentDay,
 }) {
   return (
     <KeyboardAwareScrollView extraScrollHeight={160}>
@@ -19,21 +17,8 @@ export function TasksList({
           {videoText && <Text pb="$4">{videoText}</Text>}
           {videoId && <YoutubePlayer videoId={videoId} />}
 
-          {dayTaskConfig && (
-            <TaskItem
-              taskConfig={dayTaskConfig}
-              updateGrade={updateGrade}
-              removeGrade={removeGrade}
-            />
-          )}
-          {moodTaskConfig && (
-            <TaskItem
-              day={day}
-              taskConfig={moodTaskConfig}
-              updateGrade={updateGrade}
-              removeGrade={removeGrade}
-            />
-          )}
+          {dayTaskConfig && <TaskItem taskConfig={dayTaskConfig} />}
+          {moodTaskConfig && <TaskItem currentDay={currentDay} taskConfig={moodTaskConfig} />}
         </Box>
       </ScrollView>
     </KeyboardAwareScrollView>

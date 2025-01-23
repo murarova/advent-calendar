@@ -62,6 +62,7 @@ export function ImagePicker({
                 source={{ uri: image.uri }}
                 onLoadStart={() => setIsImageLoading(true)}
                 onLoadEnd={() => setIsImageLoading(false)}
+                resizeMode="contain"
               />
             </Box>
           </AnimatedView>

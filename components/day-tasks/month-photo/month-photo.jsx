@@ -142,6 +142,7 @@ export function MonthPhoto({
                   <ImageBackground
                     style={{ flex: 1, justifyContent: "center" }}
                     src={image?.uri}
+                    resizeMode="contain"
                   />
                 </Box>
               </AnimatedView>

@@ -17,8 +17,12 @@ export function TasksList({
           {videoText && <Text pb="$4">{videoText}</Text>}
           {videoId && <YoutubePlayer videoId={videoId} />}
 
-          {dayTaskConfig && <TaskItem taskConfig={dayTaskConfig} />}
-          {moodTaskConfig && <TaskItem currentDay={currentDay} taskConfig={moodTaskConfig} />}
+          {dayTaskConfig && (
+            <TaskItem currentDay={currentDay} taskConfig={dayTaskConfig} />
+          )}
+          {moodTaskConfig && (
+            <TaskItem currentDay={currentDay} taskConfig={moodTaskConfig} />
+          )}
         </Box>
       </ScrollView>
     </KeyboardAwareScrollView>

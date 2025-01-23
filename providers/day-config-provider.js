@@ -48,6 +48,12 @@ export const DaysProvider = ({ children }) => {
   }, []);
 
   const updateDayProgress = ({ day, dayTaskGrade, moodTaskGrade }) => {
+    console.log(
+      "day, dayTaskGrade, moodTaskGrade",
+      day,
+      dayTaskGrade,
+      moodTaskGrade
+    );
     setDaysConfig((prevDays) =>
       prevDays.map((d) =>
         d.day === day

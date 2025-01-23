@@ -15,11 +15,11 @@ import { useDaysConfiguration } from "../providers/day-config-provider";
 
 export function Calendar({ pressHandler }) {
   // const currentDate = moment();
-  const currentDate = moment("2024-12-14");
+  const currentDate = moment("2024-12-14").format("YYYY-MM-DD");
   const { i18n } = useTranslation();
   const locale = LANGUAGES[i18n.resolvedLanguage]?.moment === "uk" ? "uk" : "";
   const [isAdmin, setIsAdmin] = useState(null);
-
+  console.log("currentDate", currentDate);
   LocaleConfig.locales["uk"] = {
     monthNames: [
       "Січень",
@@ -75,17 +75,18 @@ export function Calendar({ pressHandler }) {
   const minDate = moment(daysConfig[0].day).format("YYYY-MM-DD");
   const maxDate = isAdmin
     ? moment("2024-12-31").format("YYYY-MM-DD")
-    : currentDate.format("YYYY-MM-DD");
+    : currentDate;
 
   return (
     <NativeCalendar
-      current={minDate}
+      initialDate={minDate}
       firstDay={1}
       key={locale}
       hideExtraDays
       dayComponent={({ date, state }) => {
         const dayConfig = getDayConfig(date.dateString);
         const progress = calculateTotalProgress(dayConfig.progress);
+        const today = date.dateString === currentDate;
         return (
           <Pressable
             onPress={() => {
@@ -106,7 +107,9 @@ export function Calendar({ pressHandler }) {
                 inActiveStrokeColor={config.tokens.colors.warmGray400}
                 inActiveStrokeOpacity={0.2}
                 circleBackgroundColor={
-                  pressed
+                  today
+                    ? config.tokens.colors.green300
+                    : pressed
                     ? config.tokens.colors.backgroundLight100
                     : "transparent"
                 }
@@ -116,13 +119,12 @@ export function Calendar({ pressHandler }) {
                 inActiveStrokeWidth={state === "disabled" ? 0 : 5}
                 titleStyle={{
                   fontSize: 16,
-                  fontWeight: state === "today" ? 700 : 500,
-                  color:
-                    state === "today"
-                      ? config.tokens.colors.primary500
-                      : state === "disabled"
-                      ? config.tokens.colors.warmGray400
-                      : "#292524",
+                  fontWeight: today ? 700 : 500,
+                  color: today
+                    ? config.tokens.colors.white
+                    : state === "disabled"
+                    ? config.tokens.colors.warmGray400
+                    : "#292524",
                 }}
                 radius={25}
               />

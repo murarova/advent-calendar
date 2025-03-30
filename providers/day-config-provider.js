@@ -11,6 +11,8 @@ import { getConfiguration, getUserData } from "../services/services";
 import i18n from "../i18n/i18n";
 import { enumerateDaysBetweenDates } from "../utils/utils";
 
+//TODO: need to think about data flow and data updates throw application.
+
 const DaysContext = createContext({
   isLoading: false,
   daysConfig: [],
@@ -48,12 +50,6 @@ export const DaysProvider = ({ children }) => {
   }, []);
 
   const updateDayProgress = ({ day, dayTaskGrade, moodTaskGrade }) => {
-    console.log(
-      "day, dayTaskGrade, moodTaskGrade",
-      day,
-      dayTaskGrade,
-      moodTaskGrade
-    );
     setDaysConfig((prevDays) =>
       prevDays.map((d) =>
         d.day === day

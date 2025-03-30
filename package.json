@@ -59,6 +59,9 @@
     "typescript": "~5.3.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.19.3"
+    "@babel/core": "^7.19.3",
+    "@tsconfig/react-native": "^3.0.5",
+    "@types/lodash": "^4.17.15",
+    "@types/react-native-snap-carousel": "^3.8.11"
   }
 }
